@@ -217,7 +217,18 @@
     </div>
 
     <!-- DEPÓSITO -->
-    <div id="scr-dep" class="screen"><h3 style="color:var(--primary);">📥 DEPÓSITO</h3><div class="card"><p id="txt-n1"></p><p>e-Mola: 870514180</p></div><input type="text" id="dep-numero" placeholder="Seu número"><input type="text" id="dep-nome" placeholder="Nome"><input type="number" id="in-amt" placeholder="Valor em MT"><textarea id="in-ref" placeholder="Comprovante"></textarea><button class="btn-primary" onclick="sendDep()">✅ CONFIRMAR</button></div>
+    <div id="scr-dep" class="screen">
+        <h3 style="color:var(--primary);">📥 DEPÓSITO</h3>
+        <div class="card">
+            <p id="txt-n1"></p>
+            <p id="txt-emola"></p>
+        </div>
+        <input type="text" id="dep-numero" placeholder="Seu número">
+        <input type="text" id="dep-nome" placeholder="Nome">
+        <input type="number" id="in-amt" placeholder="Valor em MT">
+        <textarea id="in-ref" placeholder="Comprovante"></textarea>
+        <button class="btn-primary" onclick="sendDep()">✅ CONFIRMAR</button>
+    </div>
 
     <!-- SAQUE -->
     <div id="scr-out" class="screen"><h3 style="color:var(--accent);">💸 SAQUE</h3><div class="card"><p>⚠️ TAXA 10% · 1 SAQUE/DIA</p></div><input type="text" id="out-numero" placeholder="Número"><input type="text" id="out-nome" placeholder="Nome"><div id="grid-out" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;"></div><input type="text" id="out-val" placeholder="USD" readonly style="text-align:center;font-weight:bold;background:var(--input-bg);border:2px solid var(--accent);"><div class="card"><div class="info-row"><span>Solicitado:</span><span id="preview-amount">0</span></div><div class="info-row"><span>Taxa:</span><span id="preview-fee">0</span></div><div class="info-row"><span>Recebe:</span><span id="preview-net">0</span></div><div class="info-row"><span>💵 MT:</span><span id="preview-mt">0</span></div></div><button id="btn-submit-out" class="btn-accent" onclick="sendOut()">📤 SOLICITAR</button></div>
@@ -238,7 +249,8 @@
             <button class="theme-btn theme-dourado" onclick="setTheme('dourado')"></button>
             <button class="theme-btn theme-roxo" onclick="setTheme('roxo')"></button>
         </div></div>
-        <div class="admin-section"><h4>📱 M-Pesa</h4><input type="text" id="ed-n1"><button class="btn-primary" onclick="saveConfig()">Salvar</button></div>
+        <div class="admin-section"><h4>📱 M-Pesa</h4><input type="text" id="ed-n1" placeholder="Número e nome M-Pesa"><button class="btn-primary" onclick="saveConfigMpesa()">Salvar M-Pesa</button></div>
+        <div class="admin-section"><h4>📱 e-Mola</h4><input type="text" id="ed-emola" placeholder="Número e nome e-Mola"><button class="btn-primary" onclick="saveConfigEmola()">Salvar e-Mola</button></div>
         <div class="admin-section"><h4>💸 Valores de Saque (MT)</h4><div id="admin-saque-list"></div><input type="number" id="new-saque" placeholder="Novo valor"><button class="btn-primary" onclick="addS()">➕</button><button class="btn-gold" onclick="saveSaques()" style="margin-top:6px;">Salvar</button></div>
         <div class="admin-section"><h4>⭐ VIPs (USD)</h4><div id="admin-vip-list" style="max-height:300px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveVips()">Salvar VIPs</button></div>
         <div class="admin-section"><h4>🏦 Fundos (USD)</h4><div id="admin-wealth-list" style="max-height:300px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveWealth()">Salvar Fundos</button></div>
@@ -271,7 +283,7 @@ try{if(typeof firebase!=='undefined'){firebase.initializeApp({apiKey:_fc[0],auth
 
 // ========== DADOS PADRÃO ==========
 const DEF={
-    users:{},pending:[],config:{n1:'851511841 - Benjamim'},invites:{},
+    users:{},pending:[],config:{n1:'851511841 - Benjamim',emola:'870514180'},invites:{},
     taskLinks:['https://youtube.com/watch?v=VIDEO1','https://youtube.com/watch?v=VIDEO2','https://youtube.com/watch?v=VIDEO3'],
     saqueValues:[100,200,300,500,800,1000,2000,3000,5000,10000,20000,50000],
     cards:[
@@ -311,14 +323,14 @@ const DEF={
 // ========== CARREGAR DB ==========
 let db;
 try{
-    let s=localStorage.getItem('kvdb_v3');
+    let s=localStorage.getItem('kvdb_v4');
     if(s){db=JSON.parse(s);for(let k in DEF){if(!(k in db))db[k]=DEF[k];}}
     else{db=JSON.parse(JSON.stringify(DEF));}
 }catch(e){db=JSON.parse(JSON.stringify(DEF));}
 
 if(fbDB){fbDB.ref('data').once('value').then(s=>{if(s.val()){db=s.val();for(let k in DEF){if(!(k in db))db[k]=DEF[k];}save();}}).catch(()=>{});}
 
-function save(){try{localStorage.setItem('kvdb_v3',JSON.stringify(db));if(fbDB)fbDB.ref('data').set(db).catch(()=>{});}catch(e){}}
+function save(){try{localStorage.setItem('kvdb_v4',JSON.stringify(db));if(fbDB)fbDB.ref('data').set(db).catch(()=>{});}catch(e){}}
 
 // ========== GLOBAIS ==========
 let VIPS=[...db.vips],WEALTH=[...db.wealth],BANNERS=[...db.banners],user=null,affCard=null,bannerIdx=0,bannerTimer=null,OUTS=[],so=0;
@@ -378,7 +390,7 @@ const fN=["Maria S.","João P.","Ana C.","Pedro M.","Carla R.","Lucas M."];
 function gFeed(){let c=document.getElementById('fake-feed');if(!c)return;let d=Math.random()>0.3,n=fN[Math.floor(Math.random()*fN.length)],a=Math.floor(Math.random()*5000)+200,el=document.createElement('div');el.className='feed-item';el.innerHTML=`<div class="feed-icon ${d?'dep':'out'}">${d?'📥':'💸'}</div><div class="feed-content"><div class="feed-name">${n}</div></div><div class="feed-amt ${d?'dep':'out'}">${d?'+':'-'}${fUSD(a)}</div>`;c.prepend(el);while(c.children.length>5)c.lastChild.remove();}
 setInterval(gFeed,5000);gFeed();
 
-// ========== LOGIN/CADASTRO CORRIGIDO ==========
+// ========== LOGIN/CADASTRO ==========
 function switchLoginTab(t){document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-cadastro').classList.toggle('active',t==='cadastro');document.getElementById('form-login').style.display=t==='login'?'block':'none';document.getElementById('form-cadastro').style.display=t==='cadastro'?'block':'none';let le=document.getElementById('login-error'),re=document.getElementById('reg-error');if(le)le.classList.remove('show');if(re)re.classList.remove('show');}
 
 function handleCreateAccount(){
@@ -437,6 +449,7 @@ function doLogin(phone){
     document.getElementById('autoLoginInfo').classList.remove('show');
     document.getElementById('login-phone').value='';document.getElementById('login-pass').value='';
     changeScr('scr-home');updUI();updInv();renderCards();renderBanners();initDE();checkWE();
+    switchTab(1);
 }
 function logout(){clearSavedLogin();user=null;document.getElementById('menu').style.display='none';changeScr('scr-login');checkAutoLogin();}
 
@@ -444,8 +457,19 @@ function logout(){clearSavedLogin();user=null;document.getElementById('menu').st
 function changeScr(id){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if(id==='scr-home'){rV();rW();rT();renderCards();renderBanners();rA();updDU();}
-    if(id==='scr-dep')document.getElementById('txt-n1').textContent='M-Pesa: '+(db.config?.n1||'851511841');
+    if(id==='scr-home'){
+        rV();rW();rT();renderCards();renderBanners();rA();updDU();
+        document.getElementById('list-vips').style.display='block';
+        document.getElementById('list-wealth').style.display='none';
+        document.getElementById('list-tasks').style.display='none';
+        document.getElementById('t1').classList.add('active');
+        document.getElementById('t2').classList.remove('active');
+        document.getElementById('t3').classList.remove('active');
+    }
+    if(id==='scr-dep'){
+        document.getElementById('txt-n1').textContent='M-Pesa: '+(db.config?.n1||'851511841');
+        document.getElementById('txt-emola').textContent='e-Mola: '+(db.config?.emola||'870514180');
+    }
     if(id==='scr-out'){rOB();updWS();}
     if(id==='scr-invite')updInv();
     if(id==='scr-adm'){rAdm();document.getElementById('manual-text').value=db.manualHTML||DEF.manualHTML;}
@@ -489,7 +513,8 @@ function sT(i){if(!user)return;if(!user.tasks)user.tasks={};let tk='t_'+i;if(use
 // ========== ADMIN ==========
 let cl=0;
 function tapAdm(){cl++;if(cl>=5){let p=prompt('🔐 Senha Admin:');if(p===ADMIN_SENHA){changeScr('scr-adm');rAdm();cl=0;}}setTimeout(()=>cl=0,3000);}
-function saveConfig(){db.config.n1=document.getElementById('ed-n1').value;save();alert('✅ Salvo!');}
+function saveConfigMpesa(){db.config.n1=document.getElementById('ed-n1').value;save();alert('✅ M-Pesa salvo!');}
+function saveConfigEmola(){db.config.emola=document.getElementById('ed-emola').value;save();alert('✅ e-Mola salvo!');}
 function rASL(){document.getElementById('admin-saque-list').innerHTML=(db.saqueValues||DEF.saqueValues).map((v,i)=>`<div style="display:flex;gap:6px;margin-bottom:4px;"><input type="number" class="sv" value="${v}" data-i="${i}" style="flex:1;"><span style="color:var(--primary);">${fUSD(v)}</span><button onclick="rS(${i})" style="background:var(--accent);color:#fff;padding:4px 8px;">X</button></div>`).join('');}
 function addS(){let v=parseInt(document.getElementById('new-saque').value);if(!v)return;if(!db.saqueValues)db.saqueValues=[];db.saqueValues.push(v);db.saqueValues.sort((a,b)=>a-b);save();upOUTS();rASL();rOB();}
 function rS(i){db.saqueValues.splice(i,1);save();upOUTS();rASL();rOB();}
@@ -505,6 +530,7 @@ function saveManual(){db.manualHTML=document.getElementById('manual-text').value
 
 function rAdm(){
     document.getElementById('ed-n1').value=db.config?.n1||'';
+    document.getElementById('ed-emola').value=db.config?.emola||'';
     let cs=db.cards||DEF.cards;
     if(cs[0]){document.getElementById('c1t').value=cs[0].t;document.getElementById('c1l').value=cs[0].l;}
     if(cs[1]){document.getElementById('c2t').value=cs[1].t;document.getElementById('c2l').value=cs[1].l;}
