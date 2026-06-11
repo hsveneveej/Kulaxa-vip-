@@ -9,7 +9,6 @@
     <meta name="apple-mobile-web-app-title" content="KULAXA VIP">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
     <link rel="manifest" href="data:application/json,{'name':'KULAXA VIP','short_name':'KULAXA','start_url':'.','display':'standalone','background_color':'#0a0a0f','theme_color':'#00e676'}">
-    
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     
@@ -24,8 +23,14 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        .header-adm { text-align: center; padding: 14px 0; background: #0d0d1a; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,230,118,0.3); }
+        .header-adm { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #0d0d1a; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,230,118,0.3); }
         .header-adm h1 { background: linear-gradient(135deg, var(--primary), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 22px; cursor: pointer; letter-spacing: 2px; font-weight: 900; }
+        .hamburger-btn { background: none; border: none; color: var(--primary); font-size: 28px; cursor: pointer; padding: 8px; width: auto; }
+        .sidebar-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #0d0d1a; z-index: 200; transition: right 0.3s; padding: 20px; border-left: 2px solid var(--primary); overflow-y: auto; }
+        .sidebar-menu.open { right: 0; }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 199; display: none; }
+        .sidebar-overlay.show { display: block; }
+        .sidebar-menu button { display: block; width: 100%; margin-bottom: 10px; }
 
         .screen { display: none; padding: 12px; padding-bottom: 85px; animation: fadeIn 0.3s; }
         .screen.active { display: block; }
@@ -41,29 +46,26 @@
         .btn-accent { background: linear-gradient(135deg, #ff5252, #ff1744); color: #fff; padding: 16px; width: 100%; font-size: 15px; box-shadow: 0 6px 20px rgba(255,82,82,0.3); }
         .btn-outline { background: transparent; color: var(--primary); padding: 14px; width: 100%; font-size: 14px; border: 2px solid var(--primary); }
         .btn-gold { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; padding: 14px; width: 100%; font-size: 14px; font-weight: 900; }
+        
+        /* BOTÃO VIP GRUPO CHAMATIVO */
+        .btn-vip-group { 
+            background: linear-gradient(135deg, #ffd700, #ff8c00, #ff6d00, #ff4081); 
+            color: #000; padding: 18px 20px; width: 100%; font-size: 16px; font-weight: 900; 
+            box-shadow: 0 6px 25px rgba(255,215,0,0.6); 
+            animation: vipPulse 1.5s infinite; 
+            border: 3px solid #ffd700;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+        }
+        @keyframes vipPulse { 
+            0%,100% { box-shadow: 0 6px 25px rgba(255,215,0,0.6); transform: scale(1); } 
+            50% { box-shadow: 0 6px 40px rgba(255,215,0,1), 0 0 60px rgba(255,140,0,0.5); transform: scale(1.03); } 
+        }
 
         .card { background: linear-gradient(145deg, #151530, #0d0d25); border: 1px solid var(--border); border-radius: 18px; padding: 16px; margin-bottom: 12px; }
         .info-row { display: flex; justify-content: space-between; font-size: 12px; margin: 4px 0; color: var(--subtext); }
 
         .vip-grid, .wealth-grid { display: flex; flex-direction: column; gap: 10px; max-height: 450px; overflow-y: auto; }
-        .vip-card { background: linear-gradient(145deg, #1a1a28, #151520); border-radius: 20px; padding: 18px; border: 2px solid; position: relative; overflow: hidden; }
-        .vip-low { border-color: var(--primary); }
-        .vip-mid { border-color: var(--gold); }
-        .vip-high { border-color: var(--accent); }
-        .vip-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 8px; }
-        .badge-low { background: rgba(0,230,118,0.2); color: var(--primary); }
-        .badge-mid { background: rgba(255,215,0,0.2); color: var(--gold); }
-        .badge-high { background: rgba(255,82,82,0.2); color: var(--accent); animation: badgeGlow 2s infinite; }
-        @keyframes badgeGlow { 0%,100% { box-shadow: 0 0 8px rgba(255,82,82,0.3); } 50% { box-shadow: 0 0 20px rgba(255,82,82,0.6); } }
-        .vip-title { font-size: 18px; font-weight: 900; margin-bottom: 10px; }
-        .vip-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-        .vip-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; text-align: center; }
-        .vip-label { font-size: 8px; color: var(--subtext); text-transform: uppercase; }
-        .vip-value { font-size: 14px; font-weight: bold; color: var(--primary); }
-        .vip-value-mt { font-size: 9px; color: var(--gold); display: block; margin-top: 2px; }
-        .vip-roi { font-size: 16px; font-weight: 900; color: var(--secondary); }
-        .vip-btn { background: linear-gradient(135deg, var(--accent), var(--fire1), var(--fire3)); color: #fff; padding: 12px; border-radius: 25px; font-weight: bold; width: 100%; font-size: 13px; margin-top: 6px; box-shadow: 0 6px 20px rgba(255,69,0,0.3); }
-
         .daily-card { background: linear-gradient(135deg, #1a2a1a, #0a2a0a); border: 2px solid var(--primary); border-radius: 20px; padding: 20px; margin: 12px 0; text-align: center; }
         .daily-amount { font-size: 32px; font-weight: 900; color: var(--primary); }
         .collect-btn { background: var(--primary); color: #000; padding: 12px 30px; border-radius: 25px; font-weight: 900; font-size: 16px; margin-top: 10px; display: inline-block; animation: pulse 2s infinite; }
@@ -86,11 +88,18 @@
         .auto-login-info { background: rgba(0,230,118,0.1); border: 1px solid var(--primary); border-radius: 12px; padding: 12px; margin-bottom: 14px; font-size: 11px; text-align: center; display: none; }
         .auto-login-info.show { display: block; }
 
-        .live-feed { background: #0d0d18; border-radius: 18px; padding: 14px; margin-top: 18px; border: 1px solid var(--border); max-height: 200px; overflow-y: auto; }
+        .live-feed { background: #0d0d18; border-radius: 18px; padding: 14px; margin-top: 18px; border: 1px solid var(--border); max-height: 250px; overflow-y: auto; }
         .feed-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #1a1a28; }
-        .feed-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-        .feed-icon.dep { background: rgba(0,230,118,0.2); color: var(--primary); } .feed-icon.out { background: rgba(255,82,82,0.2); color: var(--accent); }
-        .feed-name { font-weight: 600; font-size: 12px; } .feed-amt { font-weight: bold; font-size: 13px; } .feed-amt.dep { color: var(--primary); } .feed-amt.out { color: var(--accent); }
+        .feed-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+        .feed-icon.dep { background: rgba(0,230,118,0.2); color: var(--primary); } 
+        .feed-icon.out { background: rgba(255,82,82,0.2); color: var(--accent); }
+        .feed-content { flex: 1; min-width: 0; }
+        .feed-name { font-weight: 600; font-size: 12px; } 
+        .feed-detail { font-size: 9px; color: #666; }
+        .feed-amt { font-weight: bold; font-size: 13px; flex-shrink: 0; } 
+        .feed-amt.dep { color: var(--primary); } 
+        .feed-amt.out { color: var(--accent); }
+        .feed-time { font-size: 8px; color: #555; }
 
         .bal-card { text-align: center; border-bottom: 3px solid var(--primary); background: linear-gradient(135deg, #1a1a28, #0d0d2b); border-radius: 20px; padding: 22px; }
         .bal-usd { font-size: 42px; font-weight: 900; color: var(--primary); }
@@ -98,114 +107,185 @@
         .error-msg { color: var(--accent); font-size: 11px; margin-top: -6px; margin-bottom: 8px; display: none; }
         .error-msg.show { display: block; }
 
+        .ganho-card { text-align: center; padding: 12px 8px; border-radius: 14px; }
+        .ganho-card.ontem { background: linear-gradient(135deg, #1a1a0a, #2a1a0a); border: 2px solid #ff6d00; }
+        .ganho-card.hoje { background: linear-gradient(135deg, #1a1a0a, #2a1a0a); border: 2px solid #ff8c00; }
+        .ganho-card.total { background: linear-gradient(135deg, #1a1a0a, #2a1a0a); border: 2px solid #ff9800; }
+        .ganho-label { font-size: 8px; text-transform: uppercase; font-weight: 700; }
+        .ganho-label.ontem { color: #ff6d00; } .ganho-label.hoje { color: #ff8c00; } .ganho-label.total { color: #ff9800; }
+        .ganho-valor { font-size: 16px; font-weight: 900; }
+        .ganho-valor.ontem { color: #ff8c00; } .ganho-valor.hoje { color: #ffa000; } .ganho-valor.total { color: #ffb300; }
+
         .banner-carrossel { position: relative; width: 100%; overflow: hidden; border-radius: 16px; margin-bottom: 12px; height: 110px; }
         .banner-track { display: flex; transition: transform 0.6s ease; height: 100%; }
-        .banner-slide { min-width: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-        .slide-ouro { background: linear-gradient(135deg, #1a1a0a, #2a2a0a); border: 2px solid #ffd700; }
-        .slide-azul { background: linear-gradient(135deg, #0a1a2a, #0a2a3a); border: 2px solid #00b4db; }
-        .slide-verde { background: linear-gradient(135deg, #0a1a0a, #0a2a1a); border: 2px solid #00e676; }
-        .slide-rosa { background: linear-gradient(135deg, #1a0a1a, #2a0a2a); border: 2px solid #ff4081; }
-        .slide-roxo { background: linear-gradient(135deg, #1a0a2a, #2a0a3a); border: 2px solid #9b59b6; }
-        .slide-laranja { background: linear-gradient(135deg, #2a1a0a, #3a2a0a); border: 2px solid #ff6d00; }
-        .banner-inner { text-align: center; }
+        .banner-slide { min-width: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
+        .slide-concurso { background: linear-gradient(135deg, #1a1a0a, #3a2a0a); border: 2px solid #ffd700; }
+        .slide-promo { background: linear-gradient(135deg, #0a1a2a, #0a2a3a); border: 2px solid #00b4db; }
+        .slide-premio { background: linear-gradient(135deg, #2a0a2a, #3a0a3a); border: 2px solid #ff4081; }
+        .banner-inner { text-align: center; width: 100%; padding: 10px; }
         .banner-emoji { font-size: 24px; }
-        .banner-concurso { font-size: 8px; color: #ffd700; animation: blink 1s infinite; text-transform: uppercase; letter-spacing: 2px; }
+        .banner-titulo { font-size: 8px; color: #ffd700; animation: blink 1s infinite; text-transform: uppercase; letter-spacing: 2px; }
         @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
         .banner-valor { font-size: 30px; font-weight: 900; background: linear-gradient(135deg, #ffd700, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .banner-desc { font-size: 9px; color: #ccc; margin-top: 2px; }
         .banner-dots { display: flex; justify-content: center; gap: 6px; margin-top: -20px; position: relative; z-index: 2; padding-bottom: 8px; }
         .banner-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s; }
         .banner-dot.active { background: #ffd700; width: 18px; border-radius: 4px; }
+        
+        /* BOTÃO INSCREVER NO CANAL YT */
+        .banner-inscrever-btn { 
+            position: absolute; bottom: 8px; right: 8px; 
+            background: linear-gradient(135deg, #ff0000, #cc0000); 
+            color: #fff; border: none; padding: 7px 16px; border-radius: 20px; 
+            font-size: 9px; font-weight: 900; cursor: pointer; z-index: 5; 
+            text-transform: uppercase; animation: ytPulse 2s infinite;
+            display: flex; align-items: center; gap: 4px;
+        }
+        @keyframes ytPulse { 0%,100% { box-shadow: 0 0 10px rgba(255,0,0,0.5); } 50% { box-shadow: 0 0 25px rgba(255,0,0,0.9); } }
 
         .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-        .quick-card { border-radius: 14px; padding: 16px 10px; text-align: center; cursor: pointer; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: relative; }
-        .quick-card:active { transform: scale(0.95); }
-        .quick-card .qc-icon { font-size: 28px; }
+        .quick-card { border-radius: 14px; padding: 20px 10px 38px 10px; text-align: center; cursor: pointer; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; position: relative; overflow: hidden; transition: all 0.3s; }
+        .quick-card:active { transform: scale(0.92); }
+        .quick-card .qc-icon { font-size: 32px; margin-top: 4px; }
         .quick-card .qc-title { font-weight: 800; font-size: 10px; text-transform: uppercase; }
         .quick-card .qc-badge { position: absolute; top: 6px; right: 6px; font-size: 7px; padding: 2px 8px; border-radius: 15px; font-weight: 700; }
-        .qc-whatsapp { background: linear-gradient(135deg, #1b5e20, #2e7d32); border: 2px solid #4caf50; } .qc-whatsapp .qc-badge { background: #4caf50; color: #fff; }
-        .qc-support { background: linear-gradient(135deg, #0d47a1, #1565c0); border: 2px solid #42a5f5; } .qc-support .qc-badge { background: #42a5f5; color: #fff; }
-        .qc-af1 { background: linear-gradient(135deg, #4a148c, #6a1b9a); border: 2px solid #ab47bc; } .qc-af1 .qc-badge { background: #ab47bc; color: #fff; }
-        .qc-af2 { background: linear-gradient(135deg, #b71c1c, #d32f2f); border: 2px solid var(--accent); } .qc-af2 .qc-badge { background: var(--accent); color: #fff; }
+        .quick-card .qc-action-btn { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); padding: 6px 20px; border-radius: 15px; font-size: 9px; font-weight: 700; text-transform: uppercase; pointer-events: none; }
+        .qc-whatsapp { background: linear-gradient(135deg, #1b5e20, #2e7d32); border: 2px solid #4caf50; } .qc-whatsapp .qc-badge { background: #4caf50; color: #fff; } .qc-whatsapp .qc-action-btn { background: #4caf50; color: #fff; }
+        .qc-support { background: linear-gradient(135deg, #0d47a1, #1565c0); border: 2px solid #42a5f5; } .qc-support .qc-badge { background: #42a5f5; color: #fff; } .qc-support .qc-action-btn { background: #42a5f5; color: #fff; }
+        .qc-af1 { background: linear-gradient(135deg, #4a148c, #6a1b9a); border: 2px solid #ab47bc; } .qc-af1 .qc-badge { background: #ab47bc; color: #fff; } .qc-af1 .qc-action-btn { background: #ab47bc; color: #fff; animation: btnGlow 1.5s infinite; }
+        .qc-af2 { background: linear-gradient(135deg, #b71c1c, #d32f2f); border: 2px solid var(--accent); } .qc-af2 .qc-badge { background: var(--accent); color: #fff; } .qc-af2 .qc-action-btn { background: var(--accent); color: #fff; animation: btnGlow 1.5s infinite; }
+        @keyframes btnGlow { 0%,100% { box-shadow: 0 0 8px rgba(255,255,255,0.3); } 50% { box-shadow: 0 0 20px rgba(255,255,255,0.6); } }
+
+        .roleta-container { background: linear-gradient(135deg, #1a1a0a, #2a2a0a); border: 3px solid #ffd700; border-radius: 24px; padding: 24px; text-align: center; margin: 16px 0; }
+        .roleta-display { font-size: 48px; margin: 16px 0; } .roleta-resultado { font-size: 24px; font-weight: 900; margin: 12px 0; }
+        .roleta-btn { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; padding: 16px 40px; border-radius: 30px; font-size: 18px; font-weight: 900; cursor: pointer; border: none; width: auto; display: inline-block; } .roleta-btn:disabled { background: #555; color: #999; cursor: not-allowed; }
+
+        .gift-box { background: linear-gradient(135deg, #2a1a0a, #3a2a0a); border: 3px solid #ffd700; border-radius: 24px; padding: 24px; text-align: center; margin: 16px 0; position: relative; }
+        .gift-locked { position: absolute; inset: 0; background: rgba(0,0,0,0.75); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
+        .gift-amount { font-size: 36px; font-weight: 900; color: #ffd700; }
+
+        /* CLASSES DE NÍVEL - RETÂNGULOS CHAMATIVOS */
+        .classe-bloco { border-radius: 16px; padding: 18px; margin-bottom: 14px; position: relative; overflow: hidden; border: 3px solid; }
+        .classe-bloco.classe-a { background: linear-gradient(135deg, #2a1a0a, #3a2a0a, #1a1a0a); border-color: #ffd700; box-shadow: 0 0 25px rgba(255,215,0,0.2); }
+        .classe-bloco.classe-b-plus { background: linear-gradient(135deg, #0a1a2a, #0a1a3a, #0a0a2a); border-color: #448aff; box-shadow: 0 0 20px rgba(68,138,255,0.2); }
+        .classe-bloco.classe-b { background: linear-gradient(135deg, #0a1a2a, #0a1a3a, #0a0a1a); border-color: #2979ff; box-shadow: 0 0 15px rgba(41,121,255,0.15); }
+        .classe-bloco.classe-c { background: linear-gradient(135deg, #0a2a0a, #0a2a1a, #0a1a0a); border-color: #00e676; box-shadow: 0 0 15px rgba(0,230,118,0.15); }
+        .classe-atual { box-shadow: 0 0 35px rgba(255,215,0,0.5) !important; transform: scale(1.02); }
+        .classe-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .classe-titulo { font-size: 16px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+        .classe-badge { padding: 5px 14px; border-radius: 20px; font-size: 9px; font-weight: 900; }
+        .badge-ativo-classe { background: rgba(0,230,118,0.3); color: #00e676; border: 2px solid #00e676; animation: badgePulse 2s infinite; }
+        .badge-alcancado { background: rgba(255,215,0,0.2); color: #ffd700; border: 1px solid #ffd700; }
+        .badge-bloqueado-classe { background: rgba(255,82,82,0.2); color: #ff5252; border: 1px solid #ff5252; }
+        @keyframes badgePulse { 0%,100% { box-shadow: 0 0 8px rgba(0,230,118,0.3); } 50% { box-shadow: 0 0 20px rgba(0,230,118,0.6); } }
+        .classe-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
+        .classe-cell { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 10px 6px; text-align: center; }
+        .classe-cell .cell-label { font-size: 7px; color: #888; text-transform: uppercase; margin-bottom: 3px; }
+        .classe-cell .cell-value { font-size: 13px; font-weight: 900; }
+        .classe-progress { margin-top: 8px; }
+        .classe-progress-label { font-size: 8px; color: var(--subtext); display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .classe-progress-bar { height: 8px; background: #1a1a30; border-radius: 8px; overflow: hidden; }
+        .classe-progress-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease; }
+        .fill-gold { background: linear-gradient(90deg, #ffd700, #ff8c00); }
+        .fill-blue { background: linear-gradient(90deg, #448aff, #2979ff); }
+        .fill-green { background: linear-gradient(90deg, #00e676, #00c853); }
+        .fill-red { background: linear-gradient(90deg, #ff5252, #ff1744); }
+
+        /* TAREFAS */
+        .task-card { background: linear-gradient(135deg, #0a1a2a, #0a0a2a); border: 2px solid #ff0000; border-radius: 16px; padding: 16px; margin-bottom: 10px; text-align: center; }
+        .task-card .task-icon { font-size: 36px; }
+        .task-card .task-title { font-weight: 900; font-size: 14px; color: #ff0000; margin: 6px 0; }
+        .task-card .task-value { font-size: 11px; color: #fff; }
+        .btn-yt { background: linear-gradient(135deg, #ff0000, #cc0000); color: #fff; padding: 12px; border-radius: 25px; font-weight: 900; font-size: 13px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; animation: ytPulse 2s infinite; }
 
         .admin-section { background: #12122a; border-radius: 16px; padding: 18px; margin: 12px 0; border: 1px solid var(--border); }
         .admin-section h4 { color: var(--primary); margin-bottom: 12px; font-size: 14px; }
-        .affiliate-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .affiliate-overlay.hidden { display: none; }
-        .affiliate-box { background: #1a1a30; border: 3px solid #ffd700; border-radius: 22px; padding: 28px 22px; text-align: center; max-width: 380px; width: 90%; }
-        .affiliate-box .aff-icon { font-size: 60px; } .affiliate-box .aff-title { font-size: 22px; font-weight: 900; color: #ffd700; } .affiliate-box .aff-bonus { font-size: 36px; font-weight: 900; color: #ffd700; margin: 10px 0; }
-        .aff-btn { width: 100%; padding: 14px; border: none; border-radius: 14px; font-weight: 700; font-size: 13px; cursor: pointer; margin: 5px 0; }
-        .aff-btn-gold { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; } .aff-btn-red { background: #ff0000; color: #fff; } .aff-btn-close { background: rgba(255,255,255,0.1); color: #fff; }
 
-        .manual-fab { position: fixed; bottom: 80px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 200; box-shadow: 0 6px 20px rgba(255,215,0,0.4); animation: fabPulse 2s infinite; border: none; }
-        @keyframes fabPulse { 0%,100% { box-shadow: 0 6px 20px rgba(255,215,0,0.4); } 50% { box-shadow: 0 6px 35px rgba(255,215,0,0.8); } }
-        .manual-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .manual-overlay.hidden { display: none; }
-        .manual-box { background: #1a1a30; border: 3px solid var(--gold); border-radius: 22px; padding: 24px; max-width: 400px; width: 100%; max-height: 80vh; overflow-y: auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+        .stat-box { background: var(--input-bg); border-radius: 12px; padding: 14px; text-align: center; }
+        .stat-num { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .stat-label { font-size: 9px; color: var(--subtext); text-transform: uppercase; }
+        .stats-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
+        .stats-table th, .stats-table td { padding: 6px; text-align: left; border-bottom: 1px solid var(--border); }
+        .stats-table th { color: var(--gold); font-size: 9px; }
 
-        .install-banner { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); background: #1a1a30; border: 2px solid var(--primary); border-radius: 20px; padding: 14px 20px; z-index: 150; display: none; align-items: center; gap: 12px; max-width: 400px; width: 90%; }
-        .install-banner.show { display: flex; }
-        .install-banner .ib-icon { font-size: 32px; }
-        .install-banner .ib-text { flex: 1; font-size: 11px; }
-        .install-banner .ib-btn { background: var(--primary); color: #000; padding: 10px 18px; border-radius: 20px; font-weight: 900; font-size: 12px; cursor: pointer; border: none; }
-        .install-banner .ib-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; padding: 4px; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #333; border-radius: 26px; transition: 0.3s; }
+        .toggle-slider:before { content: ""; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+        input:checked + .toggle-slider { background: var(--primary); }
+        input:checked + .toggle-slider:before { transform: translateX(24px); }
+        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+        .value-card { background: linear-gradient(145deg, #1a1a30, #12122a); border: 2px solid var(--border); border-radius: 14px; padding: 14px 8px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .payment-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
+        .payment-card { background: linear-gradient(145deg, #1a1a30, #12122a); border: 2px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; }
+        .payment-card.active { border-color: var(--primary); }
+        .pending-card { background: linear-gradient(145deg, #151530, #0d0d25); border: 1px solid var(--border); border-radius: 16px; padding: 14px; margin-bottom: 10px; }
+        .pending-card.dep { border-left: 4px solid var(--primary); }
+        .pending-card.saque { border-left: 4px solid var(--accent); }
+        .pending-row { display: flex; justify-content: space-between; font-size: 10px; margin: 3px 0; color: var(--subtext); }
+        .pending-actions { display: flex; gap: 6px; margin-top: 8px; }
+        .pending-actions button { flex: 1; padding: 8px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; border: none; }
+        .btn-approve { background: #22c55e; color: #fff; }
+        .btn-reject { background: #ef4444; color: #fff; }
+        .inscrito-badge { display: inline-block; font-size: 7px; padding: 2px 6px; border-radius: 8px; }
+        .inscrito-sim { background: rgba(34,197,94,0.2); color: #22c55e; }
+        .inscrito-nao { background: rgba(239,68,68,0.2); color: #ef4444; }
 
-        .theme-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-        .theme-btn { height: 50px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
-        .theme-btn.active { border-color: #fff; transform: scale(1.1); }
-        .theme-verde { background: linear-gradient(135deg, #00e676, #0a0a0f); }
-        .theme-azul { background: linear-gradient(135deg, #2979ff, #0a0a0f); }
-        .theme-rosa { background: linear-gradient(135deg, #ff4081, #0a0a0f); }
-        .theme-dourado { background: linear-gradient(135deg, #ffd700, #0a0a0f); }
-        .theme-roxo { background: linear-gradient(135deg, #9b59b6, #0a0a0f); }
+        .finance-total-card { border-radius: 16px; padding: 16px; text-align: center; border: 2px solid; }
+        .finance-total-card.depositado { background: linear-gradient(135deg, #0a2a0a, #0a1a0a); border-color: var(--primary); }
+        .finance-total-card.sacado { background: linear-gradient(135deg, #2a0a0a, #1a0a0a); border-color: var(--accent); }
+        .finance-total-card .ft-label { font-size: 9px; text-transform: uppercase; font-weight: 700; }
+        .finance-total-card .ft-value { font-size: 22px; font-weight: 900; margin: 4px 0; }
+        .finance-total-card.depositado .ft-value { color: var(--primary); }
+        .finance-total-card.sacado .ft-value { color: var(--accent); }
+        .finance-balance-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+        .finance-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
+        .finance-table th, .finance-table td { padding: 6px 4px; text-align: left; border-bottom: 1px solid var(--border); }
+        .finance-table th { color: var(--gold); font-size: 8px; text-transform: uppercase; }
+        .finance-table .dep-row { color: var(--primary); }
+        .finance-table .out-row { color: var(--accent); }
+        .finance-section { background: #12122a; border-radius: 14px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
 <div style="max-width: 450px; margin: auto; min-height: 100vh; position: relative;">
-    <div class="header-adm"><h1 onclick="tapAdm()">⚡ KULAXA VIP</h1></div>
-
-    <button class="manual-fab" id="manualFab" onclick="openManual()">📖</button>
-    <div class="manual-overlay hidden" id="manualOverlay"><div class="manual-box" id="manualContent"></div></div>
-
-    <div class="install-banner" id="installBanner">
-        <span class="ib-icon">📲</span><div class="ib-text"><b>Instale o App</b><br>Acesso rápido</div>
-        <button class="ib-btn" onclick="installApp()">INSTALAR</button>
-        <button class="ib-close" onclick="hideInstallBanner()">✕</button>
+    <div class="header-adm"><h1 onclick="tapAdm()">⚡ KULAXA VIP</h1><button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" style="display:none;">☰</button></div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar-menu" id="sidebarMenu">
+        <h3 style="color:var(--primary);margin-bottom:16px;">📋 MENU</h3>
+        <button class="btn-primary" onclick="navigateFromSidebar('scr-home')">🏠 Home</button>
+        <button class="btn-secondary" onclick="navigateFromSidebar('scr-dep')">📥 Depósito</button>
+        <button class="btn-accent" onclick="navigateFromSidebar('scr-out')">💸 Saque</button>
+        <button class="btn-outline" onclick="navigateFromSidebar('scr-invite')">👥 Convidar</button>
+        <button class="btn-gold" onclick="navigateFromSidebar('scr-roleta')">🎰 Roleta</button>
+        <button class="btn-secondary" onclick="navigateFromSidebar('scr-presentes')">🎁 Presentes</button>
+        <button class="btn-outline" onclick="navigateFromSidebar('scr-arvore')">🌳 Árvore</button>
+        <hr style="border-color:var(--border);margin:10px 0;">
+        <button class="btn-vip-group" onclick="entrarGrupoVIP()" style="margin-bottom:6px;">👑 GRUPO VIP EXCLUSIVO</button>
+        <button class="btn-outline" onclick="entrarGrupoNormal()" style="margin-top:6px;">💬 GRUPO GERAL</button>
+        <button class="btn-accent" onclick="logout()" style="margin-top:6px;">🚪 Sair</button>
     </div>
 
-    <!-- LOGIN -->
+    <button class="manual-fab" id="manualFab" onclick="openManual()">📖</button>
+
     <div id="scr-login" class="screen active">
         <div class="login-box">
             <div style="text-align:center;"><span class="floating-badge">💰 ECONOMIA DIGITAL USD</span></div>
             <div class="auto-login-info" id="autoLoginInfo"></div>
-            <div class="login-tabs">
-                <div class="login-tab active" id="tab-login" onclick="switchLoginTab('login')">🔐 ENTRAR</div>
-                <div class="login-tab" id="tab-cadastro" onclick="switchLoginTab('cadastro')">✨ CRIAR</div>
-            </div>
-            <div id="form-login">
-                <input type="text" id="login-phone" placeholder="📱 Número de Celular" autocomplete="off">
-                <input type="password" id="login-pass" placeholder="🔒 Senha" autocomplete="off">
-                <div class="error-msg" id="login-error"></div>
-                <button class="btn-primary" onclick="handleLogin()">🚀 ENTRAR</button>
-                <button class="btn-outline" style="margin-top:10px;" onclick="alert('🔑 Suporte: 851511841')">🔑 Esqueci a Senha</button>
-            </div>
-            <div id="form-cadastro" style="display:none;">
-                <input type="text" id="reg-name" placeholder="👤 Nome Completo" autocomplete="off">
-                <input type="text" id="reg-phone" placeholder="📱 Número de Celular" autocomplete="off">
-                <input type="password" id="reg-pass" placeholder="🔒 Criar Senha (mín. 4)" autocomplete="off">
-                <input type="password" id="reg-pass-confirm" placeholder="🔒 Confirmar Senha" autocomplete="off">
-                <div class="error-msg" id="reg-error"></div>
-                <input type="hidden" id="ref-input">
-                <button class="btn-secondary" onclick="handleCreateAccount()">✨ CRIAR CONTA</button>
-            </div>
+            <div class="login-tabs"><div class="login-tab active" id="tab-login" onclick="switchLoginTab('login')">🔐 ENTRAR</div><div class="login-tab" id="tab-cadastro" onclick="switchLoginTab('cadastro')">✨ CRIAR</div></div>
+            <div id="form-login"><input type="text" id="login-phone" placeholder="📱 Número de Celular" autocomplete="off"><input type="password" id="login-pass" placeholder="🔒 Senha" autocomplete="off"><div class="error-msg" id="login-error"></div><button class="btn-primary" id="btn-login-submit" onclick="handleLogin()">🚀 ENTRAR</button><button class="btn-outline" style="margin-top:10px;" onclick="alert('🔑 Suporte: 851511841')">🔑 Esqueci a Senha</button></div>
+            <div id="form-cadastro" style="display:none;"><input type="text" id="reg-name" placeholder="👤 Nome Completo" autocomplete="off"><input type="text" id="reg-phone" placeholder="📱 Número de Celular" autocomplete="off"><input type="password" id="reg-pass" placeholder="🔒 Criar Senha (mín. 4)" autocomplete="off"><input type="password" id="reg-pass-confirm" placeholder="🔒 Confirmar Senha" autocomplete="off"><div class="error-msg" id="reg-error"></div><input type="hidden" id="ref-input" value=""><button class="btn-secondary" id="btn-reg-submit" onclick="handleCreateAccount()">✨ CRIAR CONTA</button></div>
         </div>
-        <div class="live-feed">
-            <div style="display:flex;justify-content:space-between;margin-bottom:10px;"><span style="color:var(--primary);font-weight:bold;">📡 ATIVIDADES</span><span style="color:var(--accent);font-size:9px;">🔴 Ao vivo</span></div>
-            <div id="fake-feed"></div>
-        </div>
+        <div class="live-feed"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="color:var(--primary);font-weight:bold;">📡 ATIVIDADES RECENTES</span><span style="color:var(--accent);font-size:9px;animation:blink 1s infinite;">🔴 Ao vivo</span></div><div id="fake-feed"></div></div>
     </div>
 
-    <!-- HOME -->
     <div id="scr-home" class="screen">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;">
+            <div class="ganho-card ontem"><div class="ganho-label ontem">📅 ONTEM</div><div class="ganho-valor ontem" id="ganho-ontem">USD 0.00</div></div>
+            <div class="ganho-card hoje"><div class="ganho-label hoje">📅 HOJE</div><div class="ganho-valor hoje" id="ganho-hoje">USD 0.00</div></div>
+            <div class="ganho-card total"><div class="ganho-label total">📅 TOTAL</div><div class="ganho-valor total" id="ganho-total">USD 0.00</div></div>
+        </div>
         <div class="banner-carrossel" id="bannerCarrossel"><div class="banner-track" id="bannerTrack"></div></div>
         <div class="banner-dots" id="bannerDots"></div>
         <div class="quick-grid" id="quickGrid"></div>
@@ -213,52 +293,49 @@
         <div id="daily-section" style="display:none;"><div class="daily-card"><p style="font-size:10px;">📅 GANHO DIÁRIO</p><div class="daily-amount" id="daily-amount">USD 0.00</div><p id="daily-timer" style="font-size:11px;color:var(--subtext);"></p><button class="collect-btn" onclick="collectDaily()">💰 COLETAR</button></div></div>
         <div class="tabs"><div id="t1" class="tab active" onclick="switchTab(1)">⭐ VIP</div><div id="t2" class="tab" onclick="switchTab(2)">🏦 FUNDOS</div><div id="t3" class="tab" onclick="switchTab(3)">📺 TAREFAS</div></div>
         <div id="list-vips" class="vip-grid"></div><div id="list-wealth" class="wealth-grid" style="display:none;"></div><div id="list-tasks" style="display:none;"></div>
-        <div id="active-sec" style="display:none;"><h4 style="color:var(--primary);margin:15px 0 8px;">📦 INVESTIMENTOS</h4><div id="my-active-investments"></div></div>
     </div>
 
-    <!-- DEPÓSITO -->
-    <div id="scr-dep" class="screen">
-        <h3 style="color:var(--primary);">📥 DEPÓSITO</h3>
-        <div class="card">
-            <p id="txt-n1"></p>
-            <p id="txt-emola"></p>
-        </div>
-        <input type="text" id="dep-numero" placeholder="Seu número">
-        <input type="text" id="dep-nome" placeholder="Nome">
-        <input type="number" id="in-amt" placeholder="Valor em MT">
-        <textarea id="in-ref" placeholder="Comprovante"></textarea>
-        <button class="btn-primary" onclick="sendDep()">✅ CONFIRMAR</button>
+    <div id="scr-dep" class="screen"><h3 style="color:var(--primary);">📥 DEPÓSITO</h3><div class="card"><p id="txt-n1"></p><p id="txt-emola"></p></div><div class="payment-methods" id="payment-methods-list"></div><input type="text" id="dep-numero" placeholder="Seu número"><input type="text" id="dep-nome" placeholder="Nome"><input type="number" id="in-amt" placeholder="Valor em MT"><textarea id="in-ref" placeholder="Comprovante"></textarea><button class="btn-primary" onclick="sendDep()">✅ CONFIRMAR</button></div>
+
+    <div id="scr-out" class="screen"><h3 style="color:var(--accent);">💸 SAQUE</h3><div class="card"><p id="taxa-info">⚠️ TAXA 10% · APENAS VIPs</p></div><input type="text" id="out-numero" placeholder="Número"><input type="text" id="out-nome" placeholder="Nome"><div id="grid-out" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;"></div><input type="text" id="out-val" placeholder="USD" readonly style="text-align:center;font-weight:bold;background:var(--input-bg);border:2px solid var(--accent);"><div class="card"><div class="info-row"><span>Solicitado:</span><span id="preview-amount">0</span></div><div class="info-row"><span>Taxa:</span><span id="preview-fee">0</span></div><div class="info-row"><span>Recebe:</span><span id="preview-net">0</span></div><div class="info-row"><span>💵 MT:</span><span id="preview-mt">0</span></div></div><button id="btn-submit-out" class="btn-accent" onclick="sendOut()">📤 SOLICITAR</button></div>
+
+    <div id="scr-invite" class="screen"><h3 style="color:var(--primary);" id="invite-title" onclick="tapInvite()">👥 CONVIDAR</h3><div class="card" style="text-align:center;"><p>🎁 Ganhe 20%</p><p id="invite-link-display" style="font-size:11px;word-break:break-all;background:var(--input-bg);padding:8px;border-radius:8px;"></p><button class="btn-primary" onclick="copyInviteLink()">📋 COPIAR</button></div><p>🏆 <span id="invite-earnings">0</span> | 👥 <span id="invited-count">0</span></p><p id="cargo-info" style="color:var(--gold);"></p><button onclick="logout()" style="background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;width:100%;border-radius:14px;margin-top:15px;">🚪 SAIR</button></div>
+
+    <div id="scr-roleta" class="screen"><h3 style="color:#ffd700;">🎰 ROLETA DE CONVIDADOS</h3><div class="roleta-container"><p style="font-size:12px;">Giros disponíveis: <span id="giros-disponiveis" style="color:#ffd700;font-size:20px;">0</span></p><div class="roleta-display" id="roleta-emoji">🎰</div><div class="roleta-resultado" id="roleta-resultado"></div><button class="roleta-btn" id="roleta-btn" onclick="girarRoleta()">🎰 GIRAR</button><p style="font-size:9px;color:#888;margin-top:8px;">Convide VIPs e ganhe giros grátis!</p></div></div>
+    <div id="scr-presentes" class="screen"><h3 style="color:#ffd700;">🎁 CAIXA DE PRESENTES</h3><div class="gift-box" id="gift-box-main"><p style="position:relative;z-index:3;">🎁 Presente Diário</p><div class="gift-amount" id="gift-amount" style="position:relative;z-index:3;">? MT</div><button class="btn-gold" id="gift-btn" onclick="tentarColetarPresente()" style="position:relative;z-index:3;">🎁 ABRIR</button><div class="gift-locked" id="gift-locked-overlay"><div class="gift-locked-icon">🔒</div><div class="gift-locked-text" id="gift-locked-text"></div></div></div></div>
+    <div id="scr-arvore" class="screen"><h3 style="color:var(--primary);">🌳 ÁRVORE DE LIDERANÇA</h3><div id="arvore-content"></div></div>
+
+    <div id="scr-finance" class="screen">
+        <h3 style="color:var(--gold);">💰 PAINEL FINANCEIRO</h3>
+        <div class="finance-balance-cards" id="finance-balance-cards"></div>
+        <div class="finance-section"><h4>📥 ÚLTIMOS DEPÓSITOS APROVADOS</h4><div id="finance-dep-list" style="max-height:250px;overflow-y:auto;"></div></div>
+        <div class="finance-section"><h4>💸 ÚLTIMOS SAQUES APROVADOS</h4><div id="finance-out-list" style="max-height:250px;overflow-y:auto;"></div></div>
+        <button class="btn-accent" onclick="changeScr('scr-home')" style="margin-top:10px;">🔙 VOLTAR</button>
     </div>
 
-    <!-- SAQUE -->
-    <div id="scr-out" class="screen"><h3 style="color:var(--accent);">💸 SAQUE</h3><div class="card"><p>⚠️ TAXA 10% · 1 SAQUE/DIA</p></div><input type="text" id="out-numero" placeholder="Número"><input type="text" id="out-nome" placeholder="Nome"><div id="grid-out" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;"></div><input type="text" id="out-val" placeholder="USD" readonly style="text-align:center;font-weight:bold;background:var(--input-bg);border:2px solid var(--accent);"><div class="card"><div class="info-row"><span>Solicitado:</span><span id="preview-amount">0</span></div><div class="info-row"><span>Taxa:</span><span id="preview-fee">0</span></div><div class="info-row"><span>Recebe:</span><span id="preview-net">0</span></div><div class="info-row"><span>💵 MT:</span><span id="preview-mt">0</span></div></div><button id="btn-submit-out" class="btn-accent" onclick="sendOut()">📤 SOLICITAR</button></div>
-
-    <!-- CONVIDAR -->
-    <div id="scr-invite" class="screen"><h3 style="color:var(--primary);">👥 CONVIDAR</h3><div class="card" style="text-align:center;"><p>🎁 Ganhe 20%</p><p id="invite-link-display" style="font-size:11px;word-break:break-all;background:var(--input-bg);padding:8px;border-radius:8px;"></p><button class="btn-primary" onclick="copyInviteLink()">📋 COPIAR</button></div><p>🏆 <span id="invite-earnings">0</span> | 👥 <span id="invited-count">0</span></p><div id="team-members-list"></div><button onclick="logout()" style="background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;width:100%;border-radius:14px;margin-top:15px;">🚪 SAIR</button></div>
-
-    <!-- AFILIADO OVERLAY -->
-    <div id="affiliateOverlay" class="affiliate-overlay hidden"><div class="affiliate-box"><div class="aff-icon" id="affIcon">🏆</div><div class="aff-title" id="affTitle">OFERTA</div><div class="aff-bonus" id="affBonus">500 MT</div><p style="font-size:11px;">Crie conta e faça 1º depósito!</p><button class="aff-btn aff-btn-red" onclick="affYT()">📺 VER ESTRATÉGIA</button><button class="aff-btn aff-btn-gold" onclick="affLink()">🚀 GANHAR 500 MT</button><button class="aff-btn aff-btn-close" onclick="document.getElementById('affiliateOverlay').classList.add('hidden')">❌ Fechar</button></div></div>
-
-    <!-- ADMIN -->
     <div id="scr-adm" class="screen">
         <h2 style="color:var(--primary);">🛡️ PAINEL ADMIN</h2>
-        <div class="admin-section"><h4>🎨 TEMA</h4><div class="theme-grid">
-            <button class="theme-btn theme-verde active" onclick="setTheme('verde')"></button>
-            <button class="theme-btn theme-azul" onclick="setTheme('azul')"></button>
-            <button class="theme-btn theme-rosa" onclick="setTheme('rosa')"></button>
-            <button class="theme-btn theme-dourado" onclick="setTheme('dourado')"></button>
-            <button class="theme-btn theme-roxo" onclick="setTheme('roxo')"></button>
-        </div></div>
-        <div class="admin-section"><h4>📱 M-Pesa</h4><input type="text" id="ed-n1" placeholder="Número e nome M-Pesa"><button class="btn-primary" onclick="saveConfigMpesa()">Salvar M-Pesa</button></div>
-        <div class="admin-section"><h4>📱 e-Mola</h4><input type="text" id="ed-emola" placeholder="Número e nome e-Mola"><button class="btn-primary" onclick="saveConfigEmola()">Salvar e-Mola</button></div>
-        <div class="admin-section"><h4>💸 Valores de Saque (MT)</h4><div id="admin-saque-list"></div><input type="number" id="new-saque" placeholder="Novo valor"><button class="btn-primary" onclick="addS()">➕</button><button class="btn-gold" onclick="saveSaques()" style="margin-top:6px;">Salvar</button></div>
-        <div class="admin-section"><h4>⭐ VIPs (USD)</h4><div id="admin-vip-list" style="max-height:300px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveVips()">Salvar VIPs</button></div>
-        <div class="admin-section"><h4>🏦 Fundos (USD)</h4><div id="admin-wealth-list" style="max-height:300px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveWealth()">Salvar Fundos</button></div>
-        <div class="admin-section"><h4>🎰 Banners</h4><div id="admin-banner-list"></div><button class="btn-gold" onclick="saveBanners()">Salvar Banners</button></div>
-        <div class="admin-section"><h4>🔗 4 Cards</h4><input type="text" id="c1t" placeholder="Título 1"><input type="text" id="c1l" placeholder="Link 1"><input type="text" id="c2t" placeholder="Título 2"><input type="text" id="c2l" placeholder="Link 2"><input type="text" id="c3t" placeholder="Título 3"><input type="text" id="c3yt" placeholder="YT 3"><input type="text" id="c3l" placeholder="Link 3"><input type="text" id="c4t" placeholder="Título 4"><input type="text" id="c4yt" placeholder="YT 4"><input type="text" id="c4l" placeholder="Link 4"><button class="btn-primary" onclick="saveCards()">Salvar</button></div>
-        <div class="admin-section"><h4>📖 Manual</h4><textarea id="manual-text" rows="10"></textarea><button class="btn-gold" onclick="saveManual()">Salvar Manual</button></div>
-        <h3 style="color:var(--accent);">📋 Pendências</h3><div id="adm-list"></div>
-        <button class="btn-accent" onclick="changeScr('scr-home')">🔙 Voltar</button>
+        <div class="stats-grid" id="admin-stats-grid"></div>
+        <div class="admin-section"><h4>⭐ CLASSES DE NÍVEL (EDITÁVEL)</h4><div id="admin-classes-list"></div><button class="btn-gold" onclick="saveClasses()" style="margin-top:8px;">💾 SALVAR CLASSES</button></div>
+        <div class="admin-section"><h4>📺 CONFIGURAÇÕES DE TAREFAS</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;">
+                <div>Tarefa 1 (YT):<input type="text" id="ed-task1-link" placeholder="Link YouTube" style="padding:6px;"></div>
+                <div>Tarefa 2 (YT):<input type="text" id="ed-task2-link" placeholder="Link YouTube" style="padding:6px;"></div>
+                <div>Tarefa 3 (YT):<input type="text" id="ed-task3-link" placeholder="Link YouTube" style="padding:6px;"></div>
+                <div>Valor (USD):<input type="number" id="ed-task-value" placeholder="0.50" step="0.01" style="padding:6px;"></div>
+            </div>
+            <button class="btn-primary" onclick="saveTasksConfig()" style="margin-top:8px;">💾 SALVAR TAREFAS</button>
+        </div>
+        <div class="admin-section"><h4>👤 GERENCIAR USUÁRIO</h4><input type="text" id="search-user" placeholder="🔍 Número do usuário..." style="margin-bottom:8px;"><button class="btn-primary" onclick="searchUser()" style="margin-bottom:12px;">🔍 BUSCAR</button><div id="user-details" style="display:none;"></div></div>
+        <div class="admin-section"><h4>💳 PAGAMENTOS</h4>
+            <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span>📱 M-Pesa</span><label class="toggle-switch"><input type="checkbox" id="mpesa-toggle" onchange="togglePaymentMethod('mpesa')" checked><span class="toggle-slider"></span></label></div><input type="text" id="ed-mpesa-numero" placeholder="Número"><input type="text" id="ed-mpesa-nome" placeholder="Nome"></div>
+            <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span>📱 e-Mola</span><label class="toggle-switch"><input type="checkbox" id="emola-toggle" onchange="togglePaymentMethod('emola')" checked><span class="toggle-slider"></span></label></div><input type="text" id="ed-emola-numero" placeholder="Número"><input type="text" id="ed-emola-nome" placeholder="Nome"></div>
+            <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span>📱 mKesh</span><label class="toggle-switch"><input type="checkbox" id="mkesh-toggle" onchange="togglePaymentMethod('mkesh')" checked><span class="toggle-slider"></span></label></div><input type="text" id="ed-mkesh-numero" placeholder="Número"><input type="text" id="ed-mkesh-nome" placeholder="Nome"></div>
+            <button class="btn-primary" onclick="savePaymentMethods()">💾 SALVAR</button>
+        </div>
+        <div class="admin-section"><h4>🎯 INSCRITOS CONCURSO</h4><div id="admin-concurso-list" style="max-height:250px;overflow-y:auto;"></div></div>
+        <h3 style="color:var(--accent);">📋 PENDÊNCIAS</h3><div id="adm-list"></div>
+        <button class="btn-accent" onclick="changeScr('scr-home')" style="margin-top:10px;">🔙 Voltar</button>
     </div>
 
     <nav class="nav" id="menu" style="display:none;">
@@ -270,312 +347,371 @@
 </div>
 
 <script>
-// ========== PROTEÇÃO ==========
-(function(){
-    document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});
-    document.addEventListener('contextmenu',function(e){e.preventDefault();});
-})();
+(function(){document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});document.addEventListener('contextmenu',function(e){e.preventDefault();});})();
 
-// ========== FIREBASE ==========
-const _fc=['AIzaSyBSjZNQXlvjAyDBWf1OfZ5q0WM30E35zb8','kulaxa-vip--oficial.firebaseapp.com','kulaxa-vip--oficial','kulaxa-vip--oficial.firebasestorage.app','17954833542','1:17954833542:web:72551903dcb099fdea3d07'];
+const firebaseConfig={apiKey:"AIzaSyBSjZNQXlvjAyDBWf1OfZ5q0WM30E35zb8",authDomain:"kulaxa-vip--oficial.firebaseapp.com",databaseURL:"https://kulaxa-vip--oficial-default-rtdb.firebaseio.com",projectId:"kulaxa-vip--oficial",storageBucket:"kulaxa-vip--oficial.firebasestorage.app",messagingSenderId:"17954833542",appId:"1:17954833542:web:72551903dcb099fdea3d07",measurementId:"G-B2536S4T5H"};
 let fbDB=null;
-try{if(typeof firebase!=='undefined'){firebase.initializeApp({apiKey:_fc[0],authDomain:_fc[1],projectId:_fc[2],storageBucket:_fc[3],messagingSenderId:_fc[4],appId:_fc[5]});fbDB=firebase.database();}}catch(e){}
+try{firebase.initializeApp(firebaseConfig);fbDB=firebase.database();}catch(e){}
 
-// ========== DADOS PADRÃO ==========
 const DEF={
-    users:{},pending:[],config:{n1:'851511841 - Benjamim',emola:'870514180'},invites:{},
-    taskLinks:['https://youtube.com/watch?v=VIDEO1','https://youtube.com/watch?v=VIDEO2','https://youtube.com/watch?v=VIDEO3'],
+    users:{},pending:[],config:{n1:'851511841 - Benjamim',emola:'870514180',grupoNormal:'https://chat.whatsapp.com/GRUPO-GERAL',grupoVIP:'https://chat.whatsapp.com/GRUPO-VIP',exigirConvidado:true,comissoesAtivas:true,salariosAtivos:true,girosAtivos:true,salariosMensais:{1:700,8:1600,14:2300,18:2800},comissoesValores:{vip1:1,vip3:2,vip4:3,vip5:3,vip6:4,vip7:5},paymentMethods:{mpesa:{active:true,numero:'851511841',nome:'Benjamim'},emola:{active:true,numero:'870514180',nome:'Kulaxa'},mkesh:{active:true,numero:'870000000',nome:'mKesh Kulaxa'}}},invites:{},chatMessages:{},
+    taskLinks:['https://youtube.com/@Canal1','https://youtube.com/@Canal2','https://youtube.com/@Canal3'],
+    taskValue:0.50,
+    // CLASSES EDITÁVEIS
+    classes:[
+        {nome:'👑 CLASSE A',icone:'👑',cssClass:'classe-a',min:18,salario:2800,bonus:15,presentes:3,corTexto:'#ffd700',fillClass:'fill-gold'},
+        {nome:'🔵 CLASSE B',icone:'🔵',cssClass:'classe-b-plus',min:8,salario:1600,bonus:10,presentes:2,corTexto:'#448aff',fillClass:'fill-blue'},
+        {nome:'🟢 CLASSE C',icone:'🟢',cssClass:'classe-b',min:3,salario:700,bonus:5,presentes:1,corTexto:'#00e676',fillClass:'fill-green'},
+        {nome:'⚪ INICIANTE',icone:'⚪',cssClass:'classe-c',min:0,salario:0,bonus:0,presentes:0,corTexto:'#888',fillClass:'fill-red'}
+    ],
     saqueValues:[100,200,300,500,800,1000,2000,3000,5000,10000,20000,50000],
-    cards:[
-        {t:'💬 GRUPO WA',l:'https://chat.whatsapp.com/GRUPO',c:'qc-whatsapp',i:'💬',b:'GRÁTIS',af:false,yt:''},
-        {t:'🆘 SUPORTE',l:'https://wa.me/258851511841',c:'qc-support',i:'🆘',b:'24H',af:false,yt:''},
-        {t:'🔥 500 MT',l:'https://AFILIADO1.com',c:'qc-af1',i:'🔥',b:'BÔNUS',af:true,yt:'https://youtube.com/ESTRATEGIA1'},
-        {t:'⭐ SEGREDO',l:'https://AFILIADO2.com',c:'qc-af2',i:'⭐',b:'TOP',af:true,yt:'https://youtube.com/ESTRATEGIA2'}
-    ],
-    manualHTML:'<h2>📖 MANUAL KULAXA VIP</h2><h3>🚀 Começar</h3><ol><li>Crie conta</li><li>Deposite</li><li>Ative VIP</li><li>Colete ganhos</li></ol><h3>💰 VIPs</h3><p>20 níveis com ganhos diários.</p><h3>🏦 Fundos</h3><p>10 fundos com ciclos.</p><h3>👥 Indicação</h3><p>Ganhe 20% sobre depósitos.</p>',
-    theme:'verde',
-    banners:[
-        {e:'🎰',t:'CONCURSO EM BREVE',v:'250 USD',bg:'slide-ouro'},
-        {e:'🎯',t:'CONCURSO EM BREVE',v:'700 USD',bg:'slide-azul'},
-        {e:'🏆',t:'CONCURSO EM BREVE',v:'890 USD',bg:'slide-verde'},
-        {e:'💎',t:'CONCURSO EM BREVE',v:'1000 USD',bg:'slide-rosa'},
-        {e:'👑',t:'CONCURSO EM BREVE',v:'1320 USD',bg:'slide-roxo'},
-        {e:'🌟',t:'CONCURSO EM BREVE',v:'1500 USD',bg:'slide-laranja'}
-    ],
-    vips:[
-        {lv:1,a:500,d:20,t:4200},{lv:2,a:750,d:30,t:6300},{lv:3,a:1000,d:40,t:8400},
-        {lv:4,a:1500,d:60,t:12600},{lv:5,a:2000,d:80,t:16800},{lv:6,a:3000,d:120,t:25200},
-        {lv:7,a:4500,d:180,t:37800},{lv:8,a:6000,d:240,t:50400},{lv:9,a:8000,d:320,t:67200},
-        {lv:10,a:12000,d:480,t:100800},{lv:11,a:18000,d:720,t:151200},{lv:12,a:25000,d:1000,t:210000},
-        {lv:13,a:35000,d:1400,t:294000},{lv:14,a:50000,d:2000,t:420000},{lv:15,a:75000,d:3000,t:630000},
-        {lv:16,a:100000,d:4000,t:840000},{lv:17,a:200000,d:8000,t:1680000},{lv:18,a:400000,d:16000,t:3360000},
-        {lv:19,a:700000,d:28000,t:5880000},{lv:20,a:1000000,d:40000,t:8400000}
-    ],
-    wealth:[
-        {id:'F1',n:'Fundo Bronze 1',a:500,c:10,f:750},{id:'F2',n:'Fundo Bronze 2',a:1000,c:15,f:1600},
-        {id:'F3',n:'Fundo Prata 1',a:2500,c:25,f:4500},{id:'F4',n:'Fundo Prata 2',a:5000,c:35,f:10000},
-        {id:'F5',n:'Fundo Ouro 1',a:10000,c:50,f:25000},{id:'F6',n:'Fundo Ouro 2',a:20000,c:70,f:55000},
-        {id:'F7',n:'Fundo Diamante 1',a:40000,c:90,f:120000},{id:'F8',n:'Fundo Diamante 2',a:80000,c:120,f:280000},
-        {id:'F9',n:'Fundo VIP 1',a:150000,c:150,f:600000},{id:'F10',n:'Fundo VIP 2',a:500000,c:210,f:2500000}
-    ]
+    cards:[{t:'💬 GRUPO GERAL',l:'https://chat.whatsapp.com/GRUPO-GERAL',c:'qc-whatsapp',i:'💬',b:'GRÁTIS',af:false,yt:'',btn:'ENTRAR',vip:false},{t:'👑 GRUPO VIP',l:'https://chat.whatsapp.com/GRUPO-VIP',c:'qc-support',i:'👑',b:'EXCLUSIVO',af:false,yt:'',btn:'ENTRAR',vip:true},{t:'🔥 500 MT',l:'https://AFILIADO1.com',c:'qc-af1',i:'🔥',b:'BÔNUS',af:true,yt:'https://youtube.com/ESTRATEGIA1',btn:'GANHAR'},{t:'⭐ SEGREDO',l:'https://AFILIADO2.com',c:'qc-af2',i:'⭐',b:'TOP',af:true,yt:'https://youtube.com/ESTRATEGIA2',btn:'REVELAR'}],
+    manualHTML:'<h2>📖 MANUAL KULAXA VIP</h2>',theme:'verde',
+    banners:[{e:'🏆',t:'INSCREVA-SE NO CANAL',p:'300 MT',d:'Prêmio Exclusivo',bg:'slide-concurso',yt:'https://youtube.com/@KulaxaVIP?sub_confirmation=1'},{e:'🎯',t:'INSCREVA-SE NO CANAL',p:'400 MT',d:'Smart Watch Premium',bg:'slide-promo',yt:'https://youtube.com/@KulaxaVIP?sub_confirmation=1'},{e:'📱',t:'INSCREVA-SE NO CANAL',p:'600 MT',d:'Samsung Galaxy',bg:'slide-premio',yt:'https://youtube.com/@KulaxaVIP?sub_confirmation=1'}],
+    vips:[{lv:1,a:500,d:20,t:4200},{lv:2,a:750,d:30,t:6300},{lv:3,a:1000,d:40,t:8400},{lv:4,a:1500,d:60,t:12600},{lv:5,a:2000,d:80,t:16800},{lv:6,a:3000,d:120,t:25200},{lv:7,a:4500,d:180,t:37800},{lv:8,a:6000,d:240,t:50400},{lv:9,a:8000,d:320,t:67200},{lv:10,a:12000,d:480,t:100800},{lv:11,a:18000,d:720,t:151200},{lv:12,a:25000,d:1000,t:210000},{lv:13,a:35000,d:1400,t:294000},{lv:14,a:50000,d:2000,t:420000},{lv:15,a:75000,d:3000,t:630000},{lv:16,a:100000,d:4000,t:840000},{lv:17,a:200000,d:8000,t:1680000},{lv:18,a:400000,d:16000,t:3360000},{lv:19,a:700000,d:28000,t:5880000},{lv:20,a:1000000,d:40000,t:8400000}],
+    wealth:[{id:'F1',n:'Fundo Bronze 1',a:500,c:10,f:750},{id:'F2',n:'Fundo Bronze 2',a:1000,c:15,f:1600},{id:'F3',n:'Fundo Prata 1',a:2500,c:25,f:4500},{id:'F4',n:'Fundo Prata 2',a:5000,c:35,f:10000},{id:'F5',n:'Fundo Ouro 1',a:10000,c:50,f:25000},{id:'F6',n:'Fundo Ouro 2',a:20000,c:70,f:55000},{id:'F7',n:'Fundo Diamante 1',a:40000,c:90,f:120000},{id:'F8',n:'Fundo Diamante 2',a:80000,c:120,f:280000},{id:'F9',n:'Fundo VIP 1',a:150000,c:150,f:600000},{id:'F10',n:'Fundo VIP 2',a:500000,c:210,f:2500000}],
+    roletaAtiva:true,giftAtiva:true,ganhosDiarios:{},registroSaques:{},concursoInscritos:{},financeiro:{totalDepositado:0,totalSacado:0,depositosAprovados:[],saquesAprovados:[]}
 };
 
-// ========== CARREGAR DB ==========
-let db;
-try{
-    let s=localStorage.getItem('kvdb_v4');
-    if(s){db=JSON.parse(s);for(let k in DEF){if(!(k in db))db[k]=DEF[k];}}
-    else{db=JSON.parse(JSON.stringify(DEF));}
-}catch(e){db=JSON.parse(JSON.stringify(DEF));}
+let db=JSON.parse(JSON.stringify(DEF)),dbLoaded=false;
+if(fbDB){fbDB.ref('data').once('value').then(s=>{if(s.exists()&&s.val()){const d=s.val();for(let k in DEF){if(!(k in d))d[k]=DEF[k];}if(!d.config)d.config={};for(let ck in DEF.config){if(!(ck in d.config))d.config[ck]=DEF.config[ck];}if(!d.ganhosDiarios)d.ganhosDiarios={};if(!d.registroSaques)d.registroSaques={};if(!d.concursoInscritos)d.concursoInscritos={};if(!d.financeiro)d.financeiro=JSON.parse(JSON.stringify(DEF.financeiro));if(!d.classes)d.classes=JSON.parse(JSON.stringify(DEF.classes));if(d.taskValue===undefined)d.taskValue=DEF.taskValue;if(!d.taskLinks)d.taskLinks=[...DEF.taskLinks];db=d;}else{db=JSON.parse(JSON.stringify(DEF));fbDB.ref('data').set(db);}dbLoaded=true;afterDBLoad();}).catch(()=>{dbLoaded=true;afterDBLoad();});}else{dbLoaded=true;afterDBLoad();}
+function save(){if(fbDB&&dbLoaded){fbDB.ref('data').update(db).catch(()=>{});}}
 
-if(fbDB){fbDB.ref('data').once('value').then(s=>{if(s.val()){db=s.val();for(let k in DEF){if(!(k in db))db[k]=DEF[k];}save();}}).catch(()=>{});}
+function afterDBLoad(){applyTheme();checkAutoLogin();upOUTS();renderCards();renderBanners();generateFakeFeed();setInterval(generateFakeFeed,4000);setInterval(()=>{if(user){checkWE();updUI();initDE();updDU();verificarComissoesDiarias();verificarSalariosMensais();if(document.getElementById('scr-out')?.classList.contains('active'))updWS();}},30000);}
 
-function save(){try{localStorage.setItem('kvdb_v4',JSON.stringify(db));if(fbDB)fbDB.ref('data').set(db).catch(()=>{});}catch(e){}}
-
-// ========== GLOBAIS ==========
-let VIPS=[...db.vips],WEALTH=[...db.wealth],BANNERS=[...db.banners],user=null,affCard=null,bannerIdx=0,bannerTimer=null,OUTS=[],so=0;
-const ADMIN_SENHA='kulaxavip2000',TAXA=0.10,COMISSAO=0.20;
+let VIPS=[...db.vips],WEALTH=[...db.wealth],BANNERS=[...db.banners],CLASSES=[...db.classes],user=null,bannerIdx=0,bannerTimer=null,bannerDir=1,OUTS=[],so=0;
+const ADMIN_SENHA='kulaxavip2000',COMISSAO=0.20;
+let inviteClicks=0;
 
 function fUSD(v){v=Number(v)||0;return'USD '+v.toLocaleString(undefined,{minimumFractionDigits:2});}
 function fMT(v){v=Number(v)||0;return'MT '+v.toLocaleString(undefined,{minimumFractionDigits:2});}
+function getTaxa(){if(!user)return 0.10;let ic=getConvidadosEfetivos();if(ic>=15)return 0.03;return 0.10;}
+function getConvidadosEfetivos(){if(!user)return 0;let all=db.invites&&db.invites[user.phone]?db.invites[user.phone].inv||[]:[];let e=0;all.forEach(p=>{if(db.users[p]&&db.users[p].lv>0)e++;});return e;}
+function getTotalConvidados(){if(!user||!db.invites||!db.invites[user.phone])return 0;return(db.invites[user.phone].inv||[]).length;}
 
-// ========== TEMAS ==========
-const THEMES={
-    verde:{primary:'#00e676',secondary:'#2979ff',accent:'#ff5252',gold:'#ffd700',cyan:'#00e5ff'},
-    azul:{primary:'#2979ff',secondary:'#00e676',accent:'#ff5252',gold:'#ffd700',cyan:'#00e5ff'},
-    rosa:{primary:'#ff4081',secondary:'#2979ff',accent:'#ff5252',gold:'#ffd700',cyan:'#e040fb'},
-    dourado:{primary:'#ffd700',secondary:'#ff8c00',accent:'#ff4500',gold:'#ffd700',cyan:'#ffab00'},
-    roxo:{primary:'#9b59b6',secondary:'#8e44ad',accent:'#e74c3c',gold:'#f1c40f',cyan:'#3498db'}
-};
-function setTheme(t){if(!THEMES[t])t='verde';db.theme=t;save();let th=THEMES[t],r=document.documentElement;r.style.setProperty('--primary',th.primary);r.style.setProperty('--secondary',th.secondary);r.style.setProperty('--accent',th.accent);r.style.setProperty('--gold',th.gold);r.style.setProperty('--cyan',th.cyan);document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));let a=document.querySelector('.theme-'+t);if(a)a.classList.add('active');}
+function getClasse(q){
+    CLASSES=[...db.classes];
+    for(let c of CLASSES){if(q>=c.min)return c;}
+    return CLASSES[CLASSES.length-1]||{nome:'⚪ INICIANTE',icone:'⚪',cssClass:'classe-c',salario:0,bonus:0,presentes:0,corTexto:'#888',fillClass:'fill-red'};
+}
+function getSalarioMensal(q){if(!db.config.salariosAtivos)return 0;let c=getClasse(q);return c.salario||0;}
+
+const fakeNames=["Maria Silva","João Pedro","Ana Costa","Pedro M.","Carla Ribeiro","Lucas Mendes","Sofia Alves","Rui Santos","Tânia Lopes","Miguel Nunes"];
+const fakePhones=["84******1","85******2","86******3","87******4","82******5"];
+
+function generateFakeFeed(){let c=document.getElementById('fake-feed');if(!c)return;let isDeposit=Math.random()>0.25;let name=fakeNames[Math.floor(Math.random()*fakeNames.length)];let phone=fakePhones[Math.floor(Math.random()*fakePhones.length)];let amountUSD=Math.floor(Math.random()*8000)+200;let now=new Date();let time=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');let el=document.createElement('div');el.className='feed-item';el.innerHTML=`<div class="feed-icon ${isDeposit?'dep':'out'}">${isDeposit?'📥':'💸'}</div><div class="feed-content"><div class="feed-name">${name}</div><div class="feed-detail">${phone} · ${time}</div></div><div style="text-align:right;"><div class="feed-amt ${isDeposit?'dep':'out'}">${isDeposit?'+':'-'}${fUSD(amountUSD)}</div><div class="feed-time">${isDeposit?'Depósito':'Saque'} · ${fMT(amountUSD*64)}</div></div>`;c.prepend(el);while(c.children.length>8)c.lastChild.remove();}
+
+function toggleSidebar(){document.getElementById('sidebarMenu').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('show');}
+function navigateFromSidebar(scr){toggleSidebar();changeScr(scr);}
+
+const THEMES={verde:{primary:'#00e676',secondary:'#2979ff',accent:'#ff5252',gold:'#ffd700',cyan:'#00e5ff'},azul:{primary:'#2979ff',secondary:'#00e676',accent:'#ff5252',gold:'#ffd700',cyan:'#00e5ff'},rosa:{primary:'#ff4081',secondary:'#2979ff',accent:'#ff5252',gold:'#ffd700',cyan:'#e040fb'},dourado:{primary:'#ffd700',secondary:'#ff8c00',accent:'#ff4500',gold:'#ffd700',cyan:'#ffab00'},roxo:{primary:'#9b59b6',secondary:'#8e44ad',accent:'#e74c3c',gold:'#f1c40f',cyan:'#3498db'}};
+function setTheme(t){if(!THEMES[t])t='verde';db.theme=t;save();let th=THEMES[t],r=document.documentElement;r.style.setProperty('--primary',th.primary);r.style.setProperty('--secondary',th.secondary);r.style.setProperty('--accent',th.accent);r.style.setProperty('--gold',th.gold);r.style.setProperty('--cyan',th.cyan);}
 function applyTheme(){setTheme(db.theme||'verde');}
 
-// ========== DISPOSITIVO ==========
-function getDeviceId(){let id=localStorage.getItem('kvlx_did');if(!id){try{let nav=navigator,scr=window.screen,c=document.createElement('canvas'),ctx=c.getContext('2d');ctx.textBaseline='top';ctx.font='14px Arial';ctx.fillText('KX',2,2);id=btoa([(nav.userAgent||'').replace(/[^a-zA-Z0-9]/g,'').substring(0,30),nav.language||'',scr.colorDepth||'',scr.width||'',scr.height||'',new Date().getTimezoneOffset(),c.toDataURL().substring(0,50)].join('|')).replace(/[^a-zA-Z0-9]/g,'').substring(0,32);}catch(e){id='dev_'+Date.now();}localStorage.setItem('kvlx_did',id);}return id;}
+function getDeviceId(){let id=localStorage.getItem('kvlx_did');if(!id){id='dev_'+Date.now()+'_'+Math.random().toString(36).substring(2,8);localStorage.setItem('kvlx_did',id);}return id;}
 function getSavedLogin(){try{let d=JSON.parse(localStorage.getItem('kvlx_login')||'{}');if(d.did===getDeviceId()&&d.phone&&d.pass)return{phone:atob(d.phone),pass:atob(d.pass)};}catch(e){}return null;}
 function saveLogin(ph,pw){localStorage.setItem('kvlx_login',JSON.stringify({did:getDeviceId(),phone:btoa(ph),pass:btoa(pw)}));}
-function clearSavedLogin(){localStorage.removeItem('kvlx_login');}
-
-// ========== INSTALL APP ==========
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;if(!localStorage.getItem('kvlx_install_closed'))setTimeout(()=>{let b=document.getElementById('installBanner');if(b)b.classList.add('show');},3000);});
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted')alert('✅ Instalado!');deferredPrompt=null;});}else{alert('📲 iPhone: Compartilhar → Tela de Início\nAndroid: 3 pontinhos → Instalar App');}hideInstallBanner();}
-function hideInstallBanner(){let b=document.getElementById('installBanner');if(b)b.classList.remove('show');localStorage.setItem('kvlx_install_closed','1');}
-
-// ========== MANUAL ==========
-function openManual(){document.getElementById('manualContent').innerHTML=db.manualHTML||DEF.manualHTML;document.getElementById('manualOverlay').classList.remove('hidden');}
-document.addEventListener('click',function(e){if(e.target.id==='manualOverlay')document.getElementById('manualOverlay').classList.add('hidden');});
-
-// ========== AUTO LOGIN ==========
 function checkAutoLogin(){let s=getSavedLogin(),info=document.getElementById('autoLoginInfo');if(!info)return;if(s&&db.users&&db.users[s.phone]&&db.users[s.phone].pass===s.pass){info.innerHTML='✅ Dispositivo reconhecido!<br><b>'+db.users[s.phone].name+'</b><br><button onclick="autoLogin()" style="background:var(--primary);color:#000;padding:8px 20px;border-radius:20px;margin-top:8px;font-weight:bold;cursor:pointer;border:none;">🚀 ENTRAR</button>';info.classList.add('show');}}
 function autoLogin(){let s=getSavedLogin();if(s&&db.users&&db.users[s.phone]){document.getElementById('login-phone').value=s.phone;document.getElementById('login-pass').value=s.pass;handleLogin();}}
 
-// ========== BANNERS ==========
-function renderBanners(){BANNERS=db.banners||DEF.banners;document.getElementById('bannerTrack').innerHTML=BANNERS.map(b=>`<div class="banner-slide ${b.bg}"><div class="banner-inner"><div class="banner-emoji">${b.e}</div><div class="banner-concurso">${b.t}</div><div class="banner-valor">${b.v}</div></div></div>`).join('');document.getElementById('bannerDots').innerHTML=BANNERS.map((_,i)=>`<div class="banner-dot ${i===0?'active':''}" onclick="goBanner(${i})"></div>`).join('');bannerIdx=0;updateBanner();if(bannerTimer)clearInterval(bannerTimer);bannerTimer=setInterval(()=>{bannerIdx=(bannerIdx+1)%BANNERS.length;updateBanner();},3000);}
-function updateBanner(){document.getElementById('bannerTrack').style.transform=`translateX(-${bannerIdx*100}%)`;document.querySelectorAll('.banner-dot').forEach((d,i)=>d.classList.toggle('active',i===bannerIdx));}
-function goBanner(i){bannerIdx=i;updateBanner();clearInterval(bannerTimer);bannerTimer=setInterval(()=>{bannerIdx=(bannerIdx+1)%BANNERS.length;updateBanner();},3000);}
+function openManual(){document.getElementById('manualContent').innerHTML=db.manualHTML||DEF.manualHTML;document.getElementById('manualOverlay').classList.remove('hidden');}
 
-// ========== CARDS ==========
-function renderCards(){document.getElementById('quickGrid').innerHTML=(db.cards||DEF.cards).map((c,i)=>`<div class="quick-card ${c.c}" onclick="${c.af?`openAff(${i})`:`window.open('${c.l}','_blank')`}"><span class="qc-badge">${c.b}</span><span class="qc-icon">${c.i}</span><span class="qc-title">${c.t}</span></div>`).join('');}
-function openAff(i){affCard=(db.cards||DEF.cards)[i];if(!affCard)return;document.getElementById('affIcon').textContent=affCard.i;document.getElementById('affTitle').textContent=affCard.t;document.getElementById('affBonus').textContent='500 MT';document.getElementById('affiliateOverlay').classList.remove('hidden');}
-function affYT(){if(affCard?.yt)window.open(affCard.yt,'_blank');}
-function affLink(){if(affCard?.l){window.open(affCard.l,'_blank');document.getElementById('affiliateOverlay').classList.add('hidden');}}
+// BANNERS COM BOTÃO INSCREVER YT
+function renderBanners(){
+    BANNERS=db.banners||DEF.banners;
+    document.getElementById('bannerTrack').innerHTML=BANNERS.map((b,i)=>`<div class="banner-slide ${b.bg||'slide-concurso'}"><div class="banner-inner"><div class="banner-emoji">${b.e||'🏆'}</div><div class="banner-titulo">${b.t||'INSCREVA-SE NO CANAL'}</div><div class="banner-valor">${b.p||'300 MT'}</div><div class="banner-desc">${b.d||'Prêmio Exclusivo'}</div></div><button class="banner-inscrever-btn" onclick="inscreverYT(${i})">▶️ INSCREVER-SE</button></div>`).join('');
+    document.getElementById('bannerDots').innerHTML=BANNERS.map((_,i)=>`<div class="banner-dot ${i===0?'active':''}" onclick="goBanner(${i})"></div>`).join('');
+    bannerIdx=0;updateBanner();if(bannerTimer)clearInterval(bannerTimer);bannerTimer=setInterval(autoBanner,3500);
+}
+function inscreverYT(i){
+    let b=BANNERS[i];
+    if(b&&b.yt)window.open(b.yt,'_blank');
+    else window.open('https://youtube.com/@KulaxaVIP?sub_confirmation=1','_blank');
+}
+function autoBanner(){if(Math.random()<0.3)bannerDir*=-1;bannerIdx+=bannerDir;if(bannerIdx>=BANNERS.length)bannerIdx=0;if(bannerIdx<0)bannerIdx=BANNERS.length-1;updateBanner();}
+function updateBanner(){let t=document.getElementById('bannerTrack');if(t)t.style.transform=`translateX(-${bannerIdx*100}%)`;document.querySelectorAll('.banner-dot').forEach((d,i)=>d.classList.toggle('active',i===bannerIdx));}
+function goBanner(i){bannerIdx=i;updateBanner();clearInterval(bannerTimer);bannerTimer=setInterval(autoBanner,3500);}
 
-// ========== SAQUES ==========
-function upOUTS(){OUTS=(db.saqueValues||DEF.saqueValues).map(v=>({v:Number(v),mt:Number(v)}));}
-upOUTS();
+function renderCards(){document.getElementById('quickGrid').innerHTML=(db.cards||DEF.cards).map((c,i)=>{let btnLabel=c.btn||'ABRIR';let onclickAction;if(c.vip){onclickAction=`handleVipCard(${i})`;}else if(c.af){onclickAction=`openAff(${i})`;}else{onclickAction=`handleCardClick(${i})`;}return`<div class="quick-card ${c.c}" onclick="${onclickAction}"><span class="qc-badge">${c.b}</span><span class="qc-icon">${c.i}</span><span class="qc-title">${c.t}</span><span class="qc-action-btn">${btnLabel}</span></div>`;}).join('');}
+function handleCardClick(i){let card=(db.cards||DEF.cards)[i];if(card?.l)window.open(card.l,'_blank');}
+function handleVipCard(i){if(!user)return alert('❌ Faça login!');if(user.lv===0)return alert('🔒 EXCLUSIVO PARA VIPs!');let card=(db.cards||DEF.cards)[i];if(card?.l)window.open(card.l,'_blank');}
+function entrarGrupoVIP(){if(!user)return alert('❌ Faça login!');if(user.lv===0)return alert('🔒 EXCLUSIVO PARA VIPs!');window.open(db.config?.grupoVIP||DEF.config.grupoVIP,'_blank');}
+function entrarGrupoNormal(){if(!user)return alert('❌ Faça login!');window.open(db.config?.grupoNormal||DEF.config.grupoNormal,'_blank');}
 
-// ========== FEED ==========
-const fN=["Maria S.","João P.","Ana C.","Pedro M.","Carla R.","Lucas M."];
-function gFeed(){let c=document.getElementById('fake-feed');if(!c)return;let d=Math.random()>0.3,n=fN[Math.floor(Math.random()*fN.length)],a=Math.floor(Math.random()*5000)+200,el=document.createElement('div');el.className='feed-item';el.innerHTML=`<div class="feed-icon ${d?'dep':'out'}">${d?'📥':'💸'}</div><div class="feed-content"><div class="feed-name">${n}</div></div><div class="feed-amt ${d?'dep':'out'}">${d?'+':'-'}${fUSD(a)}</div>`;c.prepend(el);while(c.children.length>5)c.lastChild.remove();}
-setInterval(gFeed,5000);gFeed();
-
-// ========== LOGIN/CADASTRO ==========
-function switchLoginTab(t){document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-cadastro').classList.toggle('active',t==='cadastro');document.getElementById('form-login').style.display=t==='login'?'block':'none';document.getElementById('form-cadastro').style.display=t==='cadastro'?'block':'none';let le=document.getElementById('login-error'),re=document.getElementById('reg-error');if(le)le.classList.remove('show');if(re)re.classList.remove('show');}
+function switchLoginTab(t){document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-cadastro').classList.toggle('active',t==='cadastro');document.getElementById('form-login').style.display=t==='login'?'block':'none';document.getElementById('form-cadastro').style.display=t==='cadastro'?'block':'none';}
 
 function handleCreateAccount(){
-    let n=document.getElementById('reg-name'),p=document.getElementById('reg-phone'),s=document.getElementById('reg-pass'),sc=document.getElementById('reg-pass-confirm'),ref=document.getElementById('ref-input'),er=document.getElementById('reg-error');
-    if(!n||!p||!s||!sc||!er)return alert('Erro! Recarregue a página.');
-    let nome=n.value.trim(),tel=p.value.trim(),senha=s.value.trim(),senhac=sc.value.trim(),codigo=ref?ref.value.trim():'';
-    er.classList.remove('show');
-    if(!nome){er.textContent='Digite seu nome!';er.classList.add('show');return;}
-    if(!tel||tel.length<8){er.textContent='Número inválido!';er.classList.add('show');return;}
-    if(!senha||senha.length<4){er.textContent='Senha deve ter no mínimo 4 caracteres!';er.classList.add('show');return;}
-    if(senha!==senhac){er.textContent='Senhas não coincidem!';er.classList.add('show');return;}
-    if(!db.users)db.users={};
-    if(db.users[tel]){er.textContent='Este número já está registrado! Faça login.';er.classList.add('show');return;}
-    
-    db.users[tel]={name:nome,phone:tel,pass:senha,bal:0,lv:0,ai:[],dp:0,lc:0,lw:0,wc:0,tasks:{},cc:0,ic:Math.random().toString(36).substring(2,8).toUpperCase(),fd:false};
-    
-    if(codigo){let inv=Object.values(db.users).find(u=>u.ic===codigo);if(inv&&inv.phone!==tel){if(!db.invites)db.invites={};if(!db.invites[inv.phone])db.invites[inv.phone]={inv:[],earn:0};if(!db.invites[inv.phone].inv.includes(tel))db.invites[inv.phone].inv.push(tel);}}
-    
-    save();
-    n.value='';p.value='';s.value='';sc.value='';
-    alert('🎉 Conta criada com sucesso!\nAgora faça login.');
-    switchLoginTab('login');
-    document.getElementById('login-phone').value=tel;
-    document.getElementById('login-pass').value='';
+    let n=document.getElementById('reg-name'),p=document.getElementById('reg-phone'),s=document.getElementById('reg-pass'),sc=document.getElementById('reg-pass-confirm'),er=document.getElementById('reg-error');
+    if(!n||!p||!s||!sc||!er)return;let nome=n.value.trim(),tel=p.value.trim(),senha=s.value.trim(),senhac=sc.value.trim();er.classList.remove('show');
+    if(!nome){er.textContent='Digite seu nome!';er.classList.add('show');return;}if(!tel||tel.length<8){er.textContent='Número inválido!';er.classList.add('show');return;}
+    if(!senha||senha.length<4){er.textContent='Senha mín. 4!';er.classList.add('show');return;}if(senha!==senhac){er.textContent='Senhas não coincidem!';er.classList.add('show');return;}
+    if(!db.users)db.users={};if(db.users[tel]){er.textContent='Número já registrado!';er.classList.add('show');return;}
+    let ref=document.getElementById('ref-input').value.trim();
+    db.users[tel]={name:nome,phone:tel,pass:senha,bal:0,lv:0,ai:[],dp:0,lc:0,ic:Math.random().toString(36).substring(2,8).toUpperCase(),roletaGiros:0,roletaUsados:0,ultimaComissao:0,giftCollected:0,giftCount:0,ultimoSalario:0,ganhoTotal:0,ultimoDepositoInfo:null};
+    if(ref&&db.users[ref]&&ref!==tel){if(!db.invites)db.invites={};if(!db.invites[ref])db.invites[ref]={inv:[],earn:0};db.invites[ref].inv.push(tel);}
+    save();alert('🎉 Conta criada!');switchLoginTab('login');document.getElementById('login-phone').value=tel;
 }
 
-function handleLogin(){
-    let p=document.getElementById('login-phone'),s=document.getElementById('login-pass'),er=document.getElementById('login-error');
-    if(!p||!s||!er)return alert('Erro! Recarregue a página.');
-    let tel=p.value.trim(),senha=s.value.trim();
-    er.classList.remove('show');
-    if(!tel){er.textContent='Digite seu número!';er.classList.add('show');return;}
-    if(!senha){er.textContent='Digite sua senha!';er.classList.add('show');return;}
-    if(!db.users)db.users={};
-    let u=db.users[tel];
-    if(!u){er.textContent='Usuário não encontrado! Crie uma conta.';er.classList.add('show');return;}
-    if(u.pass!==senha){er.textContent='Senha incorreta!';er.classList.add('show');return;}
-    saveLogin(tel,senha);
-    doLogin(tel);
+function handleLogin(){let p=document.getElementById('login-phone'),s=document.getElementById('login-pass'),er=document.getElementById('login-error');if(!p||!s||!er)return;let tel=p.value.trim(),senha=s.value.trim();er.classList.remove('show');if(!tel){er.textContent='Digite seu número!';er.classList.add('show');return;}if(!senha){er.textContent='Digite sua senha!';er.classList.add('show');return;}let u=db.users[tel];if(!u){er.textContent='Usuário não encontrado!';er.classList.add('show');return;}if(u.pass!==senha){er.textContent='Senha incorreta!';er.classList.add('show');return;}doLogin(tel);}
+function doLogin(phone){user=db.users[phone];if(!user.ic)user.ic=Math.random().toString(36).substring(2,8).toUpperCase();if(user.roletaGiros===undefined)user.roletaGiros=0;if(user.roletaUsados===undefined)user.roletaUsados=0;if(user.ultimaComissao===undefined)user.ultimaComissao=0;if(user.giftCollected===undefined)user.giftCollected=0;if(user.ultimoSalario===undefined)user.ultimoSalario=0;if(user.ganhoTotal===undefined)user.ganhoTotal=0;if(!db.ganhosDiarios)db.ganhosDiarios={};if(!db.registroSaques)db.registroSaques={};if(!db.concursoInscritos)db.concursoInscritos={};if(!db.financeiro)db.financeiro=JSON.parse(JSON.stringify(DEF.financeiro));if(!db.classes)db.classes=JSON.parse(JSON.stringify(DEF.classes));save();VIPS=[...db.vips];WEALTH=[...db.wealth];CLASSES=[...db.classes];document.getElementById('menu').style.display='flex';document.getElementById('hamburgerBtn').style.display='block';changeScr('scr-home');updUI();updInv();renderCards();renderBanners();initDE();checkWE();atualizarDisplayGanhos();atualizarRegistroSaques();switchTab(1);}
+function logout(){user=null;inviteClicks=0;document.getElementById('menu').style.display='none';document.getElementById('hamburgerBtn').style.display='none';changeScr('scr-login');}
+
+function changeScr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));let el=document.getElementById(id);if(el)el.classList.add('active');if(id==='scr-home'){rV();rW();rT();renderCards();renderBanners();updDU();atualizarDisplayGanhos();}if(id==='scr-dep'){renderPaymentMethods();}if(id==='scr-out'){rOB();updWS();let taxa=getTaxa();document.getElementById('taxa-info').textContent='⚠️ TAXA '+(taxa*100).toFixed(0)+'% · APENAS VIPs';atualizarRegistroSaques();}if(id==='scr-invite'){updInv();inviteClicks=0;}if(id==='scr-roleta')updRoleta();if(id==='scr-presentes')updPresentes();if(id==='scr-arvore')updArvore();if(id==='scr-finance'){renderFinancePanel();}if(id==='scr-adm'){rAdm();}if(user)updUI();}
+function updUI(){if(!user)return;let u=db.users[user.phone];if(!u)return;user=u;document.getElementById('bal-txt').textContent=fUSD(user.bal);document.getElementById('bal-mt').textContent='= '+fMT(user.bal);let t=getTotalConvidados(),e=getConvidadosEfetivos(),c=getClasse(e);document.getElementById('user-info').textContent=user.name+' | VIP '+(user.lv||0)+' | 👥 '+e+'/'+t+' | '+c.icone;}
+
+function tapInvite(){inviteClicks++;if(inviteClicks>=10){inviteClicks=0;changeScr('scr-finance');}}
+
+function renderFinancePanel(){
+    let fin=db.financeiro||{totalDepositado:0,totalSacado:0,depositosAprovados:[],saquesAprovados:[]};
+    document.getElementById('finance-balance-cards').innerHTML=`
+        <div class="finance-total-card depositado"><div class="ft-label">💰 TOTAL DEPOSITADO</div><div class="ft-value">${fMT(fin.totalDepositado||0)}</div></div>
+        <div class="finance-total-card sacado"><div class="ft-label">💸 TOTAL SACADO</div><div class="ft-value">${fMT(fin.totalSacado||0)}</div></div>`;
+    let deps=fin.depositosAprovados||[];
+    document.getElementById('finance-dep-list').innerHTML=deps.length===0?'<p style="color:#888;font-size:10px;text-align:center;">Nenhum depósito aprovado.</p>':'<table class="finance-table"><thead><tr><th>Nome</th><th>Número</th><th>Valor</th><th>Data</th></tr></thead><tbody>'+deps.slice(-20).reverse().map(d=>`<tr class="dep-row"><td>${d.nome||'N/A'}</td><td>${d.numero||'N/A'}</td><td>${fMT(d.valor)}</td><td>${new Date(d.data).toLocaleDateString()}</td></tr>`).join('')+'</tbody></table>';
+    let outs=fin.saquesAprovados||[];
+    document.getElementById('finance-out-list').innerHTML=outs.length===0?'<p style="color:#888;font-size:10px;text-align:center;">Nenhum saque aprovado.</p>':'<table class="finance-table"><thead><tr><th>Nome</th><th>Número</th><th>Valor</th><th>Data</th></tr></thead><tbody>'+outs.slice(-20).reverse().map(d=>`<tr class="out-row"><td>${d.nome||'N/A'}</td><td>${d.numero||'N/A'}</td><td>${fMT(d.valor)}</td><td>${new Date(d.data).toLocaleDateString()}</td></tr>`).join('')+'</tbody></table>';
 }
 
-function doLogin(phone){
-    user=db.users[phone];
-    if(!user.ic)user.ic=Math.random().toString(36).substring(2,8).toUpperCase();
-    if(user.cc===undefined)user.cc=0;
-    if(user.fd===undefined)user.fd=false;
-    if(!user.ai)user.ai=[];
-    if(!user.tasks)user.tasks={};
-    if(user.dp===undefined)user.dp=0;
-    if(user.lc===undefined)user.lc=0;
-    if(user.lw===undefined)user.lw=0;
-    if(user.wc===undefined)user.wc=0;
-    save();
-    VIPS=[...db.vips];WEALTH=[...db.wealth];
-    document.getElementById('menu').style.display='flex';
-    document.getElementById('autoLoginInfo').classList.remove('show');
-    document.getElementById('login-phone').value='';document.getElementById('login-pass').value='';
-    changeScr('scr-home');updUI();updInv();renderCards();renderBanners();initDE();checkWE();
-    switchTab(1);
-}
-function logout(){clearSavedLogin();user=null;document.getElementById('menu').style.display='none';changeScr('scr-login');checkAutoLogin();}
+function atualizarGanhosDiarios(valor){if(!user)return;let hoje=new Date().toDateString();if(!db.ganhosDiarios)db.ganhosDiarios={};if(!db.ganhosDiarios[hoje])db.ganhosDiarios[hoje]={};db.ganhosDiarios[hoje][user.phone]=(db.ganhosDiarios[hoje][user.phone]||0)+valor;if(!user.ganhoTotal)user.ganhoTotal=0;user.ganhoTotal+=valor;save();atualizarDisplayGanhos();}
+function atualizarDisplayGanhos(){if(!user)return;let hoje=new Date().toDateString();let ontem=new Date(Date.now()-86400000).toDateString();let ganhoHoje=0,ganhoOntem=0;if(db.ganhosDiarios){if(db.ganhosDiarios[hoje]&&db.ganhosDiarios[hoje][user.phone])ganhoHoje=db.ganhosDiarios[hoje][user.phone];if(db.ganhosDiarios[ontem]&&db.ganhosDiarios[ontem][user.phone])ganhoOntem=db.ganhosDiarios[ontem][user.phone];}let ganhoTotal=user.ganhoTotal||0;let elO=document.getElementById('ganho-ontem'),elH=document.getElementById('ganho-hoje'),elT=document.getElementById('ganho-total');if(elO)elO.textContent=fUSD(ganhoOntem);if(elH)elH.textContent=fUSD(ganhoHoje);if(elT)elT.textContent=fUSD(ganhoTotal);}
+function atualizarRegistroSaques(){if(!user)return;let registros=db.registroSaques&&db.registroSaques[user.phone]?db.registroSaques[user.phone]:[];let html='';if(registros.length===0){html='<p style="color:#888;font-size:10px;text-align:center;">Nenhum saque realizado.</p>';}else{let ultimos=registros.slice(-10).reverse();ultimos.forEach(r=>{let data=new Date(r.data).toLocaleDateString();let statusCor=r.status==='aprovado'?'#22c55e':r.status==='negado'?'#ef4444':'#ff8c00';let statusTexto=r.status==='aprovado'?'✅':r.status==='negado'?'❌':'⏳';html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1a1a28;font-size:10px;"><span>${data}</span><span style="color:#ff8c00;font-weight:bold;">${fUSD(r.valor)}</span><span style="color:${statusCor};">${statusTexto}</span></div>`;});}let el=document.getElementById('saque-registro');if(el)el.innerHTML=html;}
 
-// ========== NAVEGAÇÃO ==========
-function changeScr(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    if(id==='scr-home'){
-        rV();rW();rT();renderCards();renderBanners();rA();updDU();
-        document.getElementById('list-vips').style.display='block';
-        document.getElementById('list-wealth').style.display='none';
-        document.getElementById('list-tasks').style.display='none';
-        document.getElementById('t1').classList.add('active');
-        document.getElementById('t2').classList.remove('active');
-        document.getElementById('t3').classList.remove('active');
-    }
-    if(id==='scr-dep'){
-        document.getElementById('txt-n1').textContent='M-Pesa: '+(db.config?.n1||'851511841');
-        document.getElementById('txt-emola').textContent='e-Mola: '+(db.config?.emola||'870514180');
-    }
-    if(id==='scr-out'){rOB();updWS();}
-    if(id==='scr-invite')updInv();
-    if(id==='scr-adm'){rAdm();document.getElementById('manual-text').value=db.manualHTML||DEF.manualHTML;}
-    if(user)updUI();
-}
-function updUI(){if(!user)return;let u=db.users[user.phone];if(!u)return;user=u;document.getElementById('bal-txt').textContent=fUSD(user.bal);document.getElementById('bal-mt').textContent='= '+fMT(user.bal);let ic=db.invites&&db.invites[user.phone]?db.invites[user.phone].inv?.length||0:0;document.getElementById('user-info').textContent=user.name+' | VIP '+(user.lv||0)+' | 👥 '+ic;}
+function verificarSalariosMensais(){if(!user)return;let a=Date.now();if(a-(user.ultimoSalario||0)<2592000000)return;let e=getConvidadosEfetivos(),s=getSalarioMensal(e);if(s>0){user.bal=(user.bal||0)+s;user.ultimoSalario=a;atualizarGanhosDiarios(s);save();updUI();}}
 
-// ========== GANHO DIÁRIO ==========
 function initDE(){if(!user)return;let n=Date.now(),d=86400000;if(user.lc===0||(n-user.lc)>=d){let v=VIPS.find(x=>x.lv===user.lv);if(v&&user.lv>0){user.dp=v.d;save();}}updDU();}
-function updDU(){if(!user)return;let s=document.getElementById('daily-section'),a=document.getElementById('daily-amount'),t=document.getElementById('daily-timer');if(!s||!a||!t)return;if(user.lv>0){s.style.display='block';a.textContent=fUSD(user.dp||0);let n=Date.now(),d=86400000,nx=(user.lc||0)+d;if(user.dp>0&&user.lc>0&&n<nx){let r=nx-n;t.textContent='⏱️ '+String(Math.floor(r/3600000)).padStart(2,'0')+':'+String(Math.floor((r%3600000)/60000)).padStart(2,'0')+':'+String(Math.floor((r%60000)/1000)).padStart(2,'0');}else if(user.dp>0){t.textContent='📅 Disponível!';}else{t.textContent='✅ Já coletado';}}else{s.style.display='none';}}
-function collectDaily(){if(!user)return;if(user.lv===0)return alert('❌ Ative um VIP!');if(!user.dp||user.dp<=0)return alert('⏳ Nada disponível!');let v=user.dp;user.bal=(user.bal||0)+v;user.dp=0;user.lc=Date.now();save();updUI();updDU();alert('✅ Coletado: '+fUSD(v));}
+function updDU(){if(!user)return;let s=document.getElementById('daily-section'),a=document.getElementById('daily-amount');if(!s||!a)return;if(user.lv>0){s.style.display='block';a.textContent=fUSD(user.dp||0);}else{s.style.display='none';}}
+function collectDaily(){if(!user)return;if(user.lv===0)return alert('❌ Ative um VIP!');if(!user.dp||user.dp<=0)return alert('⏳ Nada!');let v=user.dp;user.bal=(user.bal||0)+v;user.dp=0;user.lc=Date.now();atualizarGanhosDiarios(v);save();updUI();updDU();alert('✅ +'+fUSD(v));}
 
-// ========== VIPs ==========
-function gVC(lv){return lv<=6?'vip-low':lv<=12?'vip-mid':'vip-high';}
-function gBC(lv){return lv<=6?'badge-low':lv<=12?'badge-mid':'badge-high';}
-function rV(){VIPS=[...db.vips];let h='';VIPS.forEach(v=>{let ia=user&&user.lv===v.lv,ip=user&&user.lv>=v.lv,l=(v.t||0)-(v.a||0),roi=v.a>0?Math.round((l/v.a)*100):0,bt='⭐ ATIVAR VIP',bd='',ba='buyV('+v.lv+')';if(ia){bt='✅ ATIVO';bd='disabled';}else if(ip){bt='🔒 INFERIOR';bd='disabled';}h+=`<div class="vip-card ${gVC(v.lv)}"><span class="vip-badge ${gBC(v.lv)}">⭐ VIP ${v.lv}</span><div class="vip-title">Nível ${v.lv}</div><div class="vip-details"><div class="vip-item"><div class="vip-label">Ativação</div><div class="vip-value">${fUSD(v.a)}</div><div class="vip-value-mt">${fMT(v.a)}</div></div><div class="vip-item"><div class="vip-label">Ganho/Dia</div><div class="vip-value">${fUSD(v.d)}</div><div class="vip-value-mt">${fMT(v.d)}</div></div><div class="vip-item"><div class="vip-label">Lucro</div><div class="vip-value">${fUSD(l)}</div></div><div class="vip-item"><div class="vip-label">210d</div><div class="vip-roi">${fUSD(v.t)}</div></div></div><div style="font-size:10px;color:#888;margin-bottom:6px;">📈 +${roi}%</div><button class="vip-btn" onclick="${ba}" ${bd}>${bt}</button></div>`;});document.getElementById('list-vips').innerHTML=h;}
-function buyV(lv){if(!user)return;let v=VIPS.find(x=>x.lv===lv);if((user.bal||0)<v.a)return alert('❌ Saldo insuficiente!');if(!confirm(`Ativar VIP ${lv}?\n${fUSD(v.a)}\nGanho diário: ${fUSD(v.d)}`))return;user.bal-=v.a;user.lv=lv;user.dp=v.d;user.lc=0;save();updUI();rV();rW();updDU();updInv();alert('🎉 VIP '+lv+' ativado!');}
+function rV(){VIPS=[...db.vips];let h='';VIPS.forEach(v=>{let ia=user&&user.lv===v.lv,ip=user&&user.lv>=v.lv,roi=v.a>0?Math.round((v.d*210-v.a)/v.a*100):0,bt='⭐ ATIVAR VIP',bd='',ba='buyV('+v.lv+')';if(ia){bt='✅ ATIVO';bd='disabled';}else if(ip){bt='🔒 INFERIOR';bd='disabled';}h+=`<div class="card" style="border:2px solid var(--accent);"><b>⭐ VIP ${v.lv}</b><div style="display:flex;justify-content:space-between;margin:6px 0;font-size:10px;"><span>Ativação: ${fUSD(v.a)}</span><span>Dia: ${fUSD(v.d)}</span></div><div style="font-size:9px;color:#888;">📈 +${roi}%</div><button class="btn-accent" onclick="${ba}" ${bd} style="padding:8px;">${bt}</button></div>`;});document.getElementById('list-vips').innerHTML=h;}
+function buyV(lv){if(!user)return;let v=VIPS.find(x=>x.lv===lv);if((user.bal||0)<v.a)return alert('❌ Saldo!');if(!confirm(`Ativar VIP ${lv}?\n${fUSD(v.a)}\nGanho: ${fUSD(v.d)}/dia`))return;let la=user.lv;user.bal-=v.a;user.lv=lv;user.dp=v.d;user.lc=0;if(lv>la){let e=getConvidadosEfetivos(),c=getClasse(e),b=v.a*(c.bonus/100);user.bal+=b;atualizarGanhosDiarios(b);alert('🎉 VIP '+lv+'!\n'+c.nome+'\n💰 +'+fUSD(b));}save();updUI();rV();rW();updDU();updInv();atribuirGiros(user.phone);}
 
-// ========== FUNDOS ==========
-function rW(){WEALTH=[...db.wealth];let h='';WEALTH.forEach(w=>{let iv=user?.ai?.some(i=>i.fid===w.id),roi=Math.round(((w.f||0)-(w.a||0))/(w.a||1)*100);h+=`<div class="card" style="border:2px solid var(--accent);"><b>${w.n}</b><div class="info-row"><span>Ativação:</span><span>${fUSD(w.a)}</span></div><div class="info-row"><span>Ciclo:</span><span>${w.c}d</span></div><div class="info-row"><span>Final:</span><span style="color:var(--primary);">${fUSD(w.f)}</span></div><div class="info-row"><span>Lucro:</span><span style="color:#ffd700;">+${roi}%</span></div><button style="background:linear-gradient(135deg,var(--accent),var(--fire1));color:#fff;padding:12px;border-radius:20px;width:100%;" onclick="${iv?'alert(\"🔒 Já investiu\")':'buyW(\`'+w.id+'\`)'}" ${iv?'disabled':''}>${iv?'🔒 ATIVO':'💰 INVESTIR'}</button></div>`;});document.getElementById('list-wealth').innerHTML=h;}
-function buyW(id){if(!user)return;let w=WEALTH.find(x=>x.id===id);if(user.ai.some(i=>i.fid===id))return alert('⚠️ Já investiu!');if((user.bal||0)<w.a)return alert('❌ Saldo insuficiente!');if(!confirm(`${w.n}?\n${fUSD(w.a)} → ${fUSD(w.f)} em ${w.c} dias`))return;user.bal-=w.a;let e=new Date();e.setDate(e.getDate()+w.c);user.ai.push({fid:w.id,n:w.n,total:w.f,exp:e.getTime()});save();updUI();rW();rA();alert('🏦 Adquirido!');}
-function rA(){let s=document.getElementById('active-sec'),c=document.getElementById('my-active-investments');if(!user||!user.ai||user.ai.length===0){s.style.display='none';return;}s.style.display='block';c.innerHTML=user.ai.map(i=>`<div class="card" style="border-left:4px solid var(--accent);"><b>${i.n}</b> - ${fUSD(i.total)} - 🔒 ${Math.max(0,Math.ceil((i.exp-Date.now())/86400000))}d</div>`).join('');}
-function checkWE(){if(!user)return;let n=Date.now(),lb=false;user.ai=user.ai.filter(i=>{if(n>=i.exp){user.bal+=i.total;lb=true;alert('🎉 '+i.n+': '+fUSD(i.total));return false;}return true;});if(lb){save();updUI();rA();rW();}}
+function rW(){WEALTH=[...db.wealth];let h='',ex=db.config.exigirConvidado!==false,tv=getConvidadosEfetivos()>=1,fb=ex&&!tv&&user;if(fb){h+=`<div class="card" style="text-align:center;padding:25px;"><div style="font-size:35px;">🔒</div><p style="color:#ffd700;">FUNDOS BLOQUEADOS</p><p style="font-size:9px;">Precisa de 1 VIP!</p><button class="btn-gold" onclick="changeScr('scr-invite')" style="margin-top:8px;">👥 CONVIDAR</button></div>`;}WEALTH.forEach(w=>{let iv=user?.ai?.some(i=>i.fid===w.id),bt=fb?'🔒 BLOQUEADO':iv?'🔒 ATIVO':!user||user.lv===0?'🔒 SEM VIP':'💰 INVESTIR',ba=fb?'alert("Precisa de 1 VIP!")':iv?'alert("Já investiu")':!user||user.lv===0?'alert("Ative VIP!")':`buyW('${w.id}')`;h+=`<div class="card" style="border:2px solid var(--accent);"><b>${w.n}</b><div style="font-size:9px;margin:3px 0;">Ativação: ${fUSD(w.a)} | Retorno: ${fUSD(w.f)}</div><button onclick="${ba}" style="background:linear-gradient(135deg,var(--accent),#ff4500);color:#fff;padding:8px;border-radius:12px;width:100%;">${bt}</button></div>`;});document.getElementById('list-wealth').innerHTML=h;}
+function buyW(id){if(!user)return;if(user.lv===0)return alert('❌ Ative VIP!');if(db.config.exigirConvidado!==false&&getConvidadosEfetivos()<1)return alert('🔒 Precisa de 1 VIP!');let w=WEALTH.find(x=>x.id===id);if((user.bal||0)<w.a)return alert('❌ Saldo!');if(!confirm(`${w.n}?\n${fUSD(w.a)} → ${fUSD(w.f)}`))return;user.bal-=w.a;let e=new Date();e.setDate(e.getDate()+w.c);user.ai.push({fid:w.id,n:w.n,total:w.f,exp:e.getTime()});save();updUI();rW();alert('🏦 Investido!');}
+function checkWE(){if(!user)return;let n=Date.now();user.ai=user.ai.filter(i=>{if(n>=i.exp){user.bal+=i.total;atualizarGanhosDiarios(i.total);alert('🎉 '+i.n+': '+fUSD(i.total));return false;}return true;});save();updUI();}
 
-// ========== SAQUE ==========
-function rOB(){document.getElementById('grid-out').innerHTML=OUTS.map(b=>`<button onclick="sO(${b.v})" style="padding:8px;background:var(--input-bg);border:2px solid var(--border);border-radius:8px;font-weight:bold;color:var(--primary);">${fUSD(b.v)}</button>`).join('');}
-function sO(v){so=v;document.getElementById('out-val').value=fUSD(v);document.getElementById('preview-amount').textContent=fUSD(v);document.getElementById('preview-fee').textContent=fUSD(v*TAXA);document.getElementById('preview-net').textContent=fUSD(v*(1-TAXA));document.getElementById('preview-mt').textContent=fMT(v*(1-TAXA));}
-function cW(){if(!user)return false;let n=Date.now();if(!user.lw)user.lw=0;if(!user.wc)user.wc=0;if(n-user.lw>=86400000){user.wc=0;save();}return user.wc<1;}
-function updWS(){let b=document.getElementById('btn-submit-out');if(!b)return;let c=cW();b.disabled=!c;b.textContent=c?'📤 SOLICITAR SAQUE':'⏰ LIMITE DIÁRIO';}
-function sendOut(){if(!user)return;if(!cW())return alert('⏰ Limite diário!');if(!so)return alert('Selecione um valor!');let nu=document.getElementById('out-numero').value.trim(),no=document.getElementById('out-nome').value.trim();if(!nu||!no)return alert('Preencha tudo!');if((user.bal||0)<so)return alert('Saldo insuficiente!');let liq=so*(1-TAXA);if(!confirm(`Sacar ${fUSD(so)}?\nRecebe: ${fUSD(liq)} (${fMT(liq)})`))return;user.bal-=so;user.lw=Date.now();user.wc=(user.wc||0)+1;db.pending.push({t:'SAQUE',n:user.name,p:user.phone,sn:nu,sno:no,a:so,liq});save();updUI();updWS();alert('✅ Saque solicitado!');changeScr('scr-home');}
-function sendDep(){if(!user)return;let nu=document.getElementById('dep-numero').value.trim(),no=document.getElementById('dep-nome').value.trim(),a=parseInt(document.getElementById('in-amt').value),r=document.getElementById('in-ref').value.trim();if(!nu||!no||!a||!r)return alert('Preencha tudo!');db.pending.push({t:'DEP',n:user.name,p:user.phone,dn:nu,dno:no,a,r,isF:!user.fd});save();alert('📤 Depósito solicitado!');changeScr('scr-home');}
+function renderPaymentMethods(){
+    let pm=db.config?.paymentMethods||DEF.config.paymentMethods;let h='';let ic={mpesa:'📱',emola:'📲',mkesh:'💳'};let nm={mpesa:'M-Pesa',emola:'e-Mola',mkesh:'mKesh'};
+    for(let k in pm){let p=pm[k];if(p.active&&p.numero){h+=`<div class="payment-card active"><div style="font-size:22px;">${ic[k]||'💰'}</div><div style="font-weight:700;font-size:11px;">${nm[k]||k}</div><div style="font-size:9px;color:var(--subtext);">${p.numero}</div><div style="font-size:8px;color:var(--gold);">${p.nome}</div></div>`;}}
+    if(!h)h='<p style="color:var(--accent);font-size:10px;">⚠️ Nenhum método disponível.</p>';document.getElementById('payment-methods-list').innerHTML=h;
+    let pm2=db.config?.paymentMethods||{};let n1='',emola='';if(pm2.mpesa?.active&&pm2.mpesa?.numero)n1='📱 M-Pesa: '+pm2.mpesa.numero+' - '+pm2.mpesa.nome;if(pm2.emola?.active&&pm2.emola?.numero)emola='📲 e-Mola: '+pm2.emola.numero+' - '+pm2.emola.nome;if(!n1)n1='📱 M-Pesa: Indisponível';if(!emola)emola='📲 e-Mola: Indisponível';document.getElementById('txt-n1').textContent=n1;document.getElementById('txt-emola').textContent=emola;
+}
 
-// ========== CONVIDAR ==========
-function updInv(){if(!user)return;document.getElementById('invite-link-display').textContent=location.origin+location.pathname+'?ref='+user.ic;let iv=db.invites&&db.invites[user.phone]?db.invites[user.phone]:{inv:[],earn:0};document.getElementById('invite-earnings').textContent=fUSD(iv.earn);document.getElementById('invited-count').textContent=iv.inv.length;document.getElementById('team-members-list').innerHTML=iv.inv.length===0?'<p style="color:#888;">Nenhum indicado.</p>':iv.inv.map(p=>{let u=db.users[p];return u?`<div style="padding:10px;background:var(--input-bg);border-radius:10px;margin-bottom:6px;display:flex;justify-content:space-between;"><span>${u.name}</span><span style="color:var(--primary);">${p}</span></div>`:'';}).join('');}
-function copyInviteLink(){navigator.clipboard?.writeText(document.getElementById('invite-link-display').textContent).then(()=>alert('✅ Link copiado!'));}
+function upOUTS(){OUTS=(db.saqueValues||DEF.saqueValues).map(v=>({v:Number(v)}));}
+function rOB(){document.getElementById('grid-out').innerHTML=OUTS.map(b=>`<div class="value-card" onclick="sO(${b.v})"><div class="value-amount">${fUSD(b.v)}</div></div>`).join('');}
+function sO(v){so=v;document.getElementById('out-val').value=fUSD(v);let taxa=getTaxa();let net=v*(1-taxa);document.getElementById('preview-amount').textContent=fUSD(v);document.getElementById('preview-fee').textContent=fUSD(v*taxa);document.getElementById('preview-net').textContent=fUSD(net);document.getElementById('preview-mt').textContent=fMT(net);}
+function updWS(){let b=document.getElementById('btn-submit-out');if(!b)return;if(!user||user.lv===0){b.disabled=true;b.textContent='🔒 APENAS VIPs';return;}b.disabled=false;b.textContent='📤 SOLICITAR';}
+function sendOut(){if(!user)return;if(user.lv===0)return alert('❌ Apenas VIPs!');if(!so)return alert('Selecione!');let nu=document.getElementById('out-numero').value.trim(),no=document.getElementById('out-nome').value.trim();if(!nu||!no)return alert('Preencha!');if((user.bal||0)<so)return alert('Saldo!');user.bal-=so;if(!db.registroSaques)db.registroSaques={};if(!db.registroSaques[user.phone])db.registroSaques[user.phone]=[];db.registroSaques[user.phone].push({valor:so,data:Date.now(),status:'pendente'});db.pending.push({t:'SAQUE',n:user.name,p:user.phone,sn:nu,a:so,time:Date.now()});save();updUI();atualizarRegistroSaques();alert('✅ Solicitado!');changeScr('scr-home');}
+function sendDep(){if(!user)return;let nu=document.getElementById('dep-numero').value.trim(),no=document.getElementById('dep-nome').value.trim(),a=parseInt(document.getElementById('in-amt').value),r=document.getElementById('in-ref').value.trim();if(!nu||!no||!a||!r)return alert('Preencha!');db.pending.push({t:'DEP',n:user.name,p:user.phone,dn:nu,a,r,time:Date.now()});save();document.getElementById('in-amt').value='';document.getElementById('in-ref').value='';alert('📤 Enviado!');changeScr('scr-home');}
 
-// ========== TAREFAS ==========
-function rT(){let c=document.getElementById('list-tasks');c.innerHTML='<h4>📺 TAREFAS</h4>'+db.taskLinks.map((l,i)=>{let tk='t_'+i,d=user?.tasks?.[tk]?.done,s=user?.tasks?.[tk]?.st,bt=`<button class="btn-primary" onclick="sT(${i})">▶️ +0.50 USD</button>`;if(d)bt='<button disabled style="background:#22c55e;">✅</button>';else if(s&&Date.now()<s+300000)bt='<button disabled>⏳</button>';return`<div class="card"><p style="font-size:10px;">${l}</p>${bt}</div>`;}).join('');}
-function sT(i){if(!user)return;if(!user.tasks)user.tasks={};let tk='t_'+i;if(user.tasks[tk]?.done)return;user.tasks[tk]={st:Date.now(),done:false};save();window.open(db.taskLinks[i],'_blank');alert('⏳ Assista 5 min!');rT();setTimeout(()=>{if(user&&user.tasks[tk]&&!user.tasks[tk].done&&Date.now()>=user.tasks[tk].st+300000){user.tasks[tk].done=true;user.bal+=0.50;save();updUI();rT();alert('✅ +0.50 USD!');}},305000);}
+function updInv(){if(!user)return;document.getElementById('invite-link-display').textContent=location.origin+location.pathname+'?ref='+user.ic;let iv=db.invites&&db.invites[user.phone]?db.invites[user.phone]:{inv:[],earn:0};document.getElementById('invite-earnings').textContent=fUSD(iv.earn);let t=iv.inv.length,e=getConvidadosEfetivos();document.getElementById('invited-count').textContent=e+'/'+t+' VIPs';let c=getClasse(e);document.getElementById('cargo-info').textContent=c.nome+(c.salario>0?' · Salário: '+fMT(c.salario)+'/mês':'');}
+function copyInviteLink(){navigator.clipboard?.writeText(document.getElementById('invite-link-display').textContent).then(()=>alert('✅ Copiado!'));}
 
-// ========== ADMIN ==========
+// TAREFAS - Botão para canal YT (sem dar dinheiro ainda)
+function rT(){
+    let links=db.taskLinks||DEF.taskLinks;
+    let valor=db.taskValue||0.50;
+    document.getElementById('list-tasks').innerHTML=`
+        <h4 style="font-size:12px;color:var(--gold);margin-bottom:8px;">📺 GANHE ${fMT(valor*64)} DIÁRIO</h4>
+        <p style="font-size:9px;color:var(--subtext);margin-bottom:10px;">Inscreva-se no canal e ganhe diariamente!</p>
+        ${links.map((l,i)=>`
+        <div class="task-card">
+            <div class="task-icon">▶️</div>
+            <div class="task-title">INSCREVA-SE NO CANAL</div>
+            <div class="task-value">🎁 ${fMT(valor*64)} ao se inscrever</div>
+            <button class="btn-yt" onclick="abrirYT(${i})">▶️ INSCREVER-SE AGORA</button>
+        </div>`).join('')}
+        <p style="font-size:8px;color:#888;text-align:center;margin-top:10px;">*Funcionalidade em breve - Os valores serão creditados automaticamente</p>`;
+}
+function abrirYT(i){let links=db.taskLinks||DEF.taskLinks;window.open(links[i]||'https://youtube.com','_blank');}
+
+function atribuirGiros(pc){if(!db.config.girosAtivos)return;let c=db.users[pc];if(!c||c.lv===0)return;let q=Object.keys(db.invites||{}).find(k=>db.invites[k].inv.includes(pc));if(!q||!db.users[q])return;let inv=db.users[q];if(inv.lv===0)return;let vl=c.lv,g=0;if(vl>=2&&vl<=4)g=1;else if(vl>=5&&vl<=7)g=2;else if(vl>=8&&vl<=13)g=4;else if(vl>=14&&vl<=16)g=6;else if(vl>=17)g=999;inv.roletaGiros=(inv.roletaGiros||0)+g;save();}
+function updRoleta(){if(!user)return;if(user.lv>=17){let h=new Date().toDateString();if(user.ultimoGiroGratis!==h){user.roletaGiros=(user.roletaGiros||0)+1;user.ultimoGiroGratis=h;save();}}let g=user.roletaGiros||0,u=user.roletaUsados||0;document.getElementById('giros-disponiveis').textContent=Math.max(0,g-u);document.getElementById('roleta-btn').disabled=(g-u)<=0;}
+function girarRoleta(){if(!user)return;let g=user.roletaGiros||0,u=user.roletaUsados||0;if(g-u<=0)return alert('❌ Sem giros!');user.roletaUsados=u+1;let ganhou=Math.random()<0.01,r;if(ganhou){let p=[{valor:25,texto:'🎉 PRÊMIO!',emoji:'💰'},{valor:35,texto:'🎉 PRÊMIO!',emoji:'💵'},{valor:40,texto:'🎉 PRÊMIO!',emoji:'💎'},{valor:55,texto:'🎉 PRÊMIO!',emoji:'🎯'}];r=p[Math.floor(Math.random()*p.length)];}else{let p=[{valor:0,texto:'🍀 Tente novamente!',emoji:'🍀'},{valor:0,texto:'🔄 Quase!',emoji:'🔄'}];r=p[Math.floor(Math.random()*p.length)];}document.getElementById('roleta-emoji').textContent=r.emoji;document.getElementById('roleta-resultado').textContent=r.texto;if(r.valor>0){user.bal=(user.bal||0)+r.valor;atualizarGanhosDiarios(r.valor);alert('🎉 Ganhou '+r.valor+' MT!');}save();updUI();updRoleta();}
+
+function verificarComissoesDiarias(){if(!user)return;if(!db.config.comissoesAtivas)return;let a=Date.now();if(a-(user.ultimaComissao||0)<86400000)return;let iv=db.invites&&db.invites[user.phone]?db.invites[user.phone].inv:[];if(iv.length===0)return;let c=0,vs=db.config.comissoesValores||{vip1:1,vip3:2,vip4:3,vip5:3,vip6:4,vip7:5};iv.forEach(p=>{let u=db.users[p];if(!u)return;if(u.lv>=1&&u.lv<=2)c+=vs.vip1||1;else if(u.lv===3)c+=vs.vip3||2;else if(u.lv===4)c+=vs.vip4||3;else if(u.lv===5)c+=vs.vip5||3;else if(u.lv===6)c+=vs.vip6||4;else if(u.lv>=7)c+=vs.vip7||5;});if(c>0){user.bal=(user.bal||0)+c;user.ultimaComissao=a;atualizarGanhosDiarios(c);save();updUI();}}
+
+function updPresentes(){if(!user)return;let e=getConvidadosEfetivos(),c=getClasse(e),pu=db.giftAtiva&&user.lv>0&&e>=1;if(pu){document.getElementById('gift-locked-overlay').style.display='none';document.getElementById('gift-btn').style.display='inline-block';let h=new Date().toDateString(),co=(user.giftCollected===h)?(user.giftCount||1):0,mx=c.presentes;if(co>=mx){document.getElementById('gift-btn').disabled=true;document.getElementById('gift-btn').textContent='✅ LIMITE ('+mx+'/'+mx+')';}else{document.getElementById('gift-btn').disabled=false;document.getElementById('gift-btn').textContent='🎁 ABRIR ('+co+'/'+mx+')';}}else{document.getElementById('gift-locked-overlay').style.display='flex';document.getElementById('gift-btn').style.display='none';}}
+function tentarColetarPresente(){if(!user)return;if(!db.giftAtiva)return alert('🔒 Desligada!');if(user.lv===0)return alert('❌ VIP!');let e=getConvidadosEfetivos(),c=getClasse(e),h=new Date().toDateString(),co=(user.giftCollected===h)?(user.giftCount||1):0;if(co>=c.presentes)return alert('⏰ Limite de '+c.presentes+'!');let v=Math.floor(Math.random()*10)+1;user.bal=(user.bal||0)+v;user.giftCollected=h;user.giftCount=co+1;atualizarGanhosDiarios(v);save();updUI();updPresentes();alert('🎁 Presente coletado!');}
+
+// ÁRVORE COM CLASSES EM RETÂNGULOS CHAMATIVOS
+function updArvore(){
+    if(!user)return;
+    CLASSES=[...db.classes];
+    let all=db.invites&&db.invites[user.phone]?db.invites[user.phone].inv||[]:[];
+    let totalConvidados=all.length;
+    let efetivos=getConvidadosEfetivos();
+    let classeAtual=getClasse(efetivos);
+    
+    let h='';
+    h+=`<div style="background:linear-gradient(135deg,#1a1a28,#0d0d2b);border:2px solid var(--primary);border-radius:14px;padding:14px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div><div style="font-weight:900;font-size:15px;">${user.name}</div><div style="font-size:9px;color:var(--subtext);">⭐ VIP ${user.lv} • 👥 ${efetivos}/${totalConvidados} VIPs</div></div>
+            <span style="display:inline-block;padding:6px 14px;border-radius:20px;font-size:10px;font-weight:900;background:${classeAtual.corTexto};color:#000;">${classeAtual.icone} ${classeAtual.nome}</span>
+        </div>
+    </div>`;
+    
+    // Mostra cada classe como retângulo chamativo
+    CLASSES.forEach((classe,idx)=>{
+        let alcancado=efetivos>=classe.min;
+        let proximaClasse=CLASSES[idx-1]; // Classe acima
+        let meta=proximaClasse?proximaClasse.min:classe.min+1;
+        if(idx===0)meta=999;
+        let progresso=alcancado?100:Math.round((efetivos/Math.max(classe.min,1))*100);
+        let atual=alcancado&&(!proximaClasse||efetivos<proximaClasse.min);
+        if(idx===CLASSES.length-1&&efetivos===0)atual=true;
+        
+        let badgeTexto=atual?'✅ VOCÊ ESTÁ AQUI':alcancado?'✅ ALCANÇADO':'🔒 BLOQUEADO';
+        let badgeClass=atual?'badge-ativo-classe':alcancado?'badge-alcancado':'badge-bloqueado-classe';
+        
+        h+=`<div class="classe-bloco ${classe.cssClass} ${atual?'classe-atual':''}">
+            <div class="classe-header">
+                <div class="classe-titulo" style="color:${classe.corTexto};">${classe.icone} ${classe.nome}</div>
+                <span class="classe-badge ${badgeClass}">${badgeTexto}</span>
+            </div>
+            <div style="font-size:9px;color:var(--subtext);margin-bottom:8px;">Requisito: <b style="color:${classe.corTexto};">${classe.min} VIP${classe.min!==1?'s':''} ativos</b></div>
+            <div class="classe-grid">
+                <div class="classe-cell"><div class="cell-label">💼 SALÁRIO</div><div class="cell-value" style="color:#ffd700;">${fMT(classe.salario)}/mês</div></div>
+                <div class="classe-cell"><div class="cell-label">💰 BÓNUS</div><div class="cell-value" style="color:#448aff;">${classe.bonus}%</div></div>
+                <div class="classe-cell"><div class="cell-label">🎁 PRESENTES</div><div class="cell-value" style="color:#00e676;">${classe.presentes}/dia</div></div>
+                <div class="classe-cell"><div class="cell-label">👥 CONVIDADOS</div><div class="cell-value" style="color:#ff8c00;">${efetivos}/${classe.min}</div></div>
+            </div>
+            <div class="classe-progress">
+                <div class="classe-progress-label"><span>Progresso</span><span>${Math.min(100,progresso)}%</span></div>
+                <div class="classe-progress-bar"><div class="classe-progress-fill ${classe.fillClass}" style="width:${Math.min(100,progresso)}%;"></div></div>
+                <div style="font-size:7px;color:var(--subtext);margin-top:3px;">
+                    ${classe.min===0?'🌟 Ponto de partida':atual?'🌟 Você está neste nível!':alcancado?'✅ Nível conquistado':`Faltam ${classe.min-efetivos} VIPs`}
+                </div>
+            </div>
+        </div>`;
+    });
+    
+    h+=`<div style="margin-top:12px;"><h5 style="color:var(--primary);font-size:11px;margin-bottom:6px;">👥 CONVIDADOS DIRETOS (${totalConvidados})</h5>`;
+    if(totalConvidados===0)h+='<div style="text-align:center;padding:16px;color:#888;font-size:10px;">🌱 Nenhum convidado ainda.</div>';
+    else all.forEach(p=>{let u=db.users[p];if(!u)return'';let subs=db.invites&&db.invites[p]?db.invites[p].inv||[]:[];let subEfetivos=0;subs.forEach(sp=>{if(db.users[sp]&&db.users[sp].lv>0)subEfetivos++;});let sc=getClasse(subEfetivos);h+=`<div class="membro-item ${u.lv>0?'membro-vip':'membro-free'}" style="display:flex;justify-content:space-between;align-items:center;padding:8px;margin:3px 0;border-radius:8px;font-size:10px;"><div><span style="font-weight:700;">${u.name}</span><br><span style="font-size:7px;color:var(--subtext);">Rede: ${subEfetivos}/${subs.length} VIPs • ${sc.icone} ${sc.nome}</span></div><span class="membro-badge ${u.lv>0?'membro-vip-badge':'membro-free-badge'}" style="font-size:7px;padding:2px 6px;border-radius:8px;font-weight:700;">${u.lv>0?'⭐VIP'+u.lv:'❌'}</span></div>`;});
+    h+='</div>';
+    document.getElementById('arvore-content').innerHTML=h;
+}
+
+// ===== ADMIN =====
 let cl=0;
-function tapAdm(){cl++;if(cl>=5){let p=prompt('🔐 Senha Admin:');if(p===ADMIN_SENHA){changeScr('scr-adm');rAdm();cl=0;}}setTimeout(()=>cl=0,3000);}
-function saveConfigMpesa(){db.config.n1=document.getElementById('ed-n1').value;save();alert('✅ M-Pesa salvo!');}
-function saveConfigEmola(){db.config.emola=document.getElementById('ed-emola').value;save();alert('✅ e-Mola salvo!');}
-function rASL(){document.getElementById('admin-saque-list').innerHTML=(db.saqueValues||DEF.saqueValues).map((v,i)=>`<div style="display:flex;gap:6px;margin-bottom:4px;"><input type="number" class="sv" value="${v}" data-i="${i}" style="flex:1;"><span style="color:var(--primary);">${fUSD(v)}</span><button onclick="rS(${i})" style="background:var(--accent);color:#fff;padding:4px 8px;">X</button></div>`).join('');}
-function addS(){let v=parseInt(document.getElementById('new-saque').value);if(!v)return;if(!db.saqueValues)db.saqueValues=[];db.saqueValues.push(v);db.saqueValues.sort((a,b)=>a-b);save();upOUTS();rASL();rOB();}
-function rS(i){db.saqueValues.splice(i,1);save();upOUTS();rASL();rOB();}
-function saveSaques(){let is=document.querySelectorAll('.sv'),vs=[];is.forEach(i=>{let v=parseInt(i.value);if(v)vs.push(v);});if(vs.length)db.saqueValues=vs.sort((a,b)=>a-b);save();upOUTS();rASL();rOB();alert('✅ Salvos!');}
-function rAVL(){document.getElementById('admin-vip-list').innerHTML=db.vips.map((v,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:6px;font-size:11px;"><span>VIP ${v.lv}</span><input type="number" class="vv-a" value="${v.a}" data-i="${i}" placeholder="Ativ"><input type="number" class="vv-d" value="${v.d}" data-i="${i}" placeholder="Dia"><input type="number" class="vv-t" value="${v.t}" data-i="${i}" placeholder="210d"></div>`).join('');}
-function saveVips(){let as=document.querySelectorAll('.vv-a'),ds=document.querySelectorAll('.vv-d'),ts=document.querySelectorAll('.vv-t');as.forEach((a,i)=>{db.vips[i].a=parseFloat(a.value)||db.vips[i].a;db.vips[i].d=parseFloat(ds[i].value)||db.vips[i].d;db.vips[i].t=parseFloat(ts[i].value)||db.vips[i].t;});save();VIPS=[...db.vips];rV();alert('✅ VIPs salvos!');}
-function rAWL(){document.getElementById('admin-wealth-list').innerHTML=db.wealth.map((w,i)=>`<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4px;margin-bottom:6px;font-size:11px;"><span>${w.n}</span><input type="number" class="vw-a" value="${w.a}" data-i="${i}" placeholder="Ativ"><input type="number" class="vw-c" value="${w.c}" data-i="${i}" placeholder="Ciclo"><input type="number" class="vw-f" value="${w.f}" data-i="${i}" placeholder="Final"></div>`).join('');}
-function saveWealth(){let as=document.querySelectorAll('.vw-a'),cs=document.querySelectorAll('.vw-c'),fs=document.querySelectorAll('.vw-f');as.forEach((a,i)=>{db.wealth[i].a=parseFloat(a.value)||db.wealth[i].a;db.wealth[i].c=parseInt(cs[i].value)||db.wealth[i].c;db.wealth[i].f=parseFloat(fs[i].value)||db.wealth[i].f;});save();WEALTH=[...db.wealth];rW();alert('✅ Fundos salvos!');}
-function rABL(){document.getElementById('admin-banner-list').innerHTML=db.banners.map((b,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px;"><input type="text" class="vb-t" value="${b.t}" data-i="${i}" placeholder="Título"><input type="number" class="vb-v" value="${parseInt(b.v)}" data-i="${i}" placeholder="USD"></div>`).join('');}
-function saveBanners(){let ts=document.querySelectorAll('.vb-t'),vs=document.querySelectorAll('.vb-v');ts.forEach((t,i)=>{db.banners[i].t=t.value||db.banners[i].t;db.banners[i].v=(parseInt(vs[i].value)||parseInt(db.banners[i].v))+' USD';});save();BANNERS=[...db.banners];renderBanners();alert('✅ Banners salvos!');}
-function saveCards(){db.cards=[{t:document.getElementById('c1t').value,l:document.getElementById('c1l').value,c:'qc-whatsapp',i:'💬',b:'GRÁTIS',af:false,yt:''},{t:document.getElementById('c2t').value,l:document.getElementById('c2l').value,c:'qc-support',i:'🆘',b:'24H',af:false,yt:''},{t:document.getElementById('c3t').value,l:document.getElementById('c3l').value,c:'qc-af1',i:'🔥',b:'BÔNUS',af:true,yt:document.getElementById('c3yt').value},{t:document.getElementById('c4t').value,l:document.getElementById('c4l').value,c:'qc-af2',i:'⭐',b:'TOP',af:true,yt:document.getElementById('c4yt').value}];save();renderCards();alert('✅ Cards salvos!');}
-function saveManual(){db.manualHTML=document.getElementById('manual-text').value;save();alert('✅ Manual salvo!');}
+function tapAdm(){cl++;if(cl>=5){let p=prompt('🔐 Senha:');if(p===ADMIN_SENHA){changeScr('scr-adm');rAdm();cl=0;}}setTimeout(()=>cl=0,3000);}
+function togglePaymentMethod(m){db.config.paymentMethods[m].active=document.getElementById(m+'-toggle').checked;save();}
+function savePaymentMethods(){
+    db.config.paymentMethods.mpesa={active:document.getElementById('mpesa-toggle').checked,numero:document.getElementById('ed-mpesa-numero').value||'851511841',nome:document.getElementById('ed-mpesa-nome').value||'Benjamim'};
+    db.config.paymentMethods.emola={active:document.getElementById('emola-toggle').checked,numero:document.getElementById('ed-emola-numero').value||'870514180',nome:document.getElementById('ed-emola-nome').value||'Kulaxa'};
+    db.config.paymentMethods.mkesh={active:document.getElementById('mkesh-toggle').checked,numero:document.getElementById('ed-mkesh-numero').value||'870000000',nome:document.getElementById('ed-mkesh-nome').value||'mKesh Kulaxa'};
+    save();alert('✅ Métodos salvos!');renderPaymentMethods();
+}
+
+function searchUser(){
+    let ph=document.getElementById('search-user').value.trim();if(!ph)return;
+    let u=db.users[ph];if(!u){for(let k in db.users){if(k.includes(ph)||(db.users[k].name||'').toLowerCase().includes(ph.toLowerCase())){u=db.users[k];ph=k;break;}}if(!u)return alert('❌ Não encontrado!');}
+    document.getElementById('user-details').style.display='block';
+    document.getElementById('user-details').innerHTML=`<div style="background:var(--input-bg);padding:12px;border-radius:10px;margin-bottom:10px;"><div class="info-row"><span>👤 Nome:</span><span>${u.name}</span></div><div class="info-row"><span>📱 Número:</span><span>${ph}</span></div><div class="info-row"><span>🔒 Senha:</span><span style="color:#ffd700;">${u.pass}</span></div><div class="info-row"><span>💰 Saldo:</span><span>${fUSD(u.bal)}</span></div><div class="info-row"><span>⭐ VIP:</span><span>${u.lv}</span></div></div><input type="number" id="edit-balance" placeholder="Novo saldo (USD)" style="margin-bottom:6px;"><input type="text" id="edit-password" placeholder="Nova senha" style="margin-bottom:6px;"><input type="number" id="edit-vip" placeholder="Nível VIP (0-20)" style="margin-bottom:6px;"><div style="display:flex;gap:8px;"><button class="btn-primary" onclick="updateUser('${ph}')" style="flex:1;">💾 SALVAR</button><button class="btn-accent" onclick="resetUserPassword('${ph}')" style="flex:1;">🔑 REDEFINIR</button></div>`;
+}
+function updateUser(ph){let u=db.users[ph];let nb=document.getElementById('edit-balance').value,np=document.getElementById('edit-password').value,nv=document.getElementById('edit-vip').value;if(nb!=='')u.bal=parseFloat(nb)||0;if(np!==''&&np.length>=4)u.pass=np;if(nv!=='')u.lv=Math.max(0,Math.min(20,parseInt(nv)||0));save();if(user&&user.phone===ph){user=u;updUI();}alert('✅ Atualizado!');}
+function resetUserPassword(ph){let np=Math.random().toString(36).substring(2,8);db.users[ph].pass=np;save();alert('🔑 Nova senha: '+np);searchUser();}
+
+// CLASSES EDITÁVEIS PELO ADMIN
+function renderAdminClasses(){
+    CLASSES=[...db.classes];
+    document.getElementById('admin-classes-list').innerHTML=CLASSES.map((c,i)=>`
+        <div style="background:rgba(0,0,0,0.2);border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid ${c.corTexto};">
+            <b style="color:${c.corTexto};">${c.icone} ${c.nome}</b>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;font-size:10px;">
+                <div>VIPs mín:<input type="number" class="ed-classe-min" value="${c.min}" data-i="${i}" style="padding:4px;"></div>
+                <div>Salário (MT):<input type="number" class="ed-classe-sal" value="${c.salario}" data-i="${i}" style="padding:4px;"></div>
+                <div>Bónus (%):<input type="number" class="ed-classe-bonus" value="${c.bonus}" data-i="${i}" style="padding:4px;"></div>
+                <div>Presentes/dia:<input type="number" class="ed-classe-presentes" value="${c.presentes}" data-i="${i}" style="padding:4px;"></div>
+            </div>
+        </div>`).join('');
+}
+function saveClasses(){
+    let mins=document.querySelectorAll('.ed-classe-min');
+    let sals=document.querySelectorAll('.ed-classe-sal');
+    let bonus=document.querySelectorAll('.ed-classe-bonus');
+    let pres=document.querySelectorAll('.ed-classe-presentes');
+    mins.forEach((m,i)=>{
+        db.classes[i].min=parseInt(m.value)||db.classes[i].min;
+        db.classes[i].salario=parseInt(sals[i].value)||db.classes[i].salario;
+        db.classes[i].bonus=parseInt(bonus[i].value)||db.classes[i].bonus;
+        db.classes[i].presentes=parseInt(pres[i].value)||db.classes[i].presentes;
+    });
+    CLASSES=[...db.classes];save();alert('✅ Classes salvas!');
+}
+
+function saveTasksConfig(){
+    db.taskLinks=[document.getElementById('ed-task1-link').value||DEF.taskLinks[0],document.getElementById('ed-task2-link').value||DEF.taskLinks[1],document.getElementById('ed-task3-link').value||DEF.taskLinks[2]];
+    db.taskValue=parseFloat(document.getElementById('ed-task-value').value)||0.50;
+    save();alert('✅ Tarefas salvas!');
+}
+
+function renderAdminStats(){
+    let totalUsers=Object.keys(db.users||{}).length,totalVIPs=0,totalSaldo=0;
+    for(let k in db.users){let u=db.users[k];if(u.lv>0)totalVIPs++;totalSaldo+=(u.bal||0);}
+    document.getElementById('admin-stats-grid').innerHTML=`<div class="stat-box"><div class="stat-num">${totalUsers}</div><div class="stat-label">👥 USUÁRIOS</div></div><div class="stat-box"><div class="stat-num">${totalVIPs}</div><div class="stat-label">⭐ VIPs</div></div><div class="stat-box"><div class="stat-num">${fUSD(totalSaldo)}</div><div class="stat-label">💰 SALDO TOTAL</div></div>`;
+}
+
+function renderAdminConcurso(){
+    let inscritos=db.concursoInscritos||{};let inscritosKeys=Object.keys(inscritos);let allUsers=Object.keys(db.users||{});
+    let h='<table class="stats-table"><thead><tr><th>NOME</th><th>NÚMERO</th><th>INSCRITO</th></tr></thead><tbody>';
+    allUsers.forEach(phone=>{let u=db.users[phone];let inscrito=inscritosKeys.includes(phone);let nome=inscrito?inscritos[phone].nome:(u?u.name:'Desconhecido');h+=`<tr><td>${nome}</td><td>${phone}</td><td><span class="inscrito-badge ${inscrito?'inscrito-sim':'inscrito-nao'}">${inscrito?'✅ SIM':'❌ NÃO'}</span></td></tr>`;});
+    inscritosKeys.forEach(phone=>{if(!db.users[phone])h+=`<tr><td>${inscritos[phone].nome}</td><td>${phone}</td><td><span class="inscrito-badge inscrito-sim">✅ SIM</span></td></tr>`;});
+    h+='</tbody></table>';document.getElementById('admin-concurso-list').innerHTML=h;
+}
 
 function rAdm(){
-    document.getElementById('ed-n1').value=db.config?.n1||'';
-    document.getElementById('ed-emola').value=db.config?.emola||'';
-    let cs=db.cards||DEF.cards;
-    if(cs[0]){document.getElementById('c1t').value=cs[0].t;document.getElementById('c1l').value=cs[0].l;}
-    if(cs[1]){document.getElementById('c2t').value=cs[1].t;document.getElementById('c2l').value=cs[1].l;}
-    if(cs[2]){document.getElementById('c3t').value=cs[2].t;document.getElementById('c3yt').value=cs[2].yt;document.getElementById('c3l').value=cs[2].l;}
-    if(cs[3]){document.getElementById('c4t').value=cs[3].t;document.getElementById('c4yt').value=cs[3].yt;document.getElementById('c4l').value=cs[3].l;}
-    document.getElementById('manual-text').value=db.manualHTML||DEF.manualHTML;
-    document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
-    let ta=document.querySelector('.theme-'+(db.theme||'verde'));if(ta)ta.classList.add('active');
-    rASL();rAVL();rAWL();rABL();
-    
+    renderAdminStats();renderAdminClasses();renderAdminConcurso();
+    const pm=db.config?.paymentMethods||{};document.getElementById('mpesa-toggle').checked=pm.mpesa?.active!==false;document.getElementById('ed-mpesa-numero').value=pm.mpesa?.numero||'';document.getElementById('ed-mpesa-nome').value=pm.mpesa?.nome||'';document.getElementById('emola-toggle').checked=pm.emola?.active!==false;document.getElementById('ed-emola-numero').value=pm.emola?.numero||'';document.getElementById('ed-emola-nome').value=pm.emola?.nome||'';document.getElementById('mkesh-toggle').checked=pm.mkesh?.active===true;document.getElementById('ed-mkesh-numero').value=pm.mkesh?.numero||'';document.getElementById('ed-mkesh-nome').value=pm.mkesh?.nome||'';
+    document.getElementById('ed-task1-link').value=(db.taskLinks||DEF.taskLinks)[0];
+    document.getElementById('ed-task2-link').value=(db.taskLinks||DEF.taskLinks)[1];
+    document.getElementById('ed-task3-link').value=(db.taskLinks||DEF.taskLinks)[2];
+    document.getElementById('ed-task-value').value=db.taskValue||0.50;
     let pl=document.getElementById('adm-list');
     if(!db.pending||db.pending.length===0){pl.innerHTML='<p style="color:#888;text-align:center;">✅ Nenhuma pendência.</p>';return;}
     pl.innerHTML=db.pending.map((p,i)=>{
-        if(p.t==='SAQUE'){let liq=p.liq||p.a*(1-TAXA);return`<div class="card" style="border-left:4px solid var(--accent);"><b style="color:var(--accent);">💸 SAQUE</b><div class="info-row"><span>${p.n}</span><span>${p.p}</span></div><div class="info-row"><span>Valor:</span><span>${fUSD(p.a)}</span></div><div class="info-row"><span>💵 Pagar:</span><span style="color:var(--primary);font-size:16px;">${fMT(liq)}</span></div><div style="display:flex;gap:8px;margin-top:8px;"><button onclick="aA(${i},true)" style="flex:1;background:#22c55e;color:#fff;padding:10px;border-radius:8px;">✅ APROVAR</button><button onclick="aA(${i},false)" style="flex:1;background:#ef4444;color:#fff;padding:10px;border-radius:8px;">❌ NEGAR</button></div></div>`;}
-        else{return`<div class="card" style="border-left:4px solid var(--primary);"><b style="color:var(--primary);">📥 DEP${p.isF?' 🎁 +500':''}</b><div class="info-row"><span>${p.n}</span><span>${fMT(p.a)} → ${fUSD(p.a)}</span></div><div style="display:flex;gap:8px;margin-top:8px;"><button onclick="aA(${i},true)" style="flex:1;background:#22c55e;color:#fff;padding:10px;border-radius:8px;">✅ APROVAR</button><button onclick="aA(${i},false)" style="flex:1;background:#ef4444;color:#fff;padding:10px;border-radius:8px;">❌ NEGAR</button></div></div>`;}
+        let isSaque=p.t==='SAQUE';
+        return`<div class="pending-card ${isSaque?'saque':'dep'}">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-weight:900;font-size:12px;color:${isSaque?'var(--accent)':'var(--primary)'};">${isSaque?'💸 SAQUE':'📥 DEPÓSITO'}</span></div>
+            <div class="pending-row"><span>👤 Nome:</span><strong>${p.n}</strong></div>
+            <div class="pending-row"><span>📱 Número:</span><strong>${p.p}</strong></div>
+            ${isSaque?`<div class="pending-row"><span>🏦 Conta:</span><strong>${p.sn||'N/A'}</strong></div>`:`<div class="pending-row"><span>📱 Nº Dep:</span><strong>${p.dn||'N/A'}</strong></div>`}
+            <div class="pending-row"><span>💰 Valor:</span><strong style="color:${isSaque?'var(--accent)':'var(--primary)'}">${fMT(p.a)}</strong></div>
+            ${!isSaque&&p.r?`<div class="pending-row"><span>🧾 Ref:</span><strong>${p.r}</strong></div>`:''}
+            <div class="pending-actions"><button class="btn-approve" onclick="aA(${i},true)">✅ APROVAR</button><button class="btn-reject" onclick="aA(${i},false)">❌ RECUSAR</button></div>
+        </div>`;
     }).join('');
 }
 
 function aA(i,ok){
     let p=db.pending[i];
+    if(!db.financeiro)db.financeiro=JSON.parse(JSON.stringify(DEF.financeiro));
+    let fin=db.financeiro;
     if(ok&&p.t==='DEP'){
         db.users[p.p].bal=(db.users[p.p].bal||0)+p.a;
-        if(p.isF&&!db.users[p.p].fd){db.users[p.p].fd=true;db.users[p.p].bal+=500;alert('🎁 Bônus +500 USD!');}
+        db.users[p.p].ultimoDepositoInfo={valor:p.a,data:Date.now(),ref:p.r||''};
+        fin.totalDepositado=(fin.totalDepositado||0)+p.a;
+        if(!fin.depositosAprovados)fin.depositosAprovados=[];
+        fin.depositosAprovados.push({nome:p.n,numero:p.p,valor:p.a,data:Date.now()});
         let ip=Object.keys(db.invites||{}).find(k=>db.invites[k].inv.includes(p.p));
-        if(ip&&db.users[ip]){let com=p.a*COMISSAO;db.users[ip].bal=(db.users[ip].bal||0)+com;if(!db.invites[ip])db.invites[ip]={inv:[],earn:0};db.invites[ip].earn=(db.invites[ip].earn||0)+com;}
+        if(ip&&db.users[ip]){let c=p.a*COMISSAO;db.users[ip].bal=(db.users[ip].bal||0)+c;if(!db.invites[ip])db.invites[ip]={inv:[],earn:0};db.invites[ip].earn=(db.invites[ip].earn||0)+c;}
         alert('✅ Depósito aprovado!');
     }
-    if(!ok&&p.t==='SAQUE'){db.users[p.p].bal=(db.users[p.p].bal||0)+p.a;if(db.users[p.p].wc>0)db.users[p.p].wc--;alert('❌ Saque negado.');}
-    if(ok&&p.t==='SAQUE'){alert('✅ Saque aprovado!\n💵 Envie '+fMT(p.liq||p.a*(1-TAXA))+' para '+p.sno);}
-    db.pending.splice(i,1);save();rAdm();if(user)updUI();
+    if(!ok&&p.t==='SAQUE'){db.users[p.p].bal=(db.users[p.p].bal||0)+p.a;if(db.registroSaques&&db.registroSaques[p.p]){let regs=db.registroSaques[p.p];for(let r of regs){if(r.status==='pendente'&&r.valor===p.a){r.status='negado';break;}}}alert('❌ Saque negado.');}
+    if(ok&&p.t==='SAQUE'){
+        fin.totalSacado=(fin.totalSacado||0)+p.a;
+        if(!fin.saquesAprovados)fin.saquesAprovados=[];
+        fin.saquesAprovados.push({nome:p.n,numero:p.p,valor:p.a,data:Date.now()});
+        fin.totalDepositado=Math.max(0,(fin.totalDepositado||0)-p.a);
+        if(db.registroSaques&&db.registroSaques[p.p]){let regs=db.registroSaques[p.p];for(let r of regs){if(r.status==='pendente'&&r.valor===p.a){r.status='aprovado';break;}}}
+        alert('✅ Saque aprovado!');
+    }
+    db.pending.splice(i,1);save();rAdm();if(user){updUI();atualizarRegistroSaques();}
 }
 
-function switchTab(n){
-    document.getElementById('list-vips').style.display=n===1?'block':'none';
-    document.getElementById('list-wealth').style.display=n===2?'block':'none';
-    document.getElementById('list-tasks').style.display=n===3?'block':'none';
-    document.getElementById('t1').classList.toggle('active',n===1);
-    document.getElementById('t2').classList.toggle('active',n===2);
-    document.getElementById('t3').classList.toggle('active',n===3);
-}
+function switchTab(n){document.getElementById('list-vips').style.display=n===1?'block':'none';document.getElementById('list-wealth').style.display=n===2?'block':'none';document.getElementById('list-tasks').style.display=n===3?'block':'none';}
 
-// ========== INIT ==========
 (function(){let p=new URLSearchParams(location.search),r=p.get('ref');if(r)document.getElementById('ref-input').value=r;})();
-applyTheme();checkAutoLogin();
-setInterval(()=>{if(user){checkWE();updUI();initDE();updDU();if(document.getElementById('scr-out')?.classList.contains('active'))updWS();}},30000);
 </script>
 </body>
 </html>
