@@ -72,6 +72,56 @@
             padding: 8px;
         }
 
+        /* ===== CAIXA DE AVISO KULAXA VIP ===== */
+        .aviso-kulaxa {
+            background: linear-gradient(135deg, #0d0d1a, #1a1a30);
+            border: 3px solid #ffd700;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+            animation: glowAviso 2s infinite;
+        }
+        .aviso-kulaxa .aviso-icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .aviso-kulaxa .aviso-titulo {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffd700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .aviso-kulaxa .aviso-sub {
+            font-size: 11px;
+            color: var(--subtext);
+            margin-top: 2px;
+        }
+        .aviso-kulaxa .aviso-texto {
+            font-size: 13px;
+            color: #ddd;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+        .aviso-kulaxa .aviso-texto .highlight {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .aviso-kulaxa .aviso-data {
+            font-size: 9px;
+            color: #888;
+            margin-top: 6px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            padding-top: 6px;
+        }
+        @keyframes glowAviso {
+            0%,100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.2); }
+            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.5); }
+        }
+
         /* ===== BANNER DE ANÚNCIO ===== */
         .anuncio-overlay {
             position: fixed;
@@ -1654,7 +1704,7 @@
                 <p class="service-sub">Criação e desenvolvimento de sistemas personalizados</p>
                 <div class="service-contact">
                     <div class="label">📱 CONTACTO</div>
-                    <div class="number">84 678 7271</div>
+                    <div class="number" id="servicoNumeroDisplay">84 678 7271</div>
                 </div>
                 <button class="service-btn-copy" onclick="copiarNumero()">📋 COPIAR NÚMERO</button>
                 <button class="service-btn-wp" onclick="abrirWhatsApp()">💬 ENVIAR MENSAGEM NO WHATSAPP</button>
@@ -1739,6 +1789,19 @@
         </div>
 
         <div id="scr-home" class="screen">
+            <!-- ===== CAIXA DE AVISO KULAXA VIP ===== -->
+            <div class="aviso-kulaxa" id="avisoKulaxa">
+                <span class="aviso-icon">⚡</span>
+                <div class="aviso-titulo">KULAXA VIP</div>
+                <div class="aviso-sub">💰 Plataforma Oficial de Investimentos</div>
+                <div class="aviso-texto" id="avisoTexto">
+                    Bem-vindo à <span class="highlight">KULAXA VIP</span>, a plataforma que está revolucionando o mercado financeiro em Moçambique. 
+                    Invista com segurança, ganhe diariamente e construa seu futuro financeiro. 
+                    <span class="highlight">Ative seu VIP</span> e comece a lucrar hoje mesmo!
+                </div>
+                <div class="aviso-data" id="avisoData">📅 Atualizado em: 26 de Junho de 2026</div>
+            </div>
+
             <div class="online-counter">
                 <div class="online-num" id="online-count">798</div>
                 <div style="font-size:7px;color:#888;" id="estagiarios-count">🟢 Estagiários: 50-200</div>
@@ -1856,6 +1919,32 @@
             <h2 style="color:var(--primary);">🛡️ PAINEL ADMIN</h2>
             <div class="stats-grid" id="admin-stats-grid"></div>
             
+            <!-- ===== CONFIGURAÇÃO DO CONTACTO DE SERVIÇOS ===== -->
+            <div class="admin-section">
+                <h4>🛠️ CONTACTO PRESTAÇÃO DE SERVIÇOS</h4>
+                <div style="font-size:9px;color:var(--subtext);margin-bottom:6px;">Número que aparece no modal de serviços</div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Número de Contacto</label>
+                    <input type="text" id="ed-servico-numero" placeholder="Ex: 84 678 7271" style="padding:8px;">
+                </div>
+                <button class="btn-primary" onclick="saveServicoNumero()" style="margin-top:8px;">💾 SALVAR NÚMERO</button>
+            </div>
+
+            <!-- ===== CONFIGURAÇÃO DO AVISO KULAXA VIP ===== -->
+            <div class="admin-section">
+                <h4>⚡ AVISO KULAXA VIP</h4>
+                <div style="font-size:9px;color:var(--subtext);margin-bottom:6px;">Texto que aparece na caixa de aviso na Home</div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Texto do Aviso</label>
+                    <textarea id="ed-aviso-texto" rows="4" placeholder="Texto do aviso KULAXA VIP" style="padding:8px;resize:vertical;"></textarea>
+                </div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Data de Atualização</label>
+                    <input type="text" id="ed-aviso-data" placeholder="Ex: 26 de Junho de 2026" style="padding:8px;">
+                </div>
+                <button class="btn-primary" onclick="saveAvisoConfig()" style="margin-top:8px;">💾 SALVAR AVISO</button>
+            </div>
+
             <!-- ===== CONFIGURAÇÃO DO ANÚNCIO ===== -->
             <div class="admin-section">
                 <h4>📢 CONFIGURAR ANÚNCIO</h4>
@@ -2028,6 +2117,13 @@
                 taskVipQtd: 8,
                 taskDiasGratis: 15,
                 taskValues: {},
+                // ===== CONTACTO SERVIÇOS =====
+                servicoNumero: '84 678 7271',
+                // ===== AVISO KULAXA VIP =====
+                aviso: {
+                    texto: 'Bem-vindo à KULAXA VIP, a plataforma que está revolucionando o mercado financeiro em Moçambique. Invista com segurança, ganhe diariamente e construa seu futuro financeiro. Ative seu VIP e comece a lucrar hoje mesmo!',
+                    data: '26 de Junho de 2026'
+                },
                 anuncio: {
                     ativo: true,
                     titulo: 'Warner Bros em Moçambique!',
@@ -2105,6 +2201,8 @@
                     }
                     if (!d.taskValues) d.taskValues = {};
                     if (!d.config.anuncio) d.config.anuncio = { ativo: true, titulo: DEF.config.anuncio.titulo, duracao: 20, texto: DEF.config.anuncio.texto };
+                    if (!d.config.aviso) d.config.aviso = { texto: DEF.config.aviso.texto, data: DEF.config.aviso.data };
+                    if (!d.config.servicoNumero) d.config.servicoNumero = DEF.config.servicoNumero;
                     db = d;
                 } else {
                     db = JSON.parse(JSON.stringify(DEF));
@@ -2117,6 +2215,8 @@
                     }
                     if (!db.taskValues) db.taskValues = {};
                     if (!db.config.anuncio) db.config.anuncio = { ativo: true, titulo: DEF.config.anuncio.titulo, duracao: 20, texto: DEF.config.anuncio.texto };
+                    if (!db.config.aviso) db.config.aviso = { texto: DEF.config.aviso.texto, data: DEF.config.aviso.data };
+                    if (!db.config.servicoNumero) db.config.servicoNumero = DEF.config.servicoNumero;
                     fbDB.ref('data').set(db);
                 }
                 dbOk = true;
@@ -2143,33 +2243,6 @@
             if (cOnline < 7000) { cOnline += Math.floor(Math.random() * 15) + 3; if (cOnline > 7000) cOnline = 7000; }
             let el = document.getElementById('online-count'); if (el) el.textContent = cOnline.toLocaleString();
             let el2 = document.getElementById('estagiarios-count'); if (el2) el2.textContent = '🟢 Estagiários: ' + Math.floor(Math.random() * 151) + 50;
-        }
-
-        function afterDBLoad() {
-            applyTheme(); upOUTS(); renderCards(); renderBanners(); renderAfCards();
-            generateFakeFeed(); atualizarContador(); iniciarSistemaAnuncios();
-            setInterval(generateFakeFeed, 4000); setInterval(atualizarContador, 5000);
-            setInterval(() => {
-                if (user) { checkWE(); updUI(); initDE(); updDU(); atualizarTimerSaque(); atualizarGanhos();
-                    if (document.getElementById('scr-out')?.classList.contains('active')) { updWS(); atualizarTimerSaque(); }
-                    if (document.getElementById('scr-invite')?.classList.contains('active')) { renderHistoricoSaques(); }
-                    processPendingRewards();
-                }
-            }, 30000);
-            setInterval(() => {
-                if (user) processPendingRewards();
-            }, 10000);
-            if (document.getElementById('toggle-bloqueio-geral')) {
-                document.getElementById('toggle-bloqueio-geral').checked = db.config.bloqueioGeral || false;
-            }
-            if (document.getElementById('saque-diario-toggle')) {
-                document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false;
-            }
-            carregarConfigTarefasAdmin();
-            atualizarBotoesComissao();
-            renderTaskValuesEdit();
-            atualizarDiaInfo();
-            carregarConfigAnuncioAdmin();
         }
 
         // ================================================================
@@ -2258,19 +2331,29 @@
         }
 
         // ================================================================
-        // FUNÇÕES DO BOTÃO DE SERVIÇOS
+        // FUNÇÕES DO CONTACTO DE SERVIÇOS
         // ================================================================
-        
-        function abrirModalServicos() {
-            document.getElementById('modalServicos').classList.add('show');
+
+        function carregarServicoNumero() {
+            const numero = db.config.servicoNumero || '84 678 7271';
+            document.getElementById('ed-servico-numero').value = numero;
+            document.getElementById('servicoNumeroDisplay').textContent = numero;
         }
 
-        function fecharModalServicos() {
-            document.getElementById('modalServicos').classList.remove('show');
+        function saveServicoNumero() {
+            const numero = document.getElementById('ed-servico-numero').value.trim() || '84 678 7271';
+            db.config.servicoNumero = numero;
+            save();
+            document.getElementById('servicoNumeroDisplay').textContent = numero;
+            alert('✅ Número de contacto salvo!');
+        }
+
+        function getServicoNumero() {
+            return db.config.servicoNumero || '84 678 7271';
         }
 
         function copiarNumero() {
-            const numero = '846787271';
+            const numero = getServicoNumero().replace(/\s/g, '');
             navigator.clipboard?.writeText(numero).then(() => {
                 alert('✅ Número copiado: ' + numero);
             }).catch(() => {
@@ -2285,8 +2368,48 @@
         }
 
         function abrirWhatsApp() {
-            const numero = '846787271';
+            const numero = getServicoNumero().replace(/\s/g, '');
             window.open('https://wa.me/258' + numero, '_blank');
+        }
+
+        function abrirModalServicos() {
+            document.getElementById('servicoNumeroDisplay').textContent = getServicoNumero();
+            document.getElementById('modalServicos').classList.add('show');
+        }
+
+        function fecharModalServicos() {
+            document.getElementById('modalServicos').classList.remove('show');
+        }
+
+        // ================================================================
+        // FUNÇÕES DO AVISO KULAXA VIP
+        // ================================================================
+
+        function carregarAvisoConfig() {
+            const aviso = db.config.aviso || { texto: DEF.config.aviso.texto, data: DEF.config.aviso.data };
+            document.getElementById('ed-aviso-texto').value = aviso.texto || '';
+            document.getElementById('ed-aviso-data').value = aviso.data || '';
+            
+            // Atualizar display
+            document.getElementById('avisoTexto').innerHTML = aviso.texto || DEF.config.aviso.texto;
+            document.getElementById('avisoData').textContent = '📅 Atualizado em: ' + (aviso.data || DEF.config.aviso.data);
+        }
+
+        function saveAvisoConfig() {
+            if (!db.config) db.config = {};
+            if (!db.config.aviso) db.config.aviso = {};
+            
+            db.config.aviso.texto = document.getElementById('ed-aviso-texto').value.trim() || DEF.config.aviso.texto;
+            db.config.aviso.data = document.getElementById('ed-aviso-data').value.trim() || DEF.config.aviso.data;
+            
+            save();
+            
+            // Atualizar display
+            document.getElementById('avisoTexto').innerHTML = db.config.aviso.texto;
+            document.getElementById('avisoData').textContent = '📅 Atualizado em: ' + db.config.aviso.data;
+            
+            alert('✅ Aviso KULAXA VIP salvo com sucesso!');
+            carregarAvisoConfig();
         }
 
         // ================================================================
@@ -2877,6 +3000,10 @@
             processPendingRewards(phone);
             atualizarDiaInfo();
             
+            // Atualizar aviso
+            carregarAvisoConfig();
+            carregarServicoNumero();
+            
             if (!sessionStorage.getItem('anuncio_visto')) {
                 setTimeout(() => {
                     mostrarAnuncio();
@@ -2896,7 +3023,7 @@
             if (id === 'scr-roleta') updRoleta();
             if (id === 'scr-presentes') updPresentes();
             if (id === 'scr-arvore') updArvore();
-            if (id === 'scr-adm') { rAdm(); atualizarBotoesComissao(); renderTaskValuesEdit(); if (document.getElementById('saque-diario-toggle')) { document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false; } carregarConfigAnuncioAdmin(); }
+            if (id === 'scr-adm') { rAdm(); atualizarBotoesComissao(); renderTaskValuesEdit(); if (document.getElementById('saque-diario-toggle')) { document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false; } carregarConfigAnuncioAdmin(); carregarAvisoConfig(); carregarServicoNumero(); }
             if (user) updUI();
         }
 
