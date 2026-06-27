@@ -71,6 +71,232 @@
             cursor: pointer;
             padding: 8px;
         }
+
+        /* ===== BANNER DE ANÚNCIO ===== */
+        .anuncio-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            animation: fadeInOverlay 0.5s;
+        }
+        .anuncio-overlay.show {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .anuncio-box {
+            background: linear-gradient(145deg, #1a1a30, #0d0d25);
+            border: 3px solid #ffd700;
+            border-radius: 24px;
+            padding: 28px 24px;
+            max-width: 420px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUpAnuncio 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+        }
+        @keyframes slideUpAnuncio {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .anuncio-box .anuncio-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .anuncio-box .anuncio-titulo {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffd700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .anuncio-box .anuncio-texto {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+        .anuncio-box .anuncio-texto .highlight {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .anuncio-box .anuncio-timer {
+            font-size: 11px;
+            color: var(--subtext);
+            text-align: center;
+            margin-bottom: 12px;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 215, 0, 0.3);
+        }
+        .anuncio-box .anuncio-timer span {
+            color: #ffd700;
+            font-weight: 700;
+        }
+        .anuncio-box .anuncio-btn-fechar {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .anuncio-box .anuncio-btn-fechar:active {
+            transform: scale(0.96);
+        }
+        .anuncio-box .anuncio-fechar-x {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 22px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .anuncio-box .anuncio-fechar-x:hover {
+            color: #fff;
+        }
+        .anuncio-box .anuncio-progresso {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        .anuncio-box .anuncio-progresso .barra {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 4px;
+            transition: width 1s linear;
+            width: 100%;
+        }
+
+        /* ===== MODAL DE SERVIÇOS ===== */
+        .modal-service-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-service-overlay.show {
+            display: flex;
+        }
+        .modal-service-box {
+            background: linear-gradient(145deg, #1a1a30, #0d0d25);
+            border: 3px solid #ffd700;
+            border-radius: 24px;
+            padding: 30px 24px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-service-box .service-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        .modal-service-box h2 {
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        .modal-service-box .service-sub {
+            color: var(--subtext);
+            font-size: 11px;
+            margin-bottom: 16px;
+        }
+        .modal-service-box .service-contact {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 10px 0;
+            border: 2px dashed var(--gold);
+        }
+        .modal-service-box .service-contact .number {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffd700;
+            letter-spacing: 2px;
+        }
+        .modal-service-box .service-contact .label {
+            font-size: 9px;
+            color: var(--subtext);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .modal-service-box .service-btn-copy {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 8px 0;
+            width: 100%;
+        }
+        .modal-service-box .service-btn-wp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 8px 0;
+            width: 100%;
+        }
+        .modal-service-box .service-btn-close {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+            padding: 10px;
+            border-radius: 30px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
         .sidebar-menu {
             position: fixed;
             top: 0;
@@ -119,14 +345,42 @@
             animation: pulseBreve 2s infinite;
         }
         @keyframes pulseBreve {
-            0%,
-            100% {
-                opacity: 0.5;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%,100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
+
+        /* ===== BOTÃO SERVIÇOS DENTRO DO CONVIDAR ===== */
+        .btn-servicos {
+            background: linear-gradient(135deg, #ffd700, #ff8c00, #ff6d00);
+            color: #000;
+            padding: 12px;
+            width: 100%;
+            border-radius: 14px;
+            font-weight: 900;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+            animation: pulseServicos 2s infinite;
+        }
+        .btn-servicos:active {
+            transform: scale(0.96);
+        }
+        @keyframes pulseServicos {
+            0%,100% { box-shadow: 0 4px 20px rgba(255,215,0,0.4); }
+            50% { box-shadow: 0 4px 35px rgba(255,215,0,0.8); }
+        }
+        .btn-servicos .icon {
+            font-size: 16px;
+        }
+
         .screen {
             display: none;
             padding: 12px;
@@ -137,16 +391,10 @@
             display: block;
         }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        input,
-        textarea,
-        select {
+        input, textarea, select {
             width: 100%;
             padding: 12px;
             background: var(--input-bg);
@@ -226,13 +474,28 @@
             border: 3px solid #ffd700;
         }
         @keyframes vipPulse {
-            0%,
-            100% {
-                box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
-            }
-            50% {
-                box-shadow: 0 6px 40px rgba(255, 215, 0, 1);
-            }
+            0%,100% { box-shadow: 0 6px 25px rgba(255,215,0,0.6); }
+            50% { box-shadow: 0 6px 40px rgba(255,215,0,1); }
+        }
+        .btn-toggle-on {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-toggle-off {
+            background: linear-gradient(135deg, #ff5252, #ff1744);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            border: none;
         }
         .card {
             background: linear-gradient(145deg, #151530, #0d0d25);
@@ -241,8 +504,7 @@
             padding: 14px;
             margin-bottom: 10px;
         }
-        .vip-grid,
-        .wealth-grid {
+        .vip-grid, .wealth-grid {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -274,13 +536,8 @@
             animation: pulse 2s infinite;
         }
         @keyframes pulse {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(0, 230, 118, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(0, 230, 118, 0.8);
-            }
+            0%,100% { box-shadow: 0 0 20px rgba(0,230,118,0.4); }
+            50% { box-shadow: 0 0 40px rgba(0,230,118,0.8); }
         }
         .tabs {
             display: flex;
@@ -452,15 +709,9 @@
             font-size: 14px;
             font-weight: 900;
         }
-        .ganho-valor.ontem {
-            color: #ff8c00;
-        }
-        .ganho-valor.hoje {
-            color: #ffa000;
-        }
-        .ganho-valor.total {
-            color: #ffb300;
-        }
+        .ganho-valor.ontem { color: #ff8c00; }
+        .ganho-valor.hoje { color: #ffa000; }
+        .ganho-valor.total { color: #ffb300; }
         .banner-carrossel {
             position: relative;
             width: 100%;
@@ -499,9 +750,7 @@
             width: 100%;
             padding: 8px;
         }
-        .banner-emoji {
-            font-size: 22px;
-        }
+        .banner-emoji { font-size: 22px; }
         .banner-titulo {
             font-size: 7px;
             color: #ffd700;
@@ -509,13 +758,8 @@
             text-transform: uppercase;
         }
         @keyframes blink {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.3;
-            }
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
         .banner-valor {
             font-size: 22px;
@@ -537,7 +781,7 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.3);
             cursor: pointer;
         }
         .banner-dot.active {
@@ -561,13 +805,8 @@
             animation: ytPulse 2s infinite;
         }
         @keyframes ytPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
-            }
+            0%,100% { box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+            50% { box-shadow: 0 0 20px rgba(255,0,0,0.9); }
         }
         .quick-grid {
             display: grid;
@@ -587,9 +826,7 @@
             gap: 3px;
             position: relative;
         }
-        .quick-card:active {
-            transform: scale(0.92);
-        }
+        .quick-card:active { transform: scale(0.92); }
         .qc-af1 {
             background: linear-gradient(135deg, #4a148c, #6a1b9a);
             border: 2px solid #ab47bc;
@@ -605,16 +842,14 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
             z-index: 300;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-        .modal-overlay.show {
-            display: flex;
-        }
+        .modal-overlay.show { display: flex; }
         .modal-box {
             background: linear-gradient(145deg, #151530, #0d0d25);
             border: 2px solid var(--primary);
@@ -624,16 +859,6 @@
             max-width: 380px;
             text-align: center;
             animation: modalIn 0.3s;
-        }
-        @keyframes modalIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
         }
         .modal-box h3 {
             color: var(--gold);
@@ -653,23 +878,21 @@
             transition: all 0.2s;
             text-transform: uppercase;
         }
-        .modal-btn:active {
-            transform: scale(0.96);
-        }
+        .modal-btn:active { transform: scale(0.96); }
         .modal-btn-create {
             background: linear-gradient(135deg, #ab47bc, #ce93d8);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(171, 71, 188, 0.4);
+            box-shadow: 0 4px 15px rgba(171,71,188,0.4);
         }
         .modal-btn-deposit {
             background: linear-gradient(135deg, #ff5252, #ff8a80);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+            box-shadow: 0 4px 15px rgba(255,82,82,0.4);
         }
         .modal-btn-youtube {
             background: linear-gradient(135deg, #ff0000, #ff4444);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(255,0,0,0.4);
         }
         .modal-btn-close {
             background: transparent;
@@ -679,7 +902,7 @@
             margin-top: 6px;
         }
         .modal-bonus {
-            background: rgba(255, 215, 0, 0.15);
+            background: rgba(255,215,0,0.15);
             border: 1px dashed var(--gold);
             border-radius: 10px;
             padding: 8px;
@@ -714,6 +937,25 @@
             margin-bottom: 10px;
             font-size: 13px;
         }
+        .admin-section .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .admin-section .toggle-row .label {
+            font-size: 11px;
+            color: var(--subtext);
+        }
+        .admin-section .toggle-row .status {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+        .status-on { background: rgba(0,230,118,0.2); color: #00e676; }
+        .status-off { background: rgba(255,82,82,0.2); color: #ff5252; }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -839,7 +1081,7 @@
             color: #fff;
         }
         .taxa-destaque {
-            background: rgba(255, 82, 82, 0.15);
+            background: rgba(255,82,82,0.15);
             border: 2px dashed var(--accent);
             border-radius: 10px;
             padding: 8px;
@@ -910,27 +1152,7 @@
             font-weight: 900;
             color: #ffd700;
         }
-        .task-card {
-            background: linear-gradient(135deg, #0a1a2a, #0a0a2a);
-            border: 2px solid #ff0000;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .btn-yt {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            color: #fff;
-            padding: 12px;
-            border-radius: 25px;
-            font-weight: 900;
-            font-size: 13px;
-            width: 100%;
-            cursor: pointer;
-            border: none;
-        }
-
-        /* ===== ÁRVORE COM CORES VIVAS ===== */
+        /* ===== ÁRVORE ===== */
         .arvore-card-grid {
             display: flex;
             flex-direction: column;
@@ -1025,9 +1247,7 @@
             color: var(--subtext);
             margin: 6px 0;
         }
-        .arvore-card .arvore-meta strong {
-            color: #fff;
-        }
+        .arvore-card .arvore-meta strong { color: #fff; }
         .progress-bar-container {
             background: rgba(255,255,255,0.08);
             border-radius: 20px;
@@ -1095,12 +1315,169 @@
             animation: none;
             box-shadow: none;
         }
-
+        /* ===== TAREFAS - VERSÃO 2×2 GRANDE ===== */
+        .task-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .task-col {
+            background: linear-gradient(145deg, #12122a, #1a1a30);
+            border-radius: 16px;
+            padding: 14px 12px;
+            border: 2px solid var(--border);
+        }
+        .task-col h4 {
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: var(--gold);
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            padding-bottom: 8px;
+        }
+        .task-col .task-item {
+            background: linear-gradient(145deg, #0d0d20, #12122a);
+            border-radius: 14px;
+            padding: 14px 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+        .task-col .task-item:active {
+            transform: scale(0.96);
+        }
+        .task-col .task-item .task-title {
+            font-size: 11px;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .task-col .task-item .task-valor {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .task-col .task-item .task-btn {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            width: 100%;
+            max-width: 140px;
+            transition: 0.2s;
+        }
+        .task-col .task-item .task-btn:active {
+            transform: scale(0.92);
+        }
+        .task-col .task-item .task-icone {
+            font-size: 22px;
+        }
+        .task-col .task-item.bloqueado {
+            opacity: 0.5;
+            filter: grayscale(60%);
+        }
+        .task-col .task-item.bloqueado .task-btn {
+            background: #444;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .task-info {
+            text-align: center;
+            font-size: 9px;
+            color: var(--subtext);
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(255,215,0,0.05);
+            border-radius: 10px;
+            border: 1px dashed var(--gold);
+        }
+        /* ===== VIP CHAMARIZ ===== */
+        .vip-chamariz {
+            background: linear-gradient(135deg, #1a1a0a, #2a2a0a);
+            border: 3px solid #ffd700;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .vip-chamariz .cham-icon { font-size: 40px; }
+        .vip-chamariz .cham-titulo {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffd700;
+        }
+        .vip-chamariz .cham-sub {
+            font-size: 10px;
+            color: var(--subtext);
+        }
+        .vip-chamariz .cham-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+        /* ===== HISTÓRICO ===== */
+        .invite-tabs {
+            display: flex;
+            margin-bottom: 16px;
+            background: #0a0a18;
+            border-radius: 12px;
+            padding: 3px;
+        }
+        .invite-tab {
+            flex: 1;
+            text-align: center;
+            padding: 11px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--subtext);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        .invite-tab.active {
+            background: var(--primary);
+            color: #000;
+        }
+        .invite-tab-content {
+            display: none;
+        }
+        .invite-tab-content.active {
+            display: block;
+        }
+        .saque-historico-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #1a1a28;
+            font-size: 9px;
+        }
+        .saque-historico-item .status-aprovado { color: #22c55e; }
+        .saque-historico-item .status-negado { color: #ef4444; }
+        .saque-historico-item .status-pendente { color: #ffd700; }
         /* ===== ANÚNCIOS ===== */
         .fullscreen-ad-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0,0,0,0.95);
             z-index: 99999;
             display: none;
             align-items: center;
@@ -1110,13 +1487,13 @@
         }
         .fullscreen-ad-content {
             background: linear-gradient(180deg, #0B0F18 0%, #05080E 100%);
-            border: 3px solid rgba(0, 240, 255, 0.5);
+            border: 3px solid rgba(0,240,255,0.5);
             border-radius: 24px;
             padding: 30px 20px;
             text-align: center;
             max-width: 380px;
             width: 100%;
-            box-shadow: 0 0 60px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 60px rgba(0,240,255,0.2);
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @keyframes popIn {
@@ -1128,7 +1505,7 @@
             font-weight: 900;
             font-style: italic;
             color: #FF3B30;
-            text-shadow: 0 0 40px rgba(255, 59, 48, 0.6);
+            text-shadow: 0 0 40px rgba(255,59,48,0.6);
         }
         .fullscreen-ad-content .bonus-earplane {
             font-size: 3rem;
@@ -1172,9 +1549,9 @@
             width: 320px;
             max-width: 90vw;
             background: linear-gradient(180deg, #0D0800 0%, #0A0000 100%);
-            border: 2px solid rgba(255, 215, 0, 0.4);
+            border: 2px solid rgba(255,215,0,0.4);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
             padding: 14px;
             display: none;
         }
@@ -1190,7 +1567,7 @@
             font-size: 12px;
         }
         .aviator-ad .aviator-close {
-            background: rgba(255, 0, 0, 0.5);
+            background: rgba(255,0,0,0.5);
             border: none;
             color: #fff;
             width: 28px;
@@ -1251,13 +1628,58 @@
             <h1 onclick="tapAdm()">⚡ KULAXA VIP</h1>
             <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" style="display:none;">☰</button>
         </div>
+
+        <!-- ===== BANNER DE ANÚNCIO ===== -->
+        <div class="anuncio-overlay" id="anuncioOverlay">
+            <div class="anuncio-box">
+                <button class="anuncio-fechar-x" onclick="fecharAnuncio()">✕</button>
+                <div class="anuncio-badge">📢 ANÚNCIO OFICIAL</div>
+                <div class="anuncio-titulo" id="anuncioTitulo">Warner Bros em Moçambique!</div>
+                <div class="anuncio-texto" id="anuncioTexto">
+                    A plataforma de investimento <span class="highlight">Warner Bros</span> foi oficialmente lançada em <span class="highlight">Moçambique</span> no dia <span class="highlight">9 de junho de 2026</span>! Esta chegada marca um grande passo no desenvolvimento financeiro digital do país, oferecendo aos moçambicanos novas oportunidades de investimento modernas, seguras e acessíveis. Com um sistema transparente e programas adaptados a diferentes níveis de investidores, a Warner Bros Investment Platform permite que cada utilizador aumente o seu capital e construa um futuro financeiro mais estável. Seja você iniciante ou experiente no mundo dos investimentos, encontrará opções flexíveis e acompanhamento dedicado para maximizar os seus resultados. A nossa missão em Moçambique é apoiar o crescimento económico local, incentivar o empreendedorismo e criar oportunidades reais para milhares de pessoas. Acreditamos que esta plataforma terá um impacto positivo na vida financeira de muitos moçambicanos e contribuirá para uma nova era de inovação económica no país. Não perca esta oportunidade de fazer parte desta revolução.
+                </div>
+                <div class="anuncio-timer" id="anuncioTimer">⏳ O anúncio fechará automaticamente em <span id="anuncioContador">20</span> segundos</div>
+                <button class="anuncio-btn-fechar" onclick="fecharAnuncio()">✅ ENTENDI, CONTINUAR</button>
+                <div class="anuncio-progresso">
+                    <div class="barra" id="anuncioBarra" style="width:100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MODAL DE SERVIÇOS ===== -->
+        <div class="modal-service-overlay" id="modalServicos" onclick="if(event.target===this) fecharModalServicos()">
+            <div class="modal-service-box">
+                <div class="service-icon">🛠️</div>
+                <h2>PRESTAÇÃO DE SERVIÇOS</h2>
+                <p class="service-sub">Criação e desenvolvimento de sistemas personalizados</p>
+                <div class="service-contact">
+                    <div class="label">📱 CONTACTO</div>
+                    <div class="number">84 678 7271</div>
+                </div>
+                <button class="service-btn-copy" onclick="copiarNumero()">📋 COPIAR NÚMERO</button>
+                <button class="service-btn-wp" onclick="abrirWhatsApp()">💬 ENVIAR MENSAGEM NO WHATSAPP</button>
+                <button class="service-btn-close" onclick="fecharModalServicos()">✕ FECHAR</button>
+            </div>
+        </div>
+
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <div class="sidebar-menu" id="sidebarMenu">
             <h3 style="color:var(--primary);margin-bottom:16px;">📋 MENU</h3>
             <button class="btn-primary" onclick="navigateFromSidebar('scr-home')">🏠 Home</button>
             <button class="btn-secondary" onclick="navigateFromSidebar('scr-dep')">📥 Depósito</button>
             <button class="btn-accent" onclick="navigateFromSidebar('scr-out')">💸 Saque</button>
-            <button class="btn-outline" onclick="navigateFromSidebar('scr-invite')">👥 Convidar</button>
+            
+            <!-- ===== BOTÃO CONVIDAR COM SERVIÇOS DENTRO ===== -->
+            <div style="margin-bottom:10px;">
+                <button class="btn-outline" onclick="navigateFromSidebar('scr-invite')" style="margin-bottom:4px;">👥 Convidar</button>
+                <button class="btn-servicos" onclick="fecharModalServicos(); abrirModalServicos(); toggleSidebar();">
+                    <span class="icon">🛠️</span> PRESTAÇÃO DE SERVIÇOS
+                </button>
+            </div>
+
+            <button class="btn-outline sidebar-btn-locked" onclick="return false;" style="text-align:left;">
+                🛒 LOJA <span class="badge-breve">🔒 EM BREVE</span>
+            </button>
             <button class="btn-outline sidebar-btn-locked" onclick="return false;" style="text-align:left;">
                 🎁 Presentes <span class="badge-breve">🔒 EM BREVE</span>
             </button>
@@ -1286,7 +1708,7 @@
 
         <div id="scr-login" class="screen active">
             <div class="login-box">
-                <div style="text-align:center;"><span class="floating-badge">💰 ECONOMIA DIGITAL USD</span></div>
+                <div style="text-align:center;"><span class="floating-badge">💰 ECONOMIA DIGITAL MT</span></div>
                 <div class="login-tabs">
                     <div class="login-tab active" id="tab-login" onclick="switchLoginTab('login')">🔐 ENTRAR</div>
                     <div class="login-tab" id="tab-cadastro" onclick="switchLoginTab('cadastro')">✨ CRIAR</div>
@@ -1322,23 +1744,23 @@
                 <div style="font-size:7px;color:#888;" id="estagiarios-count">🟢 Estagiários: 50-200</div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;">
-                <div class="ganho-card ontem"><div style="font-size:7px;">📅 ONTEM</div><div class="ganho-valor ontem" id="ganho-ontem">USD 0.00</div></div>
-                <div class="ganho-card hoje"><div style="font-size:7px;">📅 HOJE</div><div class="ganho-valor hoje" id="ganho-hoje">USD 0.00</div></div>
-                <div class="ganho-card total"><div style="font-size:7px;">📅 ESTE ANO</div><div class="ganho-valor total" id="ganho-total">USD 0.00</div></div>
+                <div class="ganho-card ontem"><div style="font-size:7px;">📅 ONTEM</div><div class="ganho-valor ontem" id="ganho-ontem">MT 0.00</div></div>
+                <div class="ganho-card hoje"><div style="font-size:7px;">📅 HOJE</div><div class="ganho-valor hoje" id="ganho-hoje">MT 0.00</div></div>
+                <div class="ganho-card total"><div style="font-size:7px;">📅 ESTE ANO</div><div class="ganho-valor total" id="ganho-total">MT 0.00</div></div>
             </div>
             <div class="banner-carrossel" id="bannerCarrossel"><div class="banner-track" id="bannerTrack"></div></div>
             <div class="banner-dots" id="bannerDots"></div>
             <div class="quick-grid" id="quickGrid"></div>
             <div class="card bal-card">
                 <p style="font-size:10px;color:var(--subtext);">💰 SALDO</p>
-                <h1 id="bal-txt" class="bal-usd">USD 0.00</h1>
-                <p id="bal-mt">≈ MT 0.00</p>
+                <h1 id="bal-txt" class="bal-usd">MT 0.00</h1>
+                <p id="bal-mt" style="font-size:10px;color:var(--subtext);"></p>
                 <p id="user-info" style="font-size:10px;background:rgba(0,230,118,0.1);display:inline-block;padding:6px 16px;border-radius:20px;margin-top:8px;color:var(--primary);"></p>
             </div>
             <div id="daily-section" style="display:none;">
                 <div class="daily-card">
                     <p style="font-size:10px;">📅 GANHO DIÁRIO</p>
-                    <div class="daily-amount" id="daily-amount">USD 0.00</div>
+                    <div class="daily-amount" id="daily-amount">MT 0.00</div>
                     <button class="collect-btn" onclick="collectDaily()">💰 COLETAR</button>
                 </div>
             </div>
@@ -1365,31 +1787,47 @@
 
         <div id="scr-out" class="screen">
             <h3 style="color:var(--accent);">💸 SAQUE</h3>
-            <div class="card"><p id="taxa-info">⚠️ TAXA 10% · APENAS VIPs</p></div>
-            <div class="saque-timer" id="saque-timer-block" style="display:none;"><span>⏰ PRÓXIMO SAQUE EM:</span><br><span class="timer-value" id="saque-timer-display">24:00:00</span></div>
+            <div class="card">
+                <p id="taxa-info">⚠️ TAXA 10% · APENAS VIPs</p>
+                <div id="dia-info" style="font-size:9px;color:var(--gold);margin-top:4px;"></div>
+            </div>
+            <div class="saque-timer" id="saque-timer-block" style="display:none;">
+                <span>⏰ PRÓXIMO SAQUE EM:</span><br>
+                <span class="timer-value" id="saque-timer-display">24:00:00</span>
+            </div>
             <input type="text" id="out-numero" placeholder="Número">
             <input type="text" id="out-nome" placeholder="Nome">
             <div id="grid-out" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;"></div>
-            <input type="text" id="out-val" placeholder="USD" readonly style="text-align:center;font-weight:bold;background:var(--input-bg);border:2px solid var(--accent);">
+            <input type="text" id="out-val" placeholder="MT" readonly style="text-align:center;font-weight:bold;background:var(--input-bg);border:2px solid var(--accent);">
             <div class="card">
                 <div class="pending-row"><span>Solicitado:</span><span id="preview-amount">0</span></div>
                 <div class="pending-row"><span>Taxa:</span><span id="preview-fee">0</span></div>
                 <div class="pending-row"><span>Recebe:</span><span id="preview-net">0</span></div>
             </div>
-            <div class="taxa-destaque"><div class="taxa-label">⚠️ TAXA DE 10% DEDUZIDA</div><div class="taxa-value" id="taxa-destaque-valor">- USD 0.00</div></div>
+            <div class="taxa-destaque"><div class="taxa-label">⚠️ TAXA DE 10% DEDUZIDA</div><div class="taxa-value" id="taxa-destaque-valor">- MT 0.00</div></div>
             <div id="saque-registro" style="margin:10px 0;"></div>
             <button id="btn-submit-out" class="btn-accent" onclick="sendOut()" disabled>📋 SELECIONE O VALOR</button>
         </div>
 
         <div id="scr-invite" class="screen">
             <h3 style="color:var(--primary);" onclick="tapInvite()">👥 CONVIDAR</h3>
-            <div class="card" style="text-align:center;">
-                <p>🎁 Ganhe 20%</p>
-                <p id="invite-link-display" style="font-size:11px;word-break:break-all;background:var(--input-bg);padding:8px;border-radius:8px;"></p>
-                <button class="btn-primary" onclick="copyInviteLink()">📋 COPIAR</button>
+            <div class="invite-tabs">
+                <div class="invite-tab active" data-tab="convite" onclick="switchInviteTab('convite')">👥 CONVITE</div>
+                <div class="invite-tab" data-tab="historico" onclick="switchInviteTab('historico')">📋 HISTÓRICO</div>
             </div>
-            <p>🏆 <span id="invite-earnings">0</span> | 👥 <span id="invited-count">0</span></p>
-            <button onclick="logout()" style="background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;width:100%;border-radius:14px;margin-top:15px;">🚪 SAIR</button>
+            <div id="invite-tab-convite" class="invite-tab-content active">
+                <div class="card" style="text-align:center;">
+                    <p>🎁 Ganhe 20%</p>
+                    <p id="invite-link-display" style="font-size:11px;word-break:break-all;background:var(--input-bg);padding:8px;border-radius:8px;"></p>
+                    <button class="btn-primary" onclick="copyInviteLink()">📋 COPIAR</button>
+                </div>
+                <p>🏆 <span id="invite-earnings">0</span> | 👥 <span id="invited-count">0</span></p>
+                <button onclick="logout()" style="background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;width:100%;border-radius:14px;margin-top:15px;">🚪 SAIR</button>
+            </div>
+            <div id="invite-tab-historico" class="invite-tab-content">
+                <h4 style="color:var(--gold);font-size:12px;margin-bottom:10px;">📋 HISTÓRICO DE SAQUES</h4>
+                <div id="historico-saques-list"></div>
+            </div>
         </div>
 
         <div id="scr-roleta" class="screen">
@@ -1417,14 +1855,99 @@
         <div id="scr-adm" class="screen">
             <h2 style="color:var(--primary);">🛡️ PAINEL ADMIN</h2>
             <div class="stats-grid" id="admin-stats-grid"></div>
-            <div class="admin-section"><h4>💸 CONTROLE DE SAQUES</h4><div style="display:flex;justify-content:space-between;align-items:center;"><span>Saques Diários</span><label class="toggle-switch"><input type="checkbox" id="saque-diario-toggle" onchange="toggleSaqueDiario()" checked><span class="toggle-slider"></span></label></div></div>
+            
+            <!-- ===== CONFIGURAÇÃO DO ANÚNCIO ===== -->
+            <div class="admin-section">
+                <h4>📢 CONFIGURAR ANÚNCIO</h4>
+                <div style="font-size:9px;color:var(--subtext);margin-bottom:6px;">Edite o título, texto e duração do anúncio que aparece antes da Home</div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Título do Anúncio</label>
+                    <input type="text" id="ed-anuncio-titulo" placeholder="Título do anúncio" style="padding:8px;">
+                </div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Texto do Anúncio</label>
+                    <textarea id="ed-anuncio-texto" rows="4" placeholder="Texto do anúncio" style="padding:8px;resize:vertical;"></textarea>
+                </div>
+                <div>
+                    <label style="font-size:9px;color:var(--subtext);">Duração (segundos)</label>
+                    <input type="number" id="ed-anuncio-duracao" value="20" min="5" max="60" style="padding:8px;">
+                </div>
+                <button class="btn-primary" onclick="saveAnuncioConfig()" style="margin-top:8px;">💾 SALVAR ANÚNCIO</button>
+                <button class="btn-outline" onclick="testarAnuncio()" style="margin-top:4px;">🔍 TESTAR ANÚNCIO</button>
+            </div>
+
+            <!-- ===== CONTROLE DE SAQUES DIÁRIOS ===== -->
+            <div class="admin-section">
+                <h4>💸 CONTROLE DE SAQUES DIÁRIOS</h4>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;">
+                    <span style="font-size:11px;color:var(--subtext);">Saques liberados todos os dias</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="saque-diario-toggle" onchange="toggleSaqueDiario()" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div style="font-size:8px;color:var(--subtext);margin-top:4px;text-align:center;">
+                    🔓 DESBLOQUEADO = Saques todos os dias<br>
+                    🔒 BLOQUEADO = Saques apenas de Segunda a Sexta (níveis VIP por dia)
+                </div>
+            </div>
+
+            <!-- ===== CONTROLE DE COMISSÕES ===== -->
+            <div class="admin-section">
+                <h4>💰 CONTROLE DE COMISSÕES DAS TAREFAS</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:12px;text-align:center;">
+                        <div style="font-size:11px;color:var(--gold);font-weight:700;">🎬 COLUNA GRÁTIS</div>
+                        <div style="font-size:22px;margin:6px 0;" id="gratis-status-icon">🔴</div>
+                        <button id="toggle-gratis-btn" class="btn-toggle-on" onclick="toggleComissao('gratis')">✅ ATIVO</button>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:12px;text-align:center;">
+                        <div style="font-size:11px;color:var(--gold);font-weight:700;">⭐ COLUNA VIP</div>
+                        <div style="font-size:22px;margin:6px 0;" id="vip-status-icon">🔴</div>
+                        <button id="toggle-vip-btn" class="btn-toggle-on" onclick="toggleComissao('vip')">✅ ATIVO</button>
+                    </div>
+                </div>
+                <div style="margin-top:8px;font-size:8px;color:#888;text-align:center;">
+                    ⚡ Comissão ativa = usuário recebe após 5 minutos<br>
+                    🔒 Comissão desativa = usuário NÃO recebe nada
+                </div>
+            </div>
+
+            <!-- ===== VALORES INDIVIDUAIS ===== -->
+            <div class="admin-section">
+                <h4>📝 VALORES INDIVIDUAIS POR LINK</h4>
+                <div style="font-size:9px;color:var(--subtext);margin-bottom:6px;">Edite o valor em MT que cada link paga</div>
+                <div id="task-values-edit" style="max-height:300px;overflow-y:auto;"></div>
+                <button class="btn-primary" onclick="saveTaskValues()" style="margin-top:8px;">💾 SALVAR VALORES</button>
+            </div>
+
             <div class="admin-section"><h4>💵 VALORES DE SAQUE</h4><div id="admin-saque-values" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;"></div><button class="btn-primary" onclick="saveSaqueValues()" style="margin-top:8px;">💾 SALVAR</button></div>
             <div class="admin-section"><h4>⭐ CONFIGURAR VIPs (20 NÍVEIS)</h4><div id="admin-vips-list" style="max-height:400px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveVips()" style="margin-top:8px;">💾 SALVAR VIPs</button></div>
             <div class="admin-section"><h4>🏦 CONFIGURAR FUNDOS (10 FUNDOS)</h4><div id="admin-wealth-list" style="max-height:400px;overflow-y:auto;"></div><button class="btn-gold" onclick="saveWealth()" style="margin-top:8px;">💾 SALVAR FUNDOS</button></div>
             <div class="admin-section"><h4>🎨 TEMA</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;" id="theme-buttons"></div></div>
             <div class="admin-section"><h4>🏆 8 BANNERS</h4><div id="admin-banners-list" style="max-height:400px;overflow-y:auto;"></div><button class="btn-primary" onclick="saveAllBanners()" style="margin-top:8px;">💾 SALVAR BANNERS</button></div>
             <div class="admin-section"><h4>🔗 CONFIGURAR CARDS</h4><div id="af-cards-edit" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9px;"></div><button class="btn-primary" onclick="saveAfCards()" style="margin-top:8px;">💾 SALVAR</button></div>
-            <div class="admin-section"><h4>📺 TAREFAS</h4><div id="task-links-edit"></div><div style="font-size:9px;">Valor/tarefa (USD):<input type="number" id="ed-task-value" step="0.01" style="padding:6px;"></div><button class="btn-primary" onclick="saveTaskLinks()" style="margin-top:8px;">💾 SALVAR</button></div>
+            
+            <div class="admin-section"><h4>📺 CONFIGURAR TAREFAS</h4>
+                <div style="font-size:10px;color:var(--subtext);margin-bottom:8px;">Valores em MT</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div><label style="font-size:9px;">Grátis (MT/vídeo)</label><input type="number" id="ed-gratis-valor" step="0.5" style="padding:6px;"></div>
+                    <div><label style="font-size:9px;">VIP (MT/vídeo)</label><input type="number" id="ed-vip-valor" step="0.5" style="padding:6px;"></div>
+                    <div><label style="font-size:9px;">Vídeos Grátis</label><input type="number" id="ed-gratis-qtd" step="1" style="padding:6px;"></div>
+                    <div><label style="font-size:9px;">Vídeos VIP</label><input type="number" id="ed-vip-qtd" step="1" style="padding:6px;"></div>
+                    <div style="grid-column:span 2;"><label style="font-size:9px;">Dias Grátis (15 padrão)</label><input type="number" id="ed-dias-gratis" step="1" style="padding:6px;"></div>
+                </div>
+                <button class="btn-primary" onclick="saveTaskConfig()" style="margin-top:8px;">💾 SALVAR CONFIGURAÇÃO</button>
+            </div>
+
+            <div class="admin-section"><h4>📺 LINKS DAS TAREFAS</h4><div id="task-links-edit"></div><button class="btn-primary" onclick="saveTaskLinks()" style="margin-top:8px;">💾 SALVAR LINKS</button></div>
+            
+            <div class="admin-section"><h4>🔒 BLOQUEAR SISTEMA</h4>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-bloqueio-geral" onchange="toggleBloqueioGeral()"><span class="toggle-slider"></span></label>
+                    <span style="font-size:10px;">Bloquear todo o sistema (usuários veem tudo normal, mas não recebem recompensas)</span>
+                </div>
+            </div>
             <div class="admin-section"><h4>👤 USUÁRIO</h4><input type="text" id="search-user" placeholder="🔍 Número..."><button class="btn-primary" onclick="searchUser()" style="margin:8px 0;">🔍 BUSCAR</button><div id="user-details" style="display:none;"></div></div>
             <div class="admin-section"><h4>💳 PAGAMENTOS</h4>
                 <div><span>📱 M-Pesa</span><label class="toggle-switch"><input type="checkbox" id="mpesa-toggle" onchange="togglePaymentMethod('mpesa')" checked><span class="toggle-slider"></span></label><input type="text" id="ed-mpesa-numero" placeholder="Número"><input type="text" id="ed-mpesa-nome" placeholder="Nome"></div>
@@ -1458,6 +1981,10 @@
     </div>
 
     <script>
+        // ================================================================
+        // CONFIGURAÇÃO INICIAL
+        // ================================================================
+        
         (function() {
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
@@ -1490,7 +2017,23 @@
             pending: [],
             config: {
                 n1: '851511841 - Benjamim', emola: '870514180', mkesh: '870000000 - mKesh',
-                grupoNormal: '', grupoVIP: '', saqueDiario: true,
+                grupoNormal: '', grupoVIP: '', 
+                saqueDiario: true,
+                bloqueioGeral: false,
+                comissaoGratis: true,
+                comissaoVip: true,
+                taskGratisValor: 3,
+                taskVipValor: 50,
+                taskGratisQtd: 6,
+                taskVipQtd: 8,
+                taskDiasGratis: 15,
+                taskValues: {},
+                anuncio: {
+                    ativo: true,
+                    titulo: 'Warner Bros em Moçambique!',
+                    duracao: 20,
+                    texto: 'A plataforma de investimento Warner Bros foi oficialmente lançada em Moçambique no dia 9 de junho de 2026! Esta chegada marca um grande passo no desenvolvimento financeiro digital do país, oferecendo aos moçambicanos novas oportunidades de investimento modernas, seguras e acessíveis. Com um sistema transparente e programas adaptados a diferentes níveis de investidores, a Warner Bros Investment Platform permite que cada utilizador aumente o seu capital e construa um futuro financeiro mais estável. Seja você iniciante ou experiente no mundo dos investimentos, encontrará opções flexíveis e acompanhamento dedicado para maximizar os seus resultados. A nossa missão em Moçambique é apoiar o crescimento económico local, incentivar o empreendedorismo e criar oportunidades reais para milhares de pessoas. Acreditamos que esta plataforma terá um impacto positivo na vida financeira de muitos moçambicanos e contribuirá para uma nova era de inovação económica no país. Não perca esta oportunidade de fazer parte desta revolução.'
+                },
                 paymentMethods: {
                     mpesa: { active: true, numero: '851511841', nome: 'Benjamim' },
                     emola: { active: true, numero: '870514180', nome: 'Kulaxa' },
@@ -1504,8 +2047,8 @@
                 aviatorLinkWP: 'https://chat.whatsapp.com/grupo-aviator'
             },
             invites: {},
-            taskLinks: ['https://youtube.com/@Canal1', 'https://youtube.com/@Canal2', 'https://youtube.com/@Canal3'],
-            taskValue: 0.50,
+            taskLinks: [],
+            taskValues: {},
             saqueValues: [100, 200, 300, 500, 800, 1000, 2000, 3000, 5000, 10000, 20000, 50000],
             saqueValuesAtivos: {},
             afCards: [
@@ -1553,9 +2096,27 @@
                     if (!d.banners) d.banners = JSON.parse(JSON.stringify(DEF.banners));
                     if (!d.vips) d.vips = JSON.parse(JSON.stringify(DEF.vips));
                     if (!d.wealth) d.wealth = JSON.parse(JSON.stringify(DEF.wealth));
+                    if (!d.taskLinks || d.taskLinks.length < 20) {
+                        let pad = [];
+                        for (let i = 0; i < 20; i++) {
+                            pad.push('https://youtube.com/@Canal' + (i+1));
+                        }
+                        d.taskLinks = pad;
+                    }
+                    if (!d.taskValues) d.taskValues = {};
+                    if (!d.config.anuncio) d.config.anuncio = { ativo: true, titulo: DEF.config.anuncio.titulo, duracao: 20, texto: DEF.config.anuncio.texto };
                     db = d;
                 } else {
                     db = JSON.parse(JSON.stringify(DEF));
+                    if (!db.taskLinks || db.taskLinks.length < 20) {
+                        let pad = [];
+                        for (let i = 0; i < 20; i++) {
+                            pad.push('https://youtube.com/@Canal' + (i+1));
+                        }
+                        db.taskLinks = pad;
+                    }
+                    if (!db.taskValues) db.taskValues = {};
+                    if (!db.config.anuncio) db.config.anuncio = { ativo: true, titulo: DEF.config.anuncio.titulo, duracao: 20, texto: DEF.config.anuncio.texto };
                     fbDB.ref('data').set(db);
                 }
                 dbOk = true;
@@ -1570,6 +2131,9 @@
                 if (typeof u.bal !== 'number' || isNaN(u.bal)) u.bal = 0;
                 if (u.bal < 0) u.bal = 0;
                 if (typeof u.lv !== 'number' || isNaN(u.lv)) u.lv = 0;
+                if (!u.taskWatch) u.taskWatch = { count: 0, firstWatch: 0, ultimoReset: 0 };
+                if (!u.tarefasAssistidas) u.tarefasAssistidas = [];
+                if (!u.pendingRewards) u.pendingRewards = [];
             }
             fbDB.ref('data').update(db).catch(() => {});
         }
@@ -1587,9 +2151,229 @@
             setInterval(generateFakeFeed, 4000); setInterval(atualizarContador, 5000);
             setInterval(() => {
                 if (user) { checkWE(); updUI(); initDE(); updDU(); atualizarTimerSaque(); atualizarGanhos();
-                    if (document.getElementById('scr-out')?.classList.contains('active')) { updWS(); atualizarTimerSaque(); } }
+                    if (document.getElementById('scr-out')?.classList.contains('active')) { updWS(); atualizarTimerSaque(); }
+                    if (document.getElementById('scr-invite')?.classList.contains('active')) { renderHistoricoSaques(); }
+                    processPendingRewards();
+                }
             }, 30000);
+            setInterval(() => {
+                if (user) processPendingRewards();
+            }, 10000);
+            if (document.getElementById('toggle-bloqueio-geral')) {
+                document.getElementById('toggle-bloqueio-geral').checked = db.config.bloqueioGeral || false;
+            }
+            if (document.getElementById('saque-diario-toggle')) {
+                document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false;
+            }
+            carregarConfigTarefasAdmin();
+            atualizarBotoesComissao();
+            renderTaskValuesEdit();
+            atualizarDiaInfo();
+            carregarConfigAnuncioAdmin();
         }
+
+        // ================================================================
+        // FUNÇÕES DO ANÚNCIO
+        // ================================================================
+        
+        let anuncioTimer = null;
+        let anuncioContador = 20;
+        let anuncioInterval = null;
+
+        function mostrarAnuncio() {
+            const overlay = document.getElementById('anuncioOverlay');
+            const anuncio = db.config.anuncio || { ativo: true, titulo: 'Warner Bros em Moçambique!', duracao: 20, texto: DEF.config.anuncio.texto };
+            
+            if (!anuncio.ativo) {
+                return;
+            }
+            
+            document.getElementById('anuncioTitulo').textContent = anuncio.titulo || 'Warner Bros em Moçambique!';
+            document.getElementById('anuncioTexto').innerHTML = anuncio.texto || DEF.config.anuncio.texto;
+            
+            let duracao = parseInt(anuncio.duracao) || 20;
+            if (duracao < 5) duracao = 5;
+            if (duracao > 60) duracao = 60;
+            
+            anuncioContador = duracao;
+            document.getElementById('anuncioContador').textContent = anuncioContador;
+            document.getElementById('anuncioBarra').style.width = '100%';
+            
+            overlay.classList.add('show');
+            
+            if (anuncioInterval) clearInterval(anuncioInterval);
+            anuncioInterval = setInterval(() => {
+                anuncioContador--;
+                document.getElementById('anuncioContador').textContent = anuncioContador;
+                const percentual = (anuncioContador / duracao) * 100;
+                document.getElementById('anuncioBarra').style.width = percentual + '%';
+                
+                if (anuncioContador <= 0) {
+                    fecharAnuncio();
+                }
+            }, 1000);
+        }
+
+        function fecharAnuncio() {
+            const overlay = document.getElementById('anuncioOverlay');
+            overlay.classList.remove('show');
+            if (anuncioInterval) {
+                clearInterval(anuncioInterval);
+                anuncioInterval = null;
+            }
+            sessionStorage.setItem('anuncio_visto', 'true');
+        }
+
+        // ================================================================
+        // CONFIGURAÇÃO DO ANÚNCIO NO ADMIN
+        // ================================================================
+
+        function carregarConfigAnuncioAdmin() {
+            const anuncio = db.config.anuncio || { ativo: true, titulo: '', duracao: 20, texto: '' };
+            document.getElementById('ed-anuncio-titulo').value = anuncio.titulo || '';
+            document.getElementById('ed-anuncio-texto').value = anuncio.texto || '';
+            document.getElementById('ed-anuncio-duracao').value = anuncio.duracao || 20;
+        }
+
+        function saveAnuncioConfig() {
+            if (!db.config) db.config = {};
+            if (!db.config.anuncio) db.config.anuncio = {};
+            
+            db.config.anuncio.titulo = document.getElementById('ed-anuncio-titulo').value.trim() || 'Warner Bros em Moçambique!';
+            db.config.anuncio.texto = document.getElementById('ed-anuncio-texto').value.trim() || DEF.config.anuncio.texto;
+            db.config.anuncio.duracao = parseInt(document.getElementById('ed-anuncio-duracao').value) || 20;
+            if (db.config.anuncio.duracao < 5) db.config.anuncio.duracao = 5;
+            if (db.config.anuncio.duracao > 60) db.config.anuncio.duracao = 60;
+            db.config.anuncio.ativo = true;
+            
+            save();
+            alert('✅ Anúncio salvo com sucesso!');
+            carregarConfigAnuncioAdmin();
+        }
+
+        function testarAnuncio() {
+            saveAnuncioConfig();
+            sessionStorage.removeItem('anuncio_visto');
+            mostrarAnuncio();
+        }
+
+        // ================================================================
+        // FUNÇÕES DO BOTÃO DE SERVIÇOS
+        // ================================================================
+        
+        function abrirModalServicos() {
+            document.getElementById('modalServicos').classList.add('show');
+        }
+
+        function fecharModalServicos() {
+            document.getElementById('modalServicos').classList.remove('show');
+        }
+
+        function copiarNumero() {
+            const numero = '846787271';
+            navigator.clipboard?.writeText(numero).then(() => {
+                alert('✅ Número copiado: ' + numero);
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = numero;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('✅ Número copiado: ' + numero);
+            });
+        }
+
+        function abrirWhatsApp() {
+            const numero = '846787271';
+            window.open('https://wa.me/258' + numero, '_blank');
+        }
+
+        // ================================================================
+        // CONTROLE DE SAQUES DIÁRIOS E NÍVEIS POR DIA
+        // ================================================================
+
+        function toggleSaqueDiario() {
+            db.config.saqueDiario = document.getElementById('saque-diario-toggle').checked;
+            save();
+            alert('✅ Saques diários ' + (db.config.saqueDiario ? 'DESBLOQUEADOS' : 'BLOQUEADOS (Segunda a Sexta com níveis)') + '!');
+            atualizarDiaInfo();
+            if (user) { atualizarTimerSaque(); updWS(); }
+        }
+
+        function getNivelMinimoPorDia() {
+            const dias = {
+                0: 0, // Domingo - NENHUM
+                1: 17, // Segunda - VIP 17+
+                2: 14, // Terça - VIP 14+
+                3: 11, // Quarta - VIP 11+
+                4: 8,  // Quinta - VIP 8+
+                5: 0,  // Sexta - TODOS VIPs
+                6: 0   // Sábado - NENHUM
+            };
+            return dias;
+        }
+
+        function getNivelMinimoHoje() {
+            const dia = new Date().getDay();
+            const niveis = getNivelMinimoPorDia();
+            return niveis[dia] || 0;
+        }
+
+        function podeSacarHoje() {
+            if (!user) return false;
+            if (user.lv === 0) return false;
+            if (sistemaBloqueado()) return false;
+            
+            if (db.config.saqueDiario !== false) {
+                return true;
+            }
+            
+            const dia = new Date().getDay();
+            const nivelMinimo = getNivelMinimoPorDia()[dia] || 0;
+            
+            if (dia === 0 || dia === 6) {
+                return false;
+            }
+            
+            if (dia === 5) {
+                return user.lv >= 1;
+            }
+            
+            return user.lv >= nivelMinimo;
+        }
+
+        function getMensagemDiaInfo() {
+            const dia = new Date().getDay();
+            const diasNomes = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const nomeDia = diasNomes[dia];
+            
+            if (db.config.saqueDiario !== false) {
+                return '📅 ' + nomeDia + ' · Saques LIBERADOS para todos os VIPs';
+            }
+            
+            if (dia === 0 || dia === 6) {
+                return '📅 ' + nomeDia + ' · 🔒 SAQUES BLOQUEADOS (Fim de semana)';
+            }
+            
+            if (dia === 5) {
+                return '📅 ' + nomeDia + ' · 🔓 SAQUES LIBERADOS para TODOS OS VIPs';
+            }
+            
+            const nivelMin = getNivelMinimoPorDia()[dia];
+            return '📅 ' + nomeDia + ' · ⭐ VIP ' + nivelMin + '+ podem sacar';
+        }
+
+        function atualizarDiaInfo() {
+            const el = document.getElementById('dia-info');
+            if (el) {
+                el.textContent = getMensagemDiaInfo();
+            }
+        }
+
+        // ================================================================
+        // FUNÇÕES AUXILIARES
+        // ================================================================
 
         let VIPS = [...db.vips], WEALTH = [...db.wealth], BANNERS = [...db.banners], user = null, bIdx = 0, bTimer = null, OUTS = [], so = 0;
         const ADM_SENHA = 'kulaxavip2000', COM = 0.20, TX = 0.10;
@@ -1597,18 +2381,401 @@
         let anuncioAtivo = false, anuncioInterval1 = null, anuncioInterval2 = null, aviatorTimeout = null;
         let vezEarplane = true;
 
-        function fUSD(v) { v = Math.max(0, Number(v) || 0); return 'USD ' + v.toLocaleString(undefined, { minimumFractionDigits: 2 }); }
         function fMT(v) { v = Math.max(0, Number(v) || 0); return 'MT ' + v.toLocaleString(undefined, { minimumFractionDigits: 2 }); }
         function getTaxa() { if (!user) return TX; return getConvidadosEfetivos() >= 15 ? 0.03 : TX; }
         function getConvidadosEfetivos() { if (!user) return 0; let all = db.invites && db.invites[user.phone] ? db.invites[user.phone].inv || [] : []; let e = 0; all.forEach(p => { if (db.users[p] && db.users[p].lv > 0) e++; }); return e; }
         function getTotalConvidados() { if (!user || !db.invites || !db.invites[user.phone]) return 0; return (db.invites[user.phone].inv || []).length; }
-        function podeSacar() { if (!user || user.lv === 0) return false; if (db.config.saqueDiario === false) { let dia = new Date().getDay(); if (dia === 0 || dia === 6) return false; if (dia === 5) return true; return user.lv >= (dia === 1 ? 17 : dia === 2 ? 14 : dia === 3 ? 11 : dia === 4 ? 8 : 1); } if (!user.ultimoSaque) return true; return (Date.now() - user.ultimoSaque) >= 86400000; }
-        function getTempoRestante() { if (!user || !user.ultimoSaque) return '00:00:00'; let diff = 86400000 - (Date.now() - user.ultimoSaque); if (diff <= 0) return '00:00:00'; let h = Math.floor(diff / 3600000), m = Math.floor((diff % 3600000) / 60000), s = Math.floor((diff % 60000) / 1000); return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'); }
-        function atualizarTimerSaque() { if (!user || !document.getElementById('scr-out')?.classList.contains('active')) return; let pode = podeSacar(), tb = document.getElementById('saque-timer-block'), td = document.getElementById('saque-timer-display'), btn = document.getElementById('btn-submit-out'); if (pode) { if (tb) tb.style.display = 'none'; if (btn && so > 0) { btn.disabled = false; btn.textContent = '📤 SOLICITAR'; } } else { if (tb) { tb.style.display = 'block'; if (td) td.textContent = getTempoRestante(); } if (btn) { btn.disabled = true; btn.textContent = '⏰ BLOQUEADO'; } } }
+        function sistemaBloqueado() { return db.config.bloqueioGeral || false; }
+        function comissaoGratisAtiva() { return db.config.comissaoGratis !== false; }
+        function comissaoVipAtiva() { return db.config.comissaoVip !== false; }
+        
+        function podeSacar() {
+            if (!user) return false;
+            if (user.lv === 0) return false;
+            if (sistemaBloqueado()) return false;
+            if (db.config.saqueDiario !== false) {
+                if (!user.ultimoSaque) return true;
+                return (Date.now() - user.ultimoSaque) >= 86400000;
+            }
+            return podeSacarHoje();
+        }
+
+        function getMensagemBloqueio() {
+            if (!user || user.lv === 0) return '🔒 APENAS VIPs';
+            if (sistemaBloqueado()) return '⏰ SISTEMA BLOQUEADO';
+            
+            if (db.config.saqueDiario !== false) {
+                return '⏰ AGUARDE 24H';
+            }
+            
+            const dia = new Date().getDay();
+            if (dia === 0 || dia === 6) {
+                return '🔒 FIM DE SEMANA - SAQUES BLOQUEADOS';
+            }
+            if (dia === 5) {
+                return '🔓 SEXTA - TODOS VIPs LIBERADOS';
+            }
+            const nivelMin = getNivelMinimoPorDia()[dia];
+            if (user.lv < nivelMin) {
+                return '⭐ PRECISA VIP ' + nivelMin + '+ (' + user.lv + ')';
+            }
+            return '⏰ AGUARDE 24H';
+        }
+
+        function getTempoRestante() { 
+            if (!user || !user.ultimoSaque) return '00:00:00'; 
+            let diff = 86400000 - (Date.now() - user.ultimoSaque); 
+            if (diff <= 0) return '00:00:00'; 
+            let h = Math.floor(diff / 3600000), m = Math.floor((diff % 3600000) / 60000), s = Math.floor((diff % 60000) / 1000); 
+            return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'); 
+        }
+        
+        function atualizarTimerSaque() { 
+            if (!user || !document.getElementById('scr-out')?.classList.contains('active')) return; 
+            let pode = podeSacar(), tb = document.getElementById('saque-timer-block'), td = document.getElementById('saque-timer-display'), btn = document.getElementById('btn-submit-out'); 
+            if (pode) { 
+                if (tb) tb.style.display = 'none'; 
+                if (btn && so > 0) { btn.disabled = false; btn.textContent = '📤 SOLICITAR'; } 
+                else if (btn) { btn.disabled = true; btn.textContent = '📋 SELECIONE O VALOR'; }
+            } else { 
+                if (tb) { tb.style.display = 'block'; if (td) td.textContent = getTempoRestante(); } 
+                if (btn) { 
+                    btn.disabled = true; 
+                    btn.textContent = '⏰ ' + getMensagemBloqueio();
+                } 
+            } 
+        }
+
+        function updWS() {
+            let b = document.getElementById('btn-submit-out');
+            if (!b) return;
+            if (!user || user.lv === 0) {
+                b.disabled = true;
+                b.textContent = '🔒 APENAS VIPs';
+                return;
+            }
+            if (sistemaBloqueado()) {
+                b.disabled = true;
+                b.textContent = '⏰ SISTEMA BLOQUEADO';
+                return;
+            }
+            
+            if (!podeSacar()) {
+                b.disabled = true;
+                b.textContent = '⏰ ' + getMensagemBloqueio();
+                return;
+            }
+            
+            if (so > 0) {
+                b.disabled = false;
+                b.textContent = '📤 SOLICITAR';
+            } else {
+                b.disabled = true;
+                b.textContent = '📋 SELECIONE O VALOR';
+            }
+        }
+
+        function toggleBloqueioGeral() {
+            db.config.bloqueioGeral = document.getElementById('toggle-bloqueio-geral').checked;
+            save();
+            alert('✅ Bloqueio ' + (db.config.bloqueioGeral ? 'ativado' : 'desativado') + '!');
+        }
+
+        // ================================================================
+        // CONTROLE DE COMISSÕES
+        // ================================================================
+
+        function toggleComissao(tipo) {
+            if (tipo === 'gratis') {
+                db.config.comissaoGratis = !db.config.comissaoGratis;
+            } else if (tipo === 'vip') {
+                db.config.comissaoVip = !db.config.comissaoVip;
+            }
+            save();
+            atualizarBotoesComissao();
+            alert('✅ Comissão ' + (tipo === 'gratis' ? 'GRÁTIS' : 'VIP') + ' ' + 
+                  (db.config.comissaoGratis && db.config.comissaoVip ? 'ATIVADA' : 'DESATIVADA') + '!');
+        }
+
+        function atualizarBotoesComissao() {
+            let gratisBtn = document.getElementById('toggle-gratis-btn');
+            let gratisIcon = document.getElementById('gratis-status-icon');
+            if (db.config.comissaoGratis !== false) {
+                gratisBtn.textContent = '✅ ATIVO';
+                gratisBtn.className = 'btn-toggle-on';
+                gratisIcon.textContent = '🟢';
+            } else {
+                gratisBtn.textContent = '🔴 DESATIVADO';
+                gratisBtn.className = 'btn-toggle-off';
+                gratisIcon.textContent = '🔴';
+            }
+            
+            let vipBtn = document.getElementById('toggle-vip-btn');
+            let vipIcon = document.getElementById('vip-status-icon');
+            if (db.config.comissaoVip !== false) {
+                vipBtn.textContent = '✅ ATIVO';
+                vipBtn.className = 'btn-toggle-on';
+                vipIcon.textContent = '🟢';
+            } else {
+                vipBtn.textContent = '🔴 DESATIVADO';
+                vipBtn.className = 'btn-toggle-off';
+                vipIcon.textContent = '🔴';
+            }
+        }
+
+        // ================================================================
+        // VALORES INDIVIDUAIS POR LINK
+        // ================================================================
+
+        function renderTaskValuesEdit() {
+            let totalLinks = (db.config.taskGratisQtd || 6) + (db.config.taskVipQtd || 8);
+            if (!db.taskValues) db.taskValues = {};
+            
+            let gratisValor = db.config.taskGratisValor || 3;
+            let vipValor = db.config.taskVipValor || 50;
+            let gratisQtd = db.config.taskGratisQtd || 6;
+            
+            for (let i = 0; i < totalLinks; i++) {
+                if (db.taskValues[i] === undefined || db.taskValues[i] === null) {
+                    db.taskValues[i] = i < gratisQtd ? gratisValor : vipValor;
+                }
+            }
+            save();
+            
+            let h = '';
+            let links = db.taskLinks || [];
+            for (let i = 0; i < totalLinks; i++) {
+                let tipo = i < gratisQtd ? '🎬 Grátis' : '⭐ VIP';
+                let link = links[i] || 'Link ' + (i+1);
+                let val = db.taskValues[i] || (i < gratisQtd ? gratisValor : vipValor);
+                h += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <span style="font-size:8px;color:var(--subtext);min-width:30px;">${i+1}</span>
+                    <span style="font-size:7px;color:${i < gratisQtd ? 'var(--gold)' : '#ff4081'};min-width:50px;">${tipo}</span>
+                    <span style="font-size:7px;color:#666;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${link}</span>
+                    <input type="number" class="ed-task-val" value="${val}" data-i="${i}" style="width:60px;padding:4px;font-size:9px;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;color:#fff;">
+                </div>`;
+            }
+            document.getElementById('task-values-edit').innerHTML = h;
+        }
+
+        function saveTaskValues() {
+            let inputs = document.querySelectorAll('.ed-task-val');
+            inputs.forEach(inp => {
+                let i = parseInt(inp.getAttribute('data-i'));
+                let val = parseFloat(inp.value) || 0;
+                db.taskValues[i] = Math.max(0, val);
+            });
+            save();
+            alert('✅ Valores individuais salvos!');
+            renderTaskValuesEdit();
+            rT();
+        }
+
+        function getTaskValue(index) {
+            if (!db.taskValues) db.taskValues = {};
+            let val = db.taskValues[index];
+            if (val === undefined || val === null) {
+                let gratisQtd = db.config.taskGratisQtd || 6;
+                let gratisValor = db.config.taskGratisValor || 3;
+                let vipValor = db.config.taskVipValor || 50;
+                val = index < gratisQtd ? gratisValor : vipValor;
+                db.taskValues[index] = val;
+                save();
+            }
+            return parseFloat(val) || 0;
+        }
+
+        // ================================================================
+        // SISTEMA DE RECOMPENSAS COM ATRASO DE 5 MINUTOS
+        // ================================================================
+
+        function agendarRecompensa(usuario, valor, tipo, linkIndex) {
+            if (!usuario) return;
+            if (valor <= 0) return;
+            if (!db.users[usuario]) return;
+            
+            if (tipo === 'gratis' && !comissaoGratisAtiva()) return;
+            if (tipo === 'vip' && !comissaoVipAtiva()) return;
+            if (sistemaBloqueado()) return;
+            
+            let u = db.users[usuario];
+            if (!u.pendingRewards) u.pendingRewards = [];
+            
+            let reward = {
+                valor: valor,
+                tipo: tipo,
+                linkIndex: linkIndex,
+                timestamp: Date.now(),
+                liberadoEm: Date.now() + (5 * 60 * 1000),
+                processado: false
+            };
+            
+            u.pendingRewards.push(reward);
+            save();
+            processPendingRewards(usuario);
+        }
+
+        function processPendingRewards(usuario) {
+            if (!usuario) usuario = user?.phone;
+            if (!usuario || !db.users[usuario]) return;
+            
+            let u = db.users[usuario];
+            if (!u.pendingRewards || u.pendingRewards.length === 0) return;
+            
+            let agora = Date.now();
+            let processados = false;
+            
+            u.pendingRewards = u.pendingRewards.filter(r => {
+                if (r.processado) return false;
+                if (agora >= r.liberadoEm) {
+                    u.bal = Math.max(0, (u.bal || 0) + r.valor);
+                    registrarGanho(r.valor);
+                    r.processado = true;
+                    processados = true;
+                    return false;
+                }
+                return true;
+            });
+            
+            if (processados) {
+                save();
+                if (user && user.phone === usuario) {
+                    updUI();
+                }
+            }
+        }
+
+        // ================================================================
+        // TAREFAS - VERSÃO 2×2 GRANDE
+        // ================================================================
+
+        function rT() {
+            let links = db.taskLinks || [];
+            let totalLinks = (db.config.taskGratisQtd || 6) + (db.config.taskVipQtd || 8);
+            if (links.length < totalLinks) {
+                let pad = [];
+                for (let i = 0; i < totalLinks; i++) {
+                    pad.push(links[i] || 'https://youtube.com/@Canal' + (i+1));
+                }
+                links = pad;
+                db.taskLinks = links;
+                save();
+            }
+
+            let gratisQtd = db.config.taskGratisQtd || 6;
+            let vipQtd = db.config.taskVipQtd || 8;
+
+            let html = '';
+            
+            html += `<div class="vip-chamariz">
+                <div class="cham-icon">👑</div>
+                <div class="cham-titulo">VIP CHAMARIZ</div>
+                <div class="cham-sub">Ative qualquer VIP e ganhe <strong>30 MT/dia</strong> assistindo 5 vídeos</div>
+                <button class="cham-btn" onclick="ativarVipChamariz()">⭐ ATIVAR VIP CHAMARIZ</button>
+            </div>`;
+
+            html += `<div class="task-container">`;
+
+            // COLUNA GRÁTIS
+            html += `<div class="task-col"><h4>🎬 GRÁTIS</h4>`;
+            for (let i = 0; i < gratisQtd; i++) {
+                let valor = getTaskValue(i);
+                html += `<div class="task-item">
+                    <div class="task-icone">📹</div>
+                    <div class="task-title">Vídeo ${i+1}</div>
+                    <div class="task-valor">${fMT(valor)}</div>
+                    <button class="task-btn" onclick="abrirTask(${i}, 'gratis')">▶️ ASSISTIR</button>
+                </div>`;
+            }
+            html += `<div class="task-info">📺 ${gratisQtd} vídeos disponíveis</div>`;
+            html += `</div>`;
+
+            // COLUNA VIP
+            html += `<div class="task-col"><h4>⭐ VIP</h4>`;
+            html += `<div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 8px; padding: 8px; margin-bottom: 10px; text-align: center; font-size: 11px; color: var(--gold);">
+                👑 Área VIP - Bônus exclusivos
+            </div>`;
+            for (let i = gratisQtd; i < gratisQtd + vipQtd; i++) {
+                let valor = getTaskValue(i);
+                html += `<div class="task-item">
+                    <div class="task-icone">⭐</div>
+                    <div class="task-title">Vídeo ${i+1}</div>
+                    <div class="task-valor">${fMT(valor)}</div>
+                    <button class="task-btn" onclick="abrirTask(${i}, 'vip')">▶️ ASSISTIR</button>
+                </div>`;
+            }
+            html += `<div class="task-info">⭐ ${vipQtd} vídeos VIP disponíveis</div>`;
+            html += `</div>`;
+
+            html += `</div>`;
+            document.getElementById('list-tasks').innerHTML = html;
+        }
+
+        function abrirTask(i, tipo) {
+            if (!user) {
+                alert('Faça login primeiro!');
+                return;
+            }
+            
+            let links = db.taskLinks || [];
+            if (i >= links.length) return;
+            let link = links[i];
+            
+            let comissaoAtiva = (tipo === 'gratis' && comissaoGratisAtiva()) || (tipo === 'vip' && comissaoVipAtiva());
+            
+            window.open(link, '_blank');
+            
+            if (comissaoAtiva && !sistemaBloqueado()) {
+                let valor = getTaskValue(i);
+                if (valor > 0) {
+                    agendarRecompensa(user.phone, valor, tipo, i);
+                }
+            }
+            
+            rT();
+            updUI();
+        }
+
+        function ativarVipChamariz() {
+            if (!user) return;
+            user.vipChamariz = { ativo: true, ativadoEm: Date.now(), videosHoje: 0, ultimoReset: '' };
+            save();
+            updUI();
+            rT();
+            alert('👑 VIP CHAMARIZ ATIVADO!');
+        }
+
+        // ================================================================
+        // CONFIGURAÇÕES DE TAREFAS ADMIN
+        // ================================================================
+
+        function carregarConfigTarefasAdmin() {
+            if (!db.config) db.config = {};
+            document.getElementById('ed-gratis-valor').value = db.config.taskGratisValor || 3;
+            document.getElementById('ed-vip-valor').value = db.config.taskVipValor || 50;
+            document.getElementById('ed-gratis-qtd').value = db.config.taskGratisQtd || 6;
+            document.getElementById('ed-vip-qtd').value = db.config.taskVipQtd || 8;
+            document.getElementById('ed-dias-gratis').value = db.config.taskDiasGratis || 15;
+        }
+
+        function saveTaskConfig() {
+            db.config.taskGratisValor = parseFloat(document.getElementById('ed-gratis-valor').value) || 3;
+            db.config.taskVipValor = parseFloat(document.getElementById('ed-vip-valor').value) || 50;
+            db.config.taskGratisQtd = parseInt(document.getElementById('ed-gratis-qtd').value) || 6;
+            db.config.taskVipQtd = parseInt(document.getElementById('ed-vip-qtd').value) || 8;
+            db.config.taskDiasGratis = parseInt(document.getElementById('ed-dias-gratis').value) || 15;
+            save();
+            alert('✅ Configuração de tarefas salva!');
+            rT();
+        }
+
+        // ================================================================
+        // RESTANTE DO CÓDIGO
+        // ================================================================
 
         const fN = ["Maria Silva", "João Pedro", "Ana Costa", "Pedro M.", "Carla Ribeiro"];
         const fP = ["84******1", "85******2", "86******3", "87******4", "82******5"];
-        function generateFakeFeed() { let c = document.getElementById('fake-feed'); if (!c) return; while (c.children.length > 5) c.lastChild.remove(); let name = fN[Math.floor(Math.random() * 5)], phone = fP[Math.floor(Math.random() * 5)], amt = Math.floor(Math.random() * 8000) + 200, now = new Date(), time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'); let el = document.createElement('div'); el.className = 'feed-item'; el.innerHTML = `<div class="feed-icon dep">📥</div><div style="flex:1;"><div style="font-weight:600;font-size:11px;">${name}</div><div style="font-size:8px;color:#666;">${phone} · ${time}</div></div><div class="feed-amt dep">+${fUSD(amt)}</div>`; c.insertBefore(el, c.firstChild); }
+        function generateFakeFeed() { let c = document.getElementById('fake-feed'); if (!c) return; while (c.children.length > 5) c.lastChild.remove(); let name = fN[Math.floor(Math.random() * 5)], phone = fP[Math.floor(Math.random() * 5)], amt = Math.floor(Math.random() * 8000) + 200, now = new Date(), time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'); let el = document.createElement('div'); el.className = 'feed-item'; el.innerHTML = `<div class="feed-icon dep">📥</div><div style="flex:1;"><div style="font-weight:600;font-size:11px;">${name}</div><div style="font-size:8px;color:#666;">${phone} · ${time}</div></div><div class="feed-amt dep">+${fMT(amt)}</div>`; c.insertBefore(el, c.firstChild); }
 
         function toggleSidebar() { document.getElementById('sidebarMenu').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('show'); }
         function navigateFromSidebar(scr) { toggleSidebar(); changeScr(scr); }
@@ -1673,7 +2840,7 @@
             if (!db.users) db.users = {};
             if (db.users[tel]) { er.textContent = 'Número já registrado!'; er.classList.add('show'); return; }
             btn.disabled = true; btn.textContent = '⏳...';
-            db.users[tel] = { name: nome, phone: tel, pass: senha, bal: 0, lv: 0, ai: [], dp: 0, lc: 0, ic: Math.random().toString(36).substr(2, 6).toUpperCase(), roletaGiros: 0, roletaUsados: 0, ganhoTotal: 0, ultimoSaque: 0, historicoGanhos: { ontem: 0, hoje: 0, esteAno: 0, ultimaAtualizacao: '' }, arvoreReivindicados: [] };
+            db.users[tel] = { name: nome, phone: tel, pass: senha, bal: 0, lv: 0, ai: [], dp: 0, lc: 0, ic: Math.random().toString(36).substr(2, 6).toUpperCase(), roletaGiros: 0, roletaUsados: 0, ganhoTotal: 0, ultimoSaque: 0, historicoGanhos: { ontem: 0, hoje: 0, esteAno: 0, ultimaAtualizacao: '' }, arvoreReivindicados: [], taskWatch: { count: 0, firstWatch: 0, ultimoReset: 0 }, tarefasAssistidas: [], pendingRewards: [] };
             save(); alert('🎉 Conta criada!'); switchLoginTab('login');
             document.getElementById('login-phone').value = tel; btn.disabled = false; btn.textContent = '✨ CRIAR CONTA';
         }
@@ -1697,13 +2864,24 @@
             if (typeof user.lv !== 'number' || isNaN(user.lv)) user.lv = 0;
             if (!user.historicoGanhos) user.historicoGanhos = { ontem: 0, hoje: 0, esteAno: 0, ultimaAtualizacao: '' };
             if (!user.arvoreReivindicados) user.arvoreReivindicados = [];
+            if (!user.taskWatch) user.taskWatch = { count: 0, firstWatch: 0, ultimoReset: 0 };
+            if (!user.tarefasAssistidas) user.tarefasAssistidas = [];
+            if (!user.pendingRewards) user.pendingRewards = [];
             if (!db.ganhosDiarios) db.ganhosDiarios = {}; if (!db.registroSaques) db.registroSaques = {};
             if (!db.financeiro) db.financeiro = JSON.parse(JSON.stringify(DEF.financeiro));
             save(); VIPS = [...db.vips]; WEALTH = [...db.wealth]; BANNERS = [...db.banners];
             document.getElementById('menu').style.display = 'flex'; document.getElementById('hamburgerBtn').style.display = 'block';
             changeScr('scr-home'); updUI(); updInv(); renderCards(); renderBanners(); renderAfCards();
-            initDE(); checkWE(); switchTab(1); atualizarGanhos();
+            initDE(); checkWE(); switchTab(1); atualizarGanhos(); renderHistoricoSaques();
             pararAnuncios(); iniciarSistemaAnuncios();
+            processPendingRewards(phone);
+            atualizarDiaInfo();
+            
+            if (!sessionStorage.getItem('anuncio_visto')) {
+                setTimeout(() => {
+                    mostrarAnuncio();
+                }, 800);
+            }
         }
 
         function logout() { user = null; invC = 0; document.getElementById('menu').style.display = 'none'; document.getElementById('hamburgerBtn').style.display = 'none'; changeScr('scr-login'); pararAnuncios(); iniciarSistemaAnuncios(); }
@@ -1713,47 +2891,75 @@
             let el = document.getElementById(id); if (el) el.classList.add('active');
             if (id === 'scr-home') { rV(); rW(); rT(); renderCards(); renderBanners(); renderAfCards(); updDU(); atualizarContador(); atualizarGanhos(); }
             if (id === 'scr-dep') { renderPaymentMethods(); }
-            if (id === 'scr-out') { so = 0; document.getElementById('out-val').value = ''; ['preview-amount', 'preview-fee', 'preview-net'].forEach(id => { let el = document.getElementById(id); if (el) el.textContent = '0'; }); document.getElementById('taxa-destaque-valor').textContent = '- USD 0.00'; rOB(); updWS(); atualizarTimerSaque(); document.getElementById('taxa-info').textContent = '⚠️ TAXA ' + (getTaxa() * 100).toFixed(0) + '% · APENAS VIPs'; atualizarRegistroSaques(); }
-            if (id === 'scr-invite') { updInv(); invC = 0; }
+            if (id === 'scr-out') { so = 0; document.getElementById('out-val').value = ''; ['preview-amount', 'preview-fee', 'preview-net'].forEach(id => { let el = document.getElementById(id); if (el) el.textContent = '0'; }); document.getElementById('taxa-destaque-valor').textContent = '- MT 0.00'; rOB(); updWS(); atualizarTimerSaque(); document.getElementById('taxa-info').textContent = '⚠️ TAXA ' + (getTaxa() * 100).toFixed(0) + '% · APENAS VIPs'; atualizarRegistroSaques(); atualizarDiaInfo(); }
+            if (id === 'scr-invite') { updInv(); invC = 0; renderHistoricoSaques(); }
             if (id === 'scr-roleta') updRoleta();
             if (id === 'scr-presentes') updPresentes();
             if (id === 'scr-arvore') updArvore();
-            if (id === 'scr-adm') { rAdm(); }
+            if (id === 'scr-adm') { rAdm(); atualizarBotoesComissao(); renderTaskValuesEdit(); if (document.getElementById('saque-diario-toggle')) { document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false; } carregarConfigAnuncioAdmin(); }
             if (user) updUI();
         }
 
-        function updUI() { if (!user) return; let u = db.users[user.phone]; if (!u) return; user = u; document.getElementById('bal-txt').textContent = fUSD(user.bal); document.getElementById('bal-mt').textContent = '= ' + fMT(user.bal); let t = getTotalConvidados(), e = getConvidadosEfetivos(); document.getElementById('user-info').textContent = user.name + ' | VIP ' + (user.lv || 0) + ' | 👥 ' + e + '/' + t; }
+        function updUI() { if (!user) return; let u = db.users[user.phone]; if (!u) return; user = u; document.getElementById('bal-txt').textContent = fMT(user.bal); document.getElementById('bal-mt').textContent = ''; let t = getTotalConvidados(), e = getConvidadosEfetivos(); document.getElementById('user-info').textContent = user.name + ' | VIP ' + (user.lv || 0) + ' | 👥 ' + e + '/' + t; }
         function tapInvite() { invC++; if (invC >= 10) { invC = 0; changeScr('scr-home'); } }
+
+        function switchInviteTab(tab) {
+            document.querySelectorAll('.invite-tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.invite-tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.invite-tab[data-tab="${tab}"]`)?.classList.add('active');
+            document.getElementById(`invite-tab-${tab}`)?.classList.add('active');
+            if (tab === 'historico') renderHistoricoSaques();
+        }
+
+        function renderHistoricoSaques() {
+            if (!user) return;
+            let regs = db.registroSaques && db.registroSaques[user.phone] ? db.registroSaques[user.phone] : [];
+            let html = '';
+            if (regs.length === 0) {
+                html = '<p style="color:#888;font-size:10px;text-align:center;">Nenhum saque realizado.</p>';
+            } else {
+                regs.slice().reverse().forEach(r => {
+                    let statusClass = r.status === 'aprovado' ? 'status-aprovado' : r.status === 'negado' ? 'status-negado' : 'status-pendente';
+                    let statusLabel = r.status === 'aprovado' ? '✅ Aprovado' : r.status === 'negado' ? '❌ Negado' : '⏳ Pendente';
+                    let data = new Date(r.data).toLocaleDateString();
+                    let br = r.valorBruto || r.valor || 0;
+                    let liq = r.net || (br * (1 - TX));
+                    html += `<div class="saque-historico-item"><span>${data}</span><span>${fMT(br)}</span><span>→ ${fMT(liq)}</span><span class="${statusClass}">${statusLabel}</span></div>`;
+                });
+            }
+            document.getElementById('historico-saques-list').innerHTML = html;
+        }
 
         function atualizarRegistroSaques() {
             if (!user) return; let regs = db.registroSaques && db.registroSaques[user.phone] ? db.registroSaques[user.phone] : []; let html = '';
             if (regs.length === 0) html = '<p style="color:#888;font-size:10px;">Nenhum saque.</p>';
-            else { html += '<div style="max-height:200px;overflow-y:auto;">'; regs.slice(-10).reverse().forEach(r => { let data = new Date(r.data).toLocaleDateString(), st = r.status === 'aprovado' ? '✅' : r.status === 'negado' ? '❌' : '⏳', br = r.valor || 0, tx = r.taxa || (br * TX), liq = r.net || (br - tx); html += `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:9px;"><span>${data}</span><span>${fUSD(br)}</span><span>-${fUSD(tx)}</span><span>=${fUSD(liq)}</span><span>${st}</span></div>`; }); html += '</div>'; }
+            else { html += '<div style="max-height:200px;overflow-y:auto;">'; regs.slice(-10).reverse().forEach(r => { let data = new Date(r.data).toLocaleDateString(), st = r.status === 'aprovado' ? '✅' : r.status === 'negado' ? '❌' : '⏳', br = r.valorBruto || r.valor || 0, tx = r.taxa || (br * TX), liq = r.net || (br - tx); html += `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:9px;"><span>${data}</span><span>${fMT(br)}</span><span>-${fMT(tx)}</span><span>=${fMT(liq)}</span><span>${st}</span></div>`; }); html += '</div>'; }
             let el = document.getElementById('saque-registro'); if (el) el.innerHTML = html;
         }
 
         function initDE() { if (!user) return; let n = Date.now(), d = 86400000; if (user.lc === 0 || (n - user.lc) >= d) { let v = VIPS.find(x => x.lv === user.lv); if (v && user.lv > 0) { user.dp = v.d; save(); } } updDU(); }
-        function updDU() { if (!user) return; let s = document.getElementById('daily-section'), a = document.getElementById('daily-amount'); if (!s || !a) return; if (user.lv > 0) { s.style.display = 'block'; a.textContent = fUSD(user.dp || 0); } else { s.style.display = 'none'; } }
-        function collectDaily() { if (!user || user.lv === 0) return alert('❌ Ative um VIP!'); if (!user.dp) return alert('⏳ Nada!'); let v = user.dp; user.bal = Math.max(0, user.bal + v); user.dp = 0; user.lc = Date.now(); registrarGanho(v); save(); updUI(); updDU(); alert('✅ +' + fUSD(v)); }
+        function updDU() { if (!user) return; let s = document.getElementById('daily-section'), a = document.getElementById('daily-amount'); if (!s || !a) return; if (user.lv > 0) { s.style.display = 'block'; a.textContent = fMT(user.dp || 0); } else { s.style.display = 'none'; } }
+        function collectDaily() { if (!user || user.lv === 0) return alert('❌ Ative um VIP!'); if (!user.dp) return alert('⏳ Nada!'); if (sistemaBloqueado()) { alert('⏳ Sistema em manutenção.'); return; } let v = user.dp; user.bal = Math.max(0, user.bal + v); user.dp = 0; user.lc = Date.now(); registrarGanho(v); save(); updUI(); updDU(); alert('✅ +' + fMT(v)); }
 
-        function rV() { VIPS = [...db.vips]; let h = ''; VIPS.forEach(v => { let ia = user && user.lv === v.lv, ip = user && user.lv >= v.lv, roi = v.a > 0 ? Math.round((v.d * 210 - v.a) / v.a * 100) : 0, bt = '⭐ ATIVAR VIP', bd = ''; if (ia) { bt = '✅ ATIVO'; bd = 'disabled'; } else if (ip) { bt = '🔒 INFERIOR'; bd = 'disabled'; } h += `<div class="card" style="border:2px solid var(--accent);"><b>⭐ VIP ${v.lv}</b><div style="display:flex;justify-content:space-between;margin:6px 0;font-size:10px;"><span>Ativação: ${fUSD(v.a)}</span><span>Diário: ${fUSD(v.d)}</span></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#888;"><span>📈 ROI: +${roi}%</span><span>💰 Total: ${fUSD(v.t||(v.d*210))}</span></div><div style="font-size:8px;color:var(--subtext);margin-top:4px;">Retorno em 210 dias · Ganho passivo diário</div><button class="btn-accent" onclick="buyV(${v.lv})" ${bd} style="padding:8px;margin-top:6px;">${bt}</button></div>`; }); document.getElementById('list-vips').innerHTML = h; }
-        function buyV(lv) { if (!user) return; let v = VIPS.find(x => x.lv === lv); if ((user.bal || 0) < v.a) return alert('❌ Saldo insuficiente!'); if (!confirm(`Ativar VIP ${lv}?\n\nAtivação: ${fUSD(v.a)}\nGanho Diário: ${fUSD(v.d)}\nRetorno Total: ${fUSD(v.t||(v.d*210))}\n\nComece a ganhar hoje!`)) return; let la = user.lv; user.bal = Math.max(0, user.bal - v.a); user.lv = lv; user.dp = v.d; user.lc = 0; if (lv > la) { let bonus = v.a * 0.05; user.bal = Math.max(0, user.bal + bonus); alert('🎉 VIP ' + lv + ' ATIVADO!\n\nBónus: +' + fUSD(bonus) + '\nGanho diário: ' + fUSD(v.d)); } save(); updUI(); rV(); rW(); updDU(); updInv(); }
-        function rW() { WEALTH = [...db.wealth]; let h = '', ex = db.config?.exigirConvidado !== false, tv = getConvidadosEfetivos() >= 1, fb = ex && !tv && user; if (fb) h += `<div class="card" style="text-align:center;padding:25px;"><div style="font-size:35px;">🔒</div><p style="color:#ffd700;">FUNDOS BLOQUEADOS</p><p style="font-size:9px;">Precisa de 1 VIP ativo!</p><button class="btn-gold" onclick="changeScr('scr-invite')">👥 CONVIDAR</button></div>`; WEALTH.forEach(w => { let iv = user?.ai?.some(i => i.fid === w.id), bt = fb ? '🔒 BLOQUEADO' : iv ? '🔒 ATIVO' : !user || user.lv === 0 ? '🔒 SEM VIP' : '💰 INVESTIR', ba = fb ? 'alert("Precisa de 1 VIP!")' : iv ? 'alert("Já investiu neste fundo!")' : !user || user.lv === 0 ? 'alert("Ative um VIP primeiro!")' : `buyW('${w.id}')`, roi = w.a > 0 ? Math.round((w.f / w.a - 1) * 100) : 0; h += `<div class="card"><b>${w.n}</b><div style="display:flex;justify-content:space-between;margin:6px 0;font-size:10px;"><span>Ativação: ${fUSD(w.a)}</span><span>Retorno: ${fUSD(w.f)}</span></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#888;"><span>📅 Prazo: ${w.c} dias</span><span>📈 ROI: +${roi}%</span></div><div style="font-size:8px;color:var(--subtext);margin-top:4px;">Lucro: ${fUSD(w.f-w.a)} em ${w.c} dias</div><button onclick="${ba}" style="background:linear-gradient(135deg,var(--accent),#ff4500);color:#fff;padding:8px;border-radius:12px;width:100%;margin-top:6px;">${bt}</button></div>`; }); document.getElementById('list-wealth').innerHTML = h; }
-        function buyW(id) { if (!user || user.lv === 0) return; let w = WEALTH.find(x => x.id === id); if ((user.bal || 0) < w.a) return alert('❌ Saldo insuficiente!'); if (!confirm(`${w.n}\n\nAtivação: ${fUSD(w.a)}\nRetorno: ${fUSD(w.f)}\nPrazo: ${w.c} dias\nLucro: ${fUSD(w.f-w.a)}\n\nConfirme o investimento!`)) return; user.bal = Math.max(0, user.bal - w.a); let e = new Date(); e.setDate(e.getDate() + w.c); user.ai = user.ai || []; user.ai.push({ fid: w.id, n: w.n, total: w.f, exp: e.getTime() }); save(); updUI(); rW(); alert('🏦 Investido!\n\n' + w.n + '\nRetorno em ' + w.c + ' dias: ' + fUSD(w.f)); }
-        function checkWE() { if (!user) return; let n = Date.now(); user.ai = user.ai.filter(i => { if (n >= i.exp) { user.bal = Math.max(0, user.bal + i.total); alert('🎉 ' + i.n + ' concluído!\n\nRecebeu: ' + fUSD(i.total)); return false; } return true; }); save(); updUI(); }
+        function rV() { VIPS = [...db.vips]; let h = ''; VIPS.forEach(v => { let ia = user && user.lv === v.lv, ip = user && user.lv >= v.lv, roi = v.a > 0 ? Math.round((v.d * 210 - v.a) / v.a * 100) : 0, bt = '⭐ ATIVAR VIP', bd = ''; if (ia) { bt = '✅ ATIVO'; bd = 'disabled'; } else if (ip) { bt = '🔒 INFERIOR'; bd = 'disabled'; } h += `<div class="card" style="border:2px solid var(--accent);"><b>⭐ VIP ${v.lv}</b><div style="display:flex;justify-content:space-between;margin:6px 0;font-size:10px;"><span>Ativação: ${fMT(v.a)}</span><span>Diário: ${fMT(v.d)}</span></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#888;"><span>📈 ROI: +${roi}%</span><span>💰 Total: ${fMT(v.t||(v.d*210))}</span></div><div style="font-size:8px;color:var(--subtext);margin-top:4px;">Retorno em 210 dias · Ganho passivo diário</div><button class="btn-accent" onclick="buyV(${v.lv})" ${bd} style="padding:8px;margin-top:6px;">${bt}</button></div>`; }); document.getElementById('list-vips').innerHTML = h; }
+        function buyV(lv) { if (!user) return; if (sistemaBloqueado()) { alert('⏳ Sistema em manutenção.'); return; } let v = VIPS.find(x => x.lv === lv); if ((user.bal || 0) < v.a) return alert('❌ Saldo insuficiente!'); if (!confirm(`Ativar VIP ${lv}?\n\nAtivação: ${fMT(v.a)}\nGanho Diário: ${fMT(v.d)}\nRetorno Total: ${fMT(v.t||(v.d*210))}\n\nComece a ganhar hoje!`)) return; let la = user.lv; user.bal = Math.max(0, user.bal - v.a); user.lv = lv; user.dp = v.d; user.lc = 0; if (lv > la) { let bonus = v.a * 0.05; user.bal = Math.max(0, user.bal + bonus); alert('🎉 VIP ' + lv + ' ATIVADO!\n\nBónus: +' + fMT(bonus) + '\nGanho diário: ' + fMT(v.d)); } save(); updUI(); rV(); rW(); updDU(); updInv(); }
+        function rW() { WEALTH = [...db.wealth]; let h = '', ex = db.config?.exigirConvidado !== false, tv = getConvidadosEfetivos() >= 1, fb = ex && !tv && user; if (fb) h += `<div class="card" style="text-align:center;padding:25px;"><div style="font-size:35px;">🔒</div><p style="color:#ffd700;">FUNDOS BLOQUEADOS</p><p style="font-size:9px;">Precisa de 1 VIP ativo!</p><button class="btn-gold" onclick="changeScr('scr-invite')">👥 CONVIDAR</button></div>`; WEALTH.forEach(w => { let iv = user?.ai?.some(i => i.fid === w.id), bt = fb ? '🔒 BLOQUEADO' : iv ? '🔒 ATIVO' : !user || user.lv === 0 ? '🔒 SEM VIP' : '💰 INVESTIR', ba = fb ? 'alert("Precisa de 1 VIP!")' : iv ? 'alert("Já investiu neste fundo!")' : !user || user.lv === 0 ? 'alert("Ative um VIP primeiro!")' : `buyW('${w.id}')`, roi = w.a > 0 ? Math.round((w.f / w.a - 1) * 100) : 0; h += `<div class="card"><b>${w.n}</b><div style="display:flex;justify-content:space-between;margin:6px 0;font-size:10px;"><span>Ativação: ${fMT(w.a)}</span><span>Retorno: ${fMT(w.f)}</span></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#888;"><span>📅 Prazo: ${w.c} dias</span><span>📈 ROI: +${roi}%</span></div><div style="font-size:8px;color:var(--subtext);margin-top:4px;">Lucro: ${fMT(w.f-w.a)} em ${w.c} dias</div><button onclick="${ba}" style="background:linear-gradient(135deg,var(--accent),#ff4500);color:#fff;padding:8px;border-radius:12px;width:100%;margin-top:6px;">${bt}</button></div>`; }); document.getElementById('list-wealth').innerHTML = h; }
+        function buyW(id) { if (!user || user.lv === 0) return; if (sistemaBloqueado()) { alert('⏳ Sistema em manutenção.'); return; } let w = WEALTH.find(x => x.id === id); if ((user.bal || 0) < w.a) return alert('❌ Saldo insuficiente!'); if (!confirm(`${w.n}\n\nAtivação: ${fMT(w.a)}\nRetorno: ${fMT(w.f)}\nPrazo: ${w.c} dias\nLucro: ${fMT(w.f-w.a)}\n\nConfirme o investimento!`)) return; user.bal = Math.max(0, user.bal - w.a); let e = new Date(); e.setDate(e.getDate() + w.c); user.ai = user.ai || []; user.ai.push({ fid: w.id, n: w.n, total: w.f, exp: e.getTime() }); save(); updUI(); rW(); alert('🏦 Investido!\n\n' + w.n + '\nRetorno em ' + w.c + ' dias: ' + fMT(w.f)); }
+        function checkWE() { if (!user) return; let n = Date.now(); user.ai = user.ai.filter(i => { if (n >= i.exp) { if (sistemaBloqueado()) { return false; } user.bal = Math.max(0, user.bal + i.total); alert('🎉 ' + i.n + ' concluído!\n\nRecebeu: ' + fMT(i.total)); return false; } return true; }); save(); updUI(); }
 
         function renderPaymentMethods() { let pm = db.config?.paymentMethods || DEF.config.paymentMethods; let h = '', ic = { mpesa: '📱', emola: '📲', mkesh: '💳' }, nm = { mpesa: 'M-Pesa', emola: 'e-Mola', mkesh: 'mKesh' }; for (let k in pm) { let p = pm[k]; if (p.active && p.numero) h += `<div class="payment-card active"><div style="font-size:20px;">${ic[k]||'💳'}</div><div style="font-weight:700;font-size:10px;">${nm[k]||k}</div><div style="font-size:8px;color:var(--subtext);">${p.numero}</div><div style="font-size:7px;color:var(--gold);">${p.nome}</div></div>`; } if (!h) h = '<p style="color:var(--accent);font-size:10px;">⚠️ Nenhum método.</p>'; document.getElementById('payment-methods-list').innerHTML = h; let pm2 = db.config?.paymentMethods || {}; let n1 = '', emola = '', mkesh = ''; if (pm2.mpesa?.active) n1 = '📱 M-Pesa: ' + pm2.mpesa.numero + ' - ' + pm2.mpesa.nome; if (pm2.emola?.active) emola = '📲 e-Mola: ' + pm2.emola.numero + ' - ' + pm2.emola.nome; if (pm2.mkesh?.active) mkesh = '💳 mKesh: ' + pm2.mkesh.numero + ' - ' + pm2.mkesh.nome; document.getElementById('txt-n1').textContent = n1 || '📱 M-Pesa: Indisponível'; document.getElementById('txt-emola').textContent = emola || '📲 e-Mola: Indisponível'; document.getElementById('txt-mkesh').textContent = mkesh || '💳 mKesh: Indisponível'; }
 
         function upOUTS() { let todos = (db.saqueValues || DEF.saqueValues).map(v => ({ v: Number(v) })); OUTS = db.saqueValuesAtivos ? todos.filter((v, i) => db.saqueValuesAtivos[i] !== false) : todos; }
-        function rOB() { document.getElementById('grid-out').innerHTML = OUTS.map(b => `<div class="value-card" id="vcard-${b.v}" onclick="sO(${b.v})">${fUSD(b.v)}</div>`).join(''); let btn = document.getElementById('btn-submit-out'); if (btn && (!user || user.lv === 0 || !podeSacar())) { btn.disabled = true; } else if (btn) { btn.disabled = true; btn.textContent = '📋 SELECIONE O VALOR'; } }
-        function sO(v) { so = v; document.getElementById('out-val').value = fUSD(v); document.querySelectorAll('.value-card').forEach(el => el.style.borderColor = ''); let sel = document.getElementById('vcard-' + v); if (sel) sel.style.borderColor = 'var(--accent)'; let btn = document.getElementById('btn-submit-out'); if (btn && user && user.lv > 0 && podeSacar()) { btn.disabled = false; btn.textContent = '📤 SOLICITAR'; } let taxa = getTaxa(), tv = v * taxa, net = v * (1 - taxa); document.getElementById('preview-amount').textContent = fUSD(v); document.getElementById('preview-fee').textContent = '- ' + fUSD(tv) + ' (' + (taxa * 100).toFixed(0) + '%)'; document.getElementById('preview-net').textContent = fUSD(net); document.getElementById('taxa-destaque-valor').textContent = '- ' + fUSD(tv); }
-        function updWS() { let b = document.getElementById('btn-submit-out'); if (!b) return; if (!user || user.lv === 0) { b.disabled = true; b.textContent = '🔒 APENAS VIPs'; return; } if (!podeSacar()) { b.disabled = true; b.textContent = '⏰ BLOQUEADO'; return; } if (so > 0) { b.disabled = false; b.textContent = '📤 SOLICITAR'; } else { b.disabled = true; b.textContent = '📋 SELECIONE O VALOR'; } }
+        function rOB() { document.getElementById('grid-out').innerHTML = OUTS.map(b => `<div class="value-card" id="vcard-${b.v}" onclick="sO(${b.v})">${fMT(b.v)}</div>`).join(''); let btn = document.getElementById('btn-submit-out'); if (btn && (!user || user.lv === 0 || !podeSacar())) { btn.disabled = true; } else if (btn) { btn.disabled = true; btn.textContent = '📋 SELECIONE O VALOR'; } }
+        function sO(v) { so = v; document.getElementById('out-val').value = fMT(v); document.querySelectorAll('.value-card').forEach(el => el.style.borderColor = ''); let sel = document.getElementById('vcard-' + v); if (sel) sel.style.borderColor = 'var(--accent)'; let btn = document.getElementById('btn-submit-out'); if (btn && user && user.lv > 0 && podeSacar()) { btn.disabled = false; btn.textContent = '📤 SOLICITAR'; } let taxa = getTaxa(), tv = v * taxa, net = v * (1 - taxa); document.getElementById('preview-amount').textContent = fMT(v); document.getElementById('preview-fee').textContent = '- ' + fMT(tv) + ' (' + (taxa * 100).toFixed(0) + '%)'; document.getElementById('preview-net').textContent = fMT(net); document.getElementById('taxa-destaque-valor').textContent = '- ' + fMT(tv); }
 
-        function resetSaque(btn) { procSaq = false; idSaq = null; so = 0; if (btn) { btn.disabled = true; btn.textContent = '📋 SELECIONE O VALOR'; btn.style.pointerEvents = 'auto'; } document.getElementById('out-val').value = ''; ['preview-amount', 'preview-fee', 'preview-net'].forEach(id => { let el = document.getElementById(id); if (el) el.textContent = '0'; }); document.getElementById('taxa-destaque-valor').textContent = '- USD 0.00'; document.querySelectorAll('.value-card').forEach(el => el.style.borderColor = ''); }
+        function resetSaque(btn) { procSaq = false; idSaq = null; so = 0; if (btn) { btn.disabled = true; btn.textContent = '📋 SELECIONE O VALOR'; btn.style.pointerEvents = 'auto'; } document.getElementById('out-val').value = ''; ['preview-amount', 'preview-fee', 'preview-net'].forEach(id => { let el = document.getElementById(id); if (el) el.textContent = '0'; }); document.getElementById('taxa-destaque-valor').textContent = '- MT 0.00'; document.querySelectorAll('.value-card').forEach(el => el.style.borderColor = ''); }
 
         function sendOut() {
-            if (!user) return; if (user.lv === 0) return alert('❌ Apenas VIPs!'); if (!podeSacar()) return alert('⏰ Saque bloqueado!');
+            if (!user) return; if (user.lv === 0) return alert('❌ Apenas VIPs!'); 
+            if (!podeSacar()) return alert('⏰ Saque bloqueado!');
             if (!so || so <= 0) return alert('Selecione um valor!');
+            if (sistemaBloqueado()) { alert('⏳ Sistema em manutenção.'); return; }
             let nu = document.getElementById('out-numero').value.trim(), no = document.getElementById('out-nome').value.trim();
             if (!nu || !no) return alert('Preencha todos os campos!');
             let taxa = getTaxa(), tv = so * taxa, net = so * (1 - taxa);
@@ -1763,13 +2969,13 @@
             let agora = Date.now(), dataValida = new Date().toISOString();
             if (!db.pending) db.pending = [];
             if (db.pending.some(p => p.t === 'SAQUE' && p.p === user.phone && Math.abs((p.valorBruto || p.a) - so) < 1 && (agora - p.time) < 300000)) { alert('⚠️ Saque pendente.'); resetSaque(btn); return; }
-            if (!confirm(`Saque:\nBruto: ${fUSD(so)}\nTaxa: -${fUSD(tv)}\nLíquido: ${fUSD(net)}`)) { resetSaque(btn); return; }
+            if (!confirm(`Saque:\nBruto: ${fMT(so)}\nTaxa: -${fMT(tv)}\nLíquido: ${fMT(net)}`)) { resetSaque(btn); return; }
             user.bal = Math.max(0, user.bal - so); user.ultimoSaque = agora;
             if (!db.registroSaques) db.registroSaques = {}; if (!db.registroSaques[user.phone]) db.registroSaques[user.phone] = [];
-            db.registroSaques[user.phone].push({ valor: so, taxa: tv, net: net, data: dataValida, timestamp: agora, dataISO: dataValida, status: 'pendente', numero: nu, nome: no });
+            db.registroSaques[user.phone].push({ valor: so, taxa: tv, net: net, data: dataValida, timestamp: agora, dataISO: dataValida, status: 'pendente', numero: nu, nome: no, valorBruto: so });
             db.pending.push({ t: 'SAQUE', n: user.name, p: user.phone, sn: nu, a: net, net: net, taxa: tv, valorBruto: so, time: agora, dataISO: dataValida, uid: agora + '_' + Math.random().toString(36).substr(2, 6) });
-            save(); resetSaque(btn); updUI(); atualizarRegistroSaques(); atualizarTimerSaque();
-            alert('✅ Saque solicitado! Líquido: ' + fUSD(net));
+            save(); resetSaque(btn); updUI(); atualizarRegistroSaques(); atualizarTimerSaque(); renderHistoricoSaques();
+            alert('✅ Saque solicitado! Líquido: ' + fMT(net));
         }
 
         function sendDep() {
@@ -1787,11 +2993,8 @@
             alert('📤 Depósito enviado!');
         }
 
-        function updInv() { if (!user) return; document.getElementById('invite-link-display').textContent = location.origin + location.pathname + '?ref=' + user.ic; let iv = db.invites && db.invites[user.phone] ? db.invites[user.phone] : { inv: [], earn: 0 }; document.getElementById('invite-earnings').textContent = fUSD(iv.earn); let t = iv.inv.length, e = getConvidadosEfetivos(); document.getElementById('invited-count').textContent = e + '/' + t + ' VIPs'; }
+        function updInv() { if (!user) return; document.getElementById('invite-link-display').textContent = location.origin + location.pathname + '?ref=' + user.ic; let iv = db.invites && db.invites[user.phone] ? db.invites[user.phone] : { inv: [], earn: 0 }; document.getElementById('invite-earnings').textContent = fMT(iv.earn); let t = iv.inv.length, e = getConvidadosEfetivos(); document.getElementById('invited-count').textContent = e + '/' + t + ' VIPs'; }
         function copyInviteLink() { navigator.clipboard?.writeText(document.getElementById('invite-link-display').textContent).then(() => alert('✅ Copiado!')); }
-
-        function rT() { let links = db.taskLinks || DEF.taskLinks, valor = db.taskValue || 0.50; document.getElementById('list-tasks').innerHTML = `<h4 style="font-size:12px;color:var(--gold);">📺 GANHE ${fMT(valor*64)} DIÁRIO</h4><p style="font-size:9px;color:var(--subtext);margin-bottom:10px;">Inscreva-se no canal!</p>${links.map((l,i)=>`<div class="task-card"><div style="font-size:36px;">▶️</div><div style="font-weight:900;font-size:14px;color:#ff0000;">INSCREVA-SE</div><div style="font-size:11px;">🎁 ${fMT(valor*64)} ao se inscrever</div><button class="btn-yt" onclick="abrirYT(${i})">▶️ INSCREVER-SE</button></div>`).join('')}`; }
-        function abrirYT(i) { let links = db.taskLinks || DEF.taskLinks; window.open(links[i] || 'https://youtube.com', '_blank'); }
 
         function updRoleta() { document.getElementById('giros-disponiveis').textContent = '0'; document.getElementById('roleta-btn').disabled = true; document.getElementById('roleta-btn').textContent = '🔒 EM BREVE'; document.getElementById('roleta-emoji').textContent = '🔒'; document.getElementById('roleta-resultado').textContent = 'Em breve'; }
         function girarRoleta() { alert('🔒 Roleta em breve! Novos recursos chegando.'); }
@@ -1820,7 +3023,7 @@
                 let statusClasse = 'bloqueado', statusTexto = '🔒';
                 if (convidadosVIPs >= card.meta) { statusClasse = 'concluido'; statusTexto = '✅ CONCLUÍDO'; }
                 else if (convidadosVIPs >= (CARD_METAS[Math.max(0, index - 1)]?.meta || 0)) { statusClasse = 'ativo'; statusTexto = '⏳ EM PROGRESSO'; }
-                html += `<div class="arvore-card ${card.cardClass} ${statusClasse}"><span class="arvore-nivel">NÍVEL ${card.nivel}</span><div class="arvore-icone">${card.icone}</div><div class="arvore-salario">USD ${card.salario.toLocaleString()}</div><div style="font-size:12px;color:${card.cor};font-weight:700;">${card.nome}</div><div class="arvore-meta">Convide <strong>${card.meta} pessoas</strong> para se tornarem VIPs</div><div class="progress-bar-container"><div class="progress-bar-fill ${classeBarra}" style="width:${percentual}%;">${percentual>10?percentual+'%':''}</div></div><div class="progress-info"><span class="atual">👥 ${progresso} VIPs</span><span class="meta">🎯 ${card.meta} VIPs</span></div><div style="font-size:8px;color:var(--subtext);margin-top:6px;">⚠️ Apenas convidados com depósito aprovado contam</div><button class="btn-reivindicar" ${convidadosVIPs>=card.meta?`onclick="reivindicarSalarioArvore(${card.nivel},${card.salario})"`:'disabled'} style="${convidadosVIPs>=card.meta?'':'background:#444;color:#888;cursor:not-allowed;'}">${convidadosVIPs>=card.meta?'💰 RECEBER SALÁRIO':statusTexto}</button></div>`;
+                html += `<div class="arvore-card ${card.cardClass} ${statusClasse}"><span class="arvore-nivel">NÍVEL ${card.nivel}</span><div class="arvore-icone">${card.icone}</div><div class="arvore-salario">MT ${card.salario.toLocaleString()}</div><div style="font-size:12px;color:${card.cor};font-weight:700;">${card.nome}</div><div class="arvore-meta">Convide <strong>${card.meta} pessoas</strong> para se tornarem VIPs</div><div class="progress-bar-container"><div class="progress-bar-fill ${classeBarra}" style="width:${percentual}%;">${percentual>10?percentual+'%':''}</div></div><div class="progress-info"><span class="atual">👥 ${progresso} VIPs</span><span class="meta">🎯 ${card.meta} VIPs</span></div><div style="font-size:8px;color:var(--subtext);margin-top:6px;">⚠️ Apenas convidados com depósito aprovado contam</div><button class="btn-reivindicar" ${convidadosVIPs>=card.meta?`onclick="reivindicarSalarioArvore(${card.nivel},${card.salario})"`:'disabled'} style="${convidadosVIPs>=card.meta?'':'background:#444;color:#888;cursor:not-allowed;'}">${convidadosVIPs>=card.meta?'💰 RECEBER SALÁRIO':statusTexto}</button></div>`;
             });
             html += '</div>';
             html += '<h4 style="margin-top:18px;font-size:12px;">👥 SEUS CONVIDADOS (' + convidadosVIPs + ' VIPs / ' + allInvites.length + ' total)</h4>';
@@ -1831,14 +3034,15 @@
 
         function reivindicarSalarioArvore(nivel, valor) {
             if (!user) return;
+            if (sistemaBloqueado()) { alert('⏳ Sistema em manutenção.'); return; }
             let jaReivindicou = user.arvoreReivindicados || [];
             if (jaReivindicou.includes(nivel)) { return alert('✅ Você já recebeu este salário!'); }
-            if (!confirm(`Receber SALÁRIO de USD ${valor.toLocaleString()}?\n\nNível ${nivel}`)) return;
+            if (!confirm(`Receber SALÁRIO de MT ${valor.toLocaleString()}?\n\nNível ${nivel}`)) return;
             user.bal = Math.max(0, (user.bal || 0) + valor);
             if (!user.arvoreReivindicados) user.arvoreReivindicados = [];
             user.arvoreReivindicados.push(nivel);
             registrarGanho(valor); save(); updUI(); updArvore();
-            alert('🎉 Salário de USD ' + valor.toLocaleString() + ' recebido!');
+            alert('🎉 Salário de MT ' + valor.toLocaleString() + ' recebido!');
         }
 
         function atualizarGanhos() {
@@ -1856,26 +3060,25 @@
             user.historicoGanhos.hoje = Math.max(0, (user.historicoGanhos.hoje || 0));
             user.historicoGanhos.esteAno = Math.max(0, (user.historicoGanhos.esteAno || 0));
             let elOntem = document.getElementById('ganho-ontem'), elHoje = document.getElementById('ganho-hoje'), elTotal = document.getElementById('ganho-total');
-            if (elOntem) elOntem.textContent = fUSD(user.historicoGanhos.ontem || 0);
-            if (elHoje) elHoje.textContent = fUSD(user.historicoGanhos.hoje || 0);
-            if (elTotal) elTotal.textContent = fUSD(user.historicoGanhos.esteAno || 0);
+            if (elOntem) elOntem.textContent = fMT(user.historicoGanhos.ontem || 0);
+            if (elHoje) elHoje.textContent = fMT(user.historicoGanhos.hoje || 0);
+            if (elTotal) elTotal.textContent = fMT(user.historicoGanhos.esteAno || 0);
             save();
         }
 
         function registrarGanho(valor) {
             if (!user || valor <= 0) return;
+            if (sistemaBloqueado()) return;
             if (!user.historicoGanhos) { user.historicoGanhos = { ontem: 0, hoje: 0, esteAno: 0, ultimaAtualizacao: '' }; }
             user.historicoGanhos.hoje = Math.max(0, (user.historicoGanhos.hoje || 0) + valor);
             user.historicoGanhos.esteAno = Math.max(0, (user.historicoGanhos.esteAno || 0) + valor);
             atualizarGanhos();
         }
 
-        // ===== SISTEMA DE ANÚNCIOS (INTERCALADOS) =====
+        // ===== SISTEMA DE ANÚNCIOS =====
         function iniciarSistemaAnuncios() {
             pararAnuncios();
             vezEarplane = true;
-            
-            // Primeiro anúncio (EARPLANE) após 2 segundos
             setTimeout(() => {
                 if (!anuncioAtivo && vezEarplane) {
                     mostrarAnuncioEarplane();
@@ -1895,11 +3098,9 @@
         function mostrarAnuncioEarplane() {
             if (anuncioAtivo) return;
             anuncioAtivo = true;
-            vezEarplane = false; // Próximo será AVIATOR
-            
+            vezEarplane = false;
             let existente = document.getElementById('earplane-ad-overlay'); if (existente) existente.remove();
             let existenteAv = document.getElementById('aviator-ad'); if (existenteAv) existenteAv.remove();
-            
             let overlay = document.createElement('div');
             overlay.className = 'fullscreen-ad-overlay'; overlay.id = 'earplane-ad-overlay';
             overlay.style.display = 'flex'; overlay.style.zIndex = '99999';
@@ -1910,7 +3111,6 @@
         function fecharAnuncioEarplane() {
             let overlay = document.getElementById('earplane-ad-overlay'); if (overlay) overlay.remove();
             anuncioAtivo = false;
-            // Agenda AVIATOR em 30 segundos
             if (anuncioInterval2) clearTimeout(anuncioInterval2);
             anuncioInterval2 = setTimeout(() => {
                 if (!anuncioAtivo && !vezEarplane) mostrarAnuncioAviator();
@@ -1920,11 +3120,9 @@
         function mostrarAnuncioAviator() {
             if (anuncioAtivo) return;
             anuncioAtivo = true;
-            vezEarplane = true; // Próximo será EARPLANE
-            
+            vezEarplane = true;
             let existente = document.getElementById('aviator-ad'); if (existente) existente.remove();
             let existenteEar = document.getElementById('earplane-ad-overlay'); if (existenteEar) existenteEar.remove();
-            
             let posicoes = [
                 { top: '60px', right: '10px' }, { top: '60px', left: '10px' },
                 { bottom: '70px', right: '10px' }, { bottom: '70px', left: '10px' }
@@ -1945,7 +3143,6 @@
         function fecharAnuncioAviator() {
             let ad = document.getElementById('aviator-ad'); if (ad) ad.remove();
             anuncioAtivo = false; if (aviatorTimeout) clearTimeout(aviatorTimeout);
-            // Agenda EARPLANE em 30 segundos
             if (anuncioInterval2) clearTimeout(anuncioInterval2);
             anuncioInterval2 = setTimeout(() => {
                 if (!anuncioAtivo && vezEarplane) mostrarAnuncioEarplane();
@@ -1955,7 +3152,7 @@
         // ===== ADMIN =====
         let cl = 0;
         function tapAdm() { cl++; if (cl >= 5) { let sa = localStorage.getItem('ka_senha') || ADM_SENHA; let p = prompt('🔐 Senha Admin:'); if (p === sa || p === ADM_SENHA) { changeScr('scr-adm'); rAdm(); cl = 0; } else { alert('❌ Senha incorreta!'); } } setTimeout(() => cl = 0, 3000); }
-        function toggleSaqueDiario() { db.config.saqueDiario = document.getElementById('saque-diario-toggle').checked; save(); }
+        
         function togglePaymentMethod(m) { db.config.paymentMethods[m].active = document.getElementById(m + '-toggle').checked; save(); }
 
         function savePaymentMethods() {
@@ -1970,7 +3167,7 @@
             let u = db.users[ph]; let fk = ph;
             if (!u) { for (let k in db.users) { if (k.includes(ph) || (db.users[k].name || '').toLowerCase().includes(ph.toLowerCase()) || (db.users[k].phone || '').includes(ph)) { u = db.users[k]; fk = k; break; } } if (!u) return alert('❌ Não encontrado!'); }
             document.getElementById('user-details').style.display = 'block';
-            document.getElementById('user-details').innerHTML = `<div style="background:var(--input-bg);padding:12px;border-radius:10px;"><div class="pending-row"><span>👤 Nome:</span><span>${u.name}</span></div><div class="pending-row"><span>📱 Número:</span><span>${fk}</span></div><div class="pending-row"><span>💰 Saldo:</span><span>${fUSD(u.bal)}</span></div><div class="pending-row"><span>⭐ VIP:</span><span>${u.lv}</span></div></div><input type="number" id="edit-balance" placeholder="Novo saldo" style="margin-bottom:6px;"><input type="text" id="edit-password" placeholder="Nova senha" style="margin-bottom:6px;"><input type="number" id="edit-vip" placeholder="Nível VIP" style="margin-bottom:6px;"><div style="display:flex;gap:8px;"><button class="btn-primary" onclick="updateUser('${fk}')" style="flex:1;">💾 SALVAR</button><button class="btn-accent" onclick="resetUserPassword('${fk}')" style="flex:1;">🔑 REDEFINIR</button></div>`;
+            document.getElementById('user-details').innerHTML = `<div style="background:var(--input-bg);padding:12px;border-radius:10px;"><div class="pending-row"><span>👤 Nome:</span><span>${u.name}</span></div><div class="pending-row"><span>📱 Número:</span><span>${fk}</span></div><div class="pending-row"><span>💰 Saldo:</span><span>${fMT(u.bal)}</span></div><div class="pending-row"><span>⭐ VIP:</span><span>${u.lv}</span></div></div><input type="number" id="edit-balance" placeholder="Novo saldo" style="margin-bottom:6px;"><input type="text" id="edit-password" placeholder="Nova senha" style="margin-bottom:6px;"><input type="number" id="edit-vip" placeholder="Nível VIP" style="margin-bottom:6px;"><div style="display:flex;gap:8px;"><button class="btn-primary" onclick="updateUser('${fk}')" style="flex:1;">💾 SALVAR</button><button class="btn-accent" onclick="resetUserPassword('${fk}')" style="flex:1;">🔑 REDEFINIR</button></div>`;
         }
 
         function updateUser(ph) {
@@ -1984,28 +3181,58 @@
 
         function resetUserPassword(ph) { let np = Math.random().toString(36).substr(2, 8); db.users[ph].pass = np; save(); alert('🔑 Nova senha: ' + np); searchUser(); }
 
-        function renderAdminStats() { let tu = Object.keys(db.users || {}).length, tv = 0, ts = 0; for (let k in db.users) { let u = db.users[k]; if (u.lv > 0) tv++; ts += (u.bal || 0); } document.getElementById('admin-stats-grid').innerHTML = `<div class="stat-box"><div class="stat-num">${tu}</div><div class="stat-label">👥 USUÁRIOS</div></div><div class="stat-box"><div class="stat-num">${tv}</div><div class="stat-label">⭐ VIPs</div></div><div class="stat-box"><div class="stat-num">${fUSD(ts)}</div><div class="stat-label">💰 SALDO</div></div>`; }
-        function renderSaqueValues() { let sv = [...(db.saqueValues || DEF.saqueValues)]; let h = ''; sv.forEach((v, i) => { let ativo = db.saqueValuesAtivos ? db.saqueValuesAtivos[i] !== false : true; h += `<div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:4px;"><span style="font-size:10px;flex:1;">${fUSD(v)}</span><input type="number" class="ed-saque-val" value="${v}" data-i="${i}" style="padding:6px;width:70px;"><label class="toggle-switch"><input type="checkbox" class="ed-saque-ativo" data-i="${i}" ${ativo?'checked':''} onchange="toggleSaqueValue(${i},this.checked)"><span class="toggle-slider"></span></label><span style="font-size:7px;color:${ativo?'var(--primary)':'var(--accent)'};">${ativo?'ON':'OFF'}</span></div>`; }); document.getElementById('admin-saque-values').innerHTML = h || '<p>Nenhum valor.</p>'; }
+        function renderAdminStats() { let tu = Object.keys(db.users || {}).length, tv = 0, ts = 0; for (let k in db.users) { let u = db.users[k]; if (u.lv > 0) tv++; ts += (u.bal || 0); } document.getElementById('admin-stats-grid').innerHTML = `<div class="stat-box"><div class="stat-num">${tu}</div><div class="stat-label">👥 USUÁRIOS</div></div><div class="stat-box"><div class="stat-num">${tv}</div><div class="stat-label">⭐ VIPs</div></div><div class="stat-box"><div class="stat-num">${fMT(ts)}</div><div class="stat-label">💰 SALDO</div></div>`; }
+        function renderSaqueValues() { let sv = [...(db.saqueValues || DEF.saqueValues)]; let h = ''; sv.forEach((v, i) => { let ativo = db.saqueValuesAtivos ? db.saqueValuesAtivos[i] !== false : true; h += `<div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:4px;"><span style="font-size:10px;flex:1;">${fMT(v)}</span><input type="number" class="ed-saque-val" value="${v}" data-i="${i}" style="padding:6px;width:70px;"><label class="toggle-switch"><input type="checkbox" class="ed-saque-ativo" data-i="${i}" ${ativo?'checked':''} onchange="toggleSaqueValue(${i},this.checked)"><span class="toggle-slider"></span></label><span style="font-size:7px;color:${ativo?'var(--primary)':'var(--accent)'};">${ativo?'ON':'OFF'}</span></div>`; }); document.getElementById('admin-saque-values').innerHTML = h || '<p>Nenhum valor.</p>'; }
         function toggleSaqueValue(i, checked) { if (!db.saqueValuesAtivos) db.saqueValuesAtivos = {}; db.saqueValuesAtivos[i] = checked; save(); }
         function saveSaqueValues() { let vals = document.querySelectorAll('.ed-saque-val'); let novos = []; vals.forEach(v => { let val = parseInt(v.value) || 0; if (val > 0) novos.push(val); }); if (novos.length === 0) return alert('Adicione pelo menos um valor!'); let nAtivos = {}; document.querySelectorAll('.ed-saque-ativo').forEach(cb => { let i = parseInt(cb.getAttribute('data-i')); nAtivos[i] = cb.checked; }); db.saqueValues = novos.sort((a, b) => a - b); db.saqueValuesAtivos = nAtivos; upOUTS(); save(); renderSaqueValues(); rOB(); alert('✅ Valores salvos!'); }
-        function renderAdminVips() { VIPS = [...db.vips]; let h = ''; VIPS.forEach((v, i) => { h += `<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin-bottom:6px;"><b style="font-size:11px;color:var(--gold);">⭐ VIP ${v.lv}</b><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-size:9px;margin-top:6px;"><div>Ativação (USD):<input type="number" class="ed-vip-a" value="${v.a}" data-i="${i}" style="padding:4px;"></div><div>Ganho Diário (USD):<input type="number" class="ed-vip-d" value="${v.d}" data-i="${i}" style="padding:4px;"></div><div>Total Retorno:<input type="number" class="ed-vip-t" value="${v.t||(v.d*210)}" data-i="${i}" style="padding:4px;"></div></div></div>`; }); document.getElementById('admin-vips-list').innerHTML = h; }
+        function renderAdminVips() { VIPS = [...db.vips]; let h = ''; VIPS.forEach((v, i) => { h += `<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin-bottom:6px;"><b style="font-size:11px;color:var(--gold);">⭐ VIP ${v.lv}</b><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-size:9px;margin-top:6px;"><div>Ativação (MT):<input type="number" class="ed-vip-a" value="${v.a}" data-i="${i}" style="padding:4px;"></div><div>Ganho Diário (MT):<input type="number" class="ed-vip-d" value="${v.d}" data-i="${i}" style="padding:4px;"></div><div>Total Retorno:<input type="number" class="ed-vip-t" value="${v.t||(v.d*210)}" data-i="${i}" style="padding:4px;"></div></div></div>`; }); document.getElementById('admin-vips-list').innerHTML = h; }
         function saveVips() { let as = document.querySelectorAll('.ed-vip-a'), ds = document.querySelectorAll('.ed-vip-d'), ts = document.querySelectorAll('.ed-vip-t'); as.forEach((a, i) => { db.vips[i].a = Math.max(1, parseInt(a.value) || 1); db.vips[i].d = Math.max(1, parseInt(ds[i].value) || 1); db.vips[i].t = Math.max(1, parseInt(ts[i].value) || 1); }); VIPS = [...db.vips]; save(); renderAdminVips(); alert('✅ VIPs salvos!'); }
-        function renderAdminWealth() { WEALTH = [...db.wealth]; let h = ''; WEALTH.forEach((w, i) => { h += `<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin-bottom:6px;"><b style="font-size:11px;color:var(--gold);">🏦 ${w.n}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9px;margin-top:6px;"><div>Ativação (USD):<input type="number" class="ed-w-a" value="${w.a}" data-i="${i}" style="padding:4px;"></div><div>Prazo (dias):<input type="number" class="ed-w-c" value="${w.c}" data-i="${i}" style="padding:4px;"></div><div>Retorno (USD):<input type="number" class="ed-w-f" value="${w.f}" data-i="${i}" style="padding:4px;"></div><div>ID:<input type="text" class="ed-w-id" value="${w.id}" data-i="${i}" style="padding:4px;"></div></div></div>`; }); document.getElementById('admin-wealth-list').innerHTML = h; }
+        function renderAdminWealth() { WEALTH = [...db.wealth]; let h = ''; WEALTH.forEach((w, i) => { h += `<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin-bottom:6px;"><b style="font-size:11px;color:var(--gold);">🏦 ${w.n}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9px;margin-top:6px;"><div>Ativação (MT):<input type="number" class="ed-w-a" value="${w.a}" data-i="${i}" style="padding:4px;"></div><div>Prazo (dias):<input type="number" class="ed-w-c" value="${w.c}" data-i="${i}" style="padding:4px;"></div><div>Retorno (MT):<input type="number" class="ed-w-f" value="${w.f}" data-i="${i}" style="padding:4px;"></div><div>ID:<input type="text" class="ed-w-id" value="${w.id}" data-i="${i}" style="padding:4px;"></div></div></div>`; }); document.getElementById('admin-wealth-list').innerHTML = h; }
         function saveWealth() { let as = document.querySelectorAll('.ed-w-a'), cs = document.querySelectorAll('.ed-w-c'), fs = document.querySelectorAll('.ed-w-f'), ids = document.querySelectorAll('.ed-w-id'); as.forEach((a, i) => { db.wealth[i].a = Math.max(1, parseInt(a.value) || 1); db.wealth[i].c = Math.max(1, parseInt(cs[i].value) || 1); db.wealth[i].f = Math.max(1, parseInt(fs[i].value) || 1); db.wealth[i].id = ids[i].value || db.wealth[i].id; }); WEALTH = [...db.wealth]; save(); renderAdminWealth(); alert('✅ Fundos salvos!'); }
         function renderThemes() { let h = ''; for (let t in THEMES) { let th = THEMES[t]; h += `<div onclick="setTheme('${t}')" style="cursor:pointer;background:${th.primary};color:#000;padding:12px;border-radius:10px;text-align:center;font-weight:700;font-size:10px;">${t.toUpperCase()}</div>`; } document.getElementById('theme-buttons').innerHTML = h; }
         function renderAdminBanners() { BANNERS = [...db.banners]; let h = ''; BANNERS.forEach((b, i) => { h += `<div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:6px;"><b style="font-size:10px;">Banner ${i+1}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9px;margin-top:4px;"><div>Emoji:<input type="text" class="ed-ban-e" value="${b.e||''}" data-i="${i}" style="padding:4px;"></div><div>Título:<input type="text" class="ed-ban-t" value="${b.t||''}" data-i="${i}" style="padding:4px;"></div><div>Prémio:<input type="text" class="ed-ban-p" value="${b.p||''}" data-i="${i}" style="padding:4px;"></div><div>Descrição:<input type="text" class="ed-ban-d" value="${b.d||''}" data-i="${i}" style="padding:4px;"></div><div>Link YT:<input type="text" class="ed-ban-yt" value="${b.yt||''}" data-i="${i}" style="padding:4px;"></div><div>Estilo:<select class="ed-ban-bg" data-i="${i}" style="padding:4px;"><option value="slide-concurso" ${b.bg==='slide-concurso'?'selected':''}>Concurso</option><option value="slide-promo" ${b.bg==='slide-promo'?'selected':''}>Promo</option><option value="slide-premio" ${b.bg==='slide-premio'?'selected':''}>Prémio</option></select></div></div></div>`; }); document.getElementById('admin-banners-list').innerHTML = h; }
         function saveAllBanners() { let es = document.querySelectorAll('.ed-ban-e'), ts = document.querySelectorAll('.ed-ban-t'), ps = document.querySelectorAll('.ed-ban-p'), ds = document.querySelectorAll('.ed-ban-d'), ys = document.querySelectorAll('.ed-ban-yt'), bs = document.querySelectorAll('.ed-ban-bg'); if (!db.banners) db.banners = []; for (let i = 0; i < 8; i++) { if (!db.banners[i]) db.banners[i] = {}; db.banners[i].e = es[i]?.value || ''; db.banners[i].t = ts[i]?.value || ''; db.banners[i].p = ps[i]?.value || ''; db.banners[i].d = ds[i]?.value || ''; db.banners[i].yt = ys[i]?.value || ''; db.banners[i].bg = bs[i]?.value || 'slide-concurso'; } BANNERS = [...db.banners]; save(); renderBanners(); renderAdminBanners(); alert('✅ 8 Banners salvos!'); }
         function renderAfCardsEdit() { let af = db.afCards || DEF.afCards; let h = ''; for (let i = 0; i < 3; i++) { let c = af[i] || {}; h += `<div>Card ${i+1} - Título:<input type="text" id="ed-af${i+1}-titulo" value="${c.t||''}" style="padding:4px;"></div><div>Card ${i+1} - Bónus:<input type="text" id="ed-af${i+1}-bonus" value="${c.b||''}" style="padding:4px;"></div><div>Card ${i+1} - Link Afiliado:<input type="text" id="ed-af${i+1}-link" value="${c.l||''}" style="padding:4px;"></div><div>Card ${i+1} - Link YouTube:<input type="text" id="ed-af${i+1}-yt" value="${c.yt||''}" style="padding:4px;"></div>`; } document.getElementById('af-cards-edit').innerHTML = h; }
         function saveAfCards() { db.afCards = [{ t: document.getElementById('ed-af1-titulo').value || '', st: 'Crie sua conta grátis', b: document.getElementById('ed-af1-bonus').value || '', l: document.getElementById('ed-af1-link').value || '', yt: document.getElementById('ed-af1-yt').value || '', c: 'qc-af1', i: '✨', btn: 'ABRIR', badge: 'BÔNUS' }, { t: document.getElementById('ed-af2-titulo').value || '', st: 'Deposite e ganhe bónus', b: document.getElementById('ed-af2-bonus').value || '', l: document.getElementById('ed-af2-link').value || '', yt: document.getElementById('ed-af2-yt').value || '', c: 'qc-af2', i: '💰', btn: 'ABRIR', badge: 'TOP' }, { t: document.getElementById('ed-af3-titulo').value || '', st: 'Aprenda estratégias', b: document.getElementById('ed-af3-bonus').value || '', l: document.getElementById('ed-af3-link').value || '', yt: document.getElementById('ed-af3-yt').value || '', c: 'qc-af3', i: '👑', btn: 'ENTRAR', badge: 'ELITE' }]; save(); renderCards(); renderAfCards(); renderAfCardsEdit(); alert('✅ Cards salvos!'); }
-        function renderTaskLinksEdit() { let links = db.taskLinks || DEF.taskLinks; let h = ''; links.forEach((l, i) => { h += `<div>Tarefa ${i+1}:<input type="text" class="ed-task-link" value="${l}" data-i="${i}" style="padding:6px;"></div>`; }); document.getElementById('task-links-edit').innerHTML = h; document.getElementById('ed-task-value').value = db.taskValue || DEF.taskValue; }
-        function saveTaskLinks() { let ls = document.querySelectorAll('.ed-task-link'); if (!db.taskLinks) db.taskLinks = []; ls.forEach((l, i) => { db.taskLinks[i] = l.value || db.taskLinks[i]; }); db.taskValue = parseFloat(document.getElementById('ed-task-value').value) || 0.50; save(); renderTaskLinksEdit(); alert('✅ Tarefas salvas!'); }
+        
+        function renderTaskLinksEdit() {
+            let totalLinks = (db.config.taskGratisQtd || 6) + (db.config.taskVipQtd || 8);
+            let links = db.taskLinks || [];
+            if (links.length < totalLinks) {
+                let pad = [];
+                for (let i = 0; i < totalLinks; i++) {
+                    pad.push(links[i] || 'https://youtube.com/@Canal' + (i+1));
+                }
+                links = pad;
+                db.taskLinks = links;
+                save();
+            }
+            let h = '';
+            links.forEach((l, i) => {
+                h += `<div>Tarefa ${i+1}:<input type="text" class="ed-task-link" value="${l}" data-i="${i}" style="padding:6px;width:100%;"></div>`;
+            });
+            document.getElementById('task-links-edit').innerHTML = h;
+        }
+        
+        function saveTaskLinks() {
+            let ls = document.querySelectorAll('.ed-task-link');
+            let novos = [];
+            ls.forEach((l, i) => { novos[i] = l.value || 'https://youtube.com/@Canal' + (i+1); });
+            db.taskLinks = novos;
+            save(); renderTaskLinksEdit(); alert('✅ Links salvos!');
+        }
+
         function trocarSenhaAdmin() { let ns = document.getElementById('ed-nova-senha').value.trim(), cs = document.getElementById('ed-confirmar-senha').value.trim(); if (!ns || ns.length < 4) return alert('Senha mín. 4 caracteres!'); if (ns !== cs) return alert('Senhas não coincidem!'); localStorage.setItem('ka_senha', ns); alert('✅ Senha alterada!'); document.getElementById('ed-nova-senha').value = ''; document.getElementById('ed-confirmar-senha').value = ''; }
         function saveEarplaneLinks() { if (!db.config) db.config = {}; db.config.earplaneLinkCadastro = document.getElementById('ed-earplane-cadastro').value || ''; db.config.earplaneLinkDeposito = document.getElementById('ed-earplane-deposito').value || ''; save(); alert('✅ Links EARPLANE salvos!'); }
         function saveAviatorLinks() { if (!db.config) db.config = {}; db.config.aviatorLinkCadastro = document.getElementById('ed-aviator-cadastro').value || ''; db.config.aviatorLinkDeposito = document.getElementById('ed-aviator-deposito').value || ''; db.config.aviatorLinkYT = document.getElementById('ed-aviator-yt').value || ''; db.config.aviatorLinkWP = document.getElementById('ed-aviator-wp').value || ''; save(); alert('✅ Links AVIATOR salvos!'); }
 
         function rAdm() {
             renderAdminStats(); renderSaqueValues(); renderAdminVips(); renderAdminWealth(); renderThemes(); renderAdminBanners(); renderAfCardsEdit(); renderTaskLinksEdit();
+            carregarConfigTarefasAdmin();
             document.getElementById('saque-diario-toggle').checked = db.config.saqueDiario !== false;
+            if (document.getElementById('toggle-bloqueio-geral')) {
+                document.getElementById('toggle-bloqueio-geral').checked = db.config.bloqueioGeral || false;
+            }
             const pm = db.config?.paymentMethods || {};
             document.getElementById('mpesa-toggle').checked = pm.mpesa?.active !== false; document.getElementById('ed-mpesa-numero').value = pm.mpesa?.numero || ''; document.getElementById('ed-mpesa-nome').value = pm.mpesa?.nome || '';
             document.getElementById('emola-toggle').checked = pm.emola?.active !== false; document.getElementById('ed-emola-numero').value = pm.emola?.numero || ''; document.getElementById('ed-emola-nome').value = pm.emola?.nome || '';
@@ -2016,7 +3243,7 @@
             let pl = document.getElementById('adm-list');
             if (!db.pending || db.pending.length === 0) { pl.innerHTML = '<p style="color:#888;text-align:center;">✅ Nenhuma pendência.</p>'; return; }
             pl.innerHTML = db.pending.map((p, i) => {
-                if (p.t === 'SAQUE') { let liq = p.net || p.a || 0, br = p.valorBruto || ((p.taxa ? liq + p.taxa : liq)); return `<div class="pending-card saque"><div style="display:flex;justify-content:space-between;"><span style="color:var(--accent);">💸 SAQUE</span><span style="font-size:8px;">${new Date(p.time).toLocaleString()}</span></div><div class="pending-row"><span>👤 Nome:</span><strong>${p.n}</strong></div><div class="pending-row"><span>📱 Número:</span><strong>${p.p}</strong></div><div class="pending-row"><span>🏦 Conta:</span><strong>${p.sn||'N/A'}</strong></div><div class="taxa-destaque"><div class="taxa-label">⚠️ VALOR A PAGAR (JÁ DEDUZIDO 10%)</div><div class="taxa-value" style="color:var(--primary);">${fUSD(liq)}</div></div><div class="pending-row"><span>💰 Bruto:</span><strong style="text-decoration:line-through;">${fUSD(br)}</strong></div><div class="pending-actions"><button class="btn-approve" onclick="aA(${i},true)">✅ APROVAR</button><button class="btn-reject" onclick="aA(${i},false)">❌ RECUSAR</button></div></div>`; }
+                if (p.t === 'SAQUE') { let liq = p.net || p.a || 0, br = p.valorBruto || ((p.taxa ? liq + p.taxa : liq)); return `<div class="pending-card saque"><div style="display:flex;justify-content:space-between;"><span style="color:var(--accent);">💸 SAQUE</span><span style="font-size:8px;">${new Date(p.time).toLocaleString()}</span></div><div class="pending-row"><span>👤 Nome:</span><strong>${p.n}</strong></div><div class="pending-row"><span>📱 Número:</span><strong>${p.p}</strong></div><div class="pending-row"><span>🏦 Conta:</span><strong>${p.sn||'N/A'}</strong></div><div class="taxa-destaque"><div class="taxa-label">⚠️ VALOR A PAGAR (JÁ DEDUZIDO 10%)</div><div class="taxa-value" style="color:var(--primary);">${fMT(liq)}</div></div><div class="pending-row"><span>💰 Bruto:</span><strong style="text-decoration:line-through;">${fMT(br)}</strong></div><div class="pending-actions"><button class="btn-approve" onclick="aA(${i},true)">✅ APROVAR</button><button class="btn-reject" onclick="aA(${i},false)">❌ RECUSAR</button></div></div>`; }
                 else { return `<div class="pending-card dep"><div style="display:flex;justify-content:space-between;"><span style="color:var(--primary);">📥 DEPÓSITO</span><span style="font-size:8px;">${new Date(p.time).toLocaleString()}</span></div><div class="pending-row"><span>👤 Nome:</span><strong>${p.n}</strong></div><div class="pending-row"><span>📱 Número:</span><strong>${p.p}</strong></div><div class="pending-row"><span>💰 Valor:</span><strong style="color:var(--primary)">${fMT(p.a)}</strong></div>${p.r?`<div class="pending-row"><span>🧾 Ref:</span><strong>${p.r}</strong></div>`:''}<div class="pending-actions"><button class="btn-approve" onclick="aA(${i},true)">✅ APROVAR</button><button class="btn-reject" onclick="aA(${i},false)">❌ RECUSAR</button></div></div>`; }
             }).join('');
         }
@@ -2040,7 +3267,7 @@
                 if (br <= 0) return alert('❌ Valor inválido no registo. Corrija manualmente.');
                 db.users[p.p].bal = Math.max(0, (db.users[p.p].bal || 0) + br);
                 if (db.registroSaques && db.registroSaques[p.p]) { for (let r of db.registroSaques[p.p]) { if (r.status === 'pendente' && Math.abs(r.valor - br) < 1) { r.status = 'negado'; break; } } }
-                alert('❌ Saque recusado. Devolvido ' + fUSD(br) + ' à conta de ' + p.n);
+                alert('❌ Saque recusado. Devolvido ' + fMT(br) + ' à conta de ' + p.n);
             }
             if (ok && p.t === 'SAQUE') {
                 let liq = typeof p.net === 'number' ? p.net : (p.a || 0); let br = 0; if (typeof p.valorBruto === 'number' && p.valorBruto > 0) { br = p.valorBruto; } else if (typeof p.taxa === 'number') { br = liq + p.taxa; } else { br = liq; }
@@ -2048,9 +3275,9 @@
                 db.financeiro.totalSacado = Math.max(0, (db.financeiro.totalSacado || 0) + liq);
                 db.financeiro.saquesAprovados.push({ nome: p.n, numero: p.p, valor: liq, data: new Date().toISOString() });
                 if (db.registroSaques && db.registroSaques[p.p]) { for (let r of db.registroSaques[p.p]) { if (r.status === 'pendente' && Math.abs(r.valor - br) < 1) { r.status = 'aprovado'; break; } } }
-                alert('✅ Saque APROVADO!\nPagar ao utilizador ' + p.n + ':\n' + p.sn + '\nValor líquido: ' + fUSD(liq));
+                alert('✅ Saque APROVADO!\nPagar ao utilizador ' + p.n + ':\n' + p.sn + '\nValor líquido: ' + fMT(liq));
             }
-            db.pending.splice(i, 1); save(); rAdm(); if (user) { updUI(); atualizarRegistroSaques(); }
+            db.pending.splice(i, 1); save(); rAdm(); if (user) { updUI(); atualizarRegistroSaques(); renderHistoricoSaques(); }
         }
 
         function switchTab(n) { document.getElementById('list-vips').style.display = n === 1 ? 'block' : 'none'; document.getElementById('list-wealth').style.display = n === 2 ? 'block' : 'none'; document.getElementById('list-tasks').style.display = n === 3 ? 'block' : 'none'; }
